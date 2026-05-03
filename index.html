@@ -1,0 +1,783 @@
+
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --forest:#1a3a2a;--mountain:#2d5a3d;--peak:#3d7a52;--mist:#a8c5b0;--snow:#f0f5f2;
+    --gold:#c8a84b;--amber:#e8c56a;--sky:#e8f4f0;--dark:#0d1f16;--text:#1a2e22;
+    --accent:#ff6b35;
+  }
+  body{font-family:'DM Sans',sans-serif;background:var(--snow);color:var(--text);overflow-x:hidden}
+  
+  /* NAV */
+  nav{background:rgba(13,31,22,0.97);backdrop-filter:blur(10px);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(200,168,75,0.3)}
+  .logo{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);letter-spacing:1px;cursor:pointer}
+  .logo span{color:#fff}
+  .nav-tabs{display:flex;gap:4px}
+  .nav-tab{background:none;border:none;color:rgba(255,255,255,0.7);padding:8px 14px;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;transition:all 0.2s}
+  .nav-tab:hover,.nav-tab.active{background:rgba(200,168,75,0.15);color:var(--gold)}
+  .nav-cta{background:var(--gold);color:var(--dark);border:none;padding:8px 18px;border-radius:6px;font-weight:600;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif}
+  
+  /* PAGES */
+  .page{display:none;animation:fadeIn 0.3s ease}
+  .page.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  
+  /* HOME PAGE */
+  .hero{background:linear-gradient(160deg,var(--forest) 0%,var(--mountain) 50%,var(--peak) 100%);min-height:520px;display:flex;align-items:center;padding:4rem 3rem;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60 L30 0 L60 60Z' fill='rgba(255,255,255,0.02)'/%3E%3C/svg%3E") repeat;pointer-events:none}
+  .hero-mountains{position:absolute;bottom:0;right:0;opacity:0.15}
+  .hero-content{max-width:560px;z-index:1}
+  .hero-badge{background:rgba(200,168,75,0.2);border:1px solid rgba(200,168,75,0.4);color:var(--gold);padding:5px 14px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;display:inline-block;margin-bottom:1.2rem}
+  .hero h1{font-family:'Playfair Display',serif;font-size:52px;line-height:1.1;color:#fff;font-weight:900;margin-bottom:1rem}
+  .hero h1 em{color:var(--gold);font-style:normal}
+  .hero p{color:rgba(255,255,255,0.75);font-size:17px;line-height:1.7;margin-bottom:2rem;font-weight:300}
+  .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+  .btn-primary{background:var(--gold);color:var(--dark);border:none;padding:13px 28px;border-radius:8px;font-weight:600;font-size:15px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+  .btn-primary:hover{background:var(--amber);transform:translateY(-1px)}
+  .btn-outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,0.4);padding:13px 28px;border-radius:8px;font-weight:500;font-size:15px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+  .btn-outline:hover{border-color:#fff;background:rgba(255,255,255,0.08)}
+  
+  /* STATS BAR */
+  .stats-bar{background:var(--dark);display:flex;justify-content:space-around;padding:1.5rem 3rem}
+  .stat{text-align:center}
+  .stat-num{font-family:'Playfair Display',serif;font-size:28px;color:var(--gold);font-weight:700}
+  .stat-label{font-size:12px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+  
+  /* SECTION */
+  .section{padding:3rem 2.5rem}
+  .section-alt{background:var(--sky)}
+  .section-header{margin-bottom:2rem}
+  .section-tag{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--peak);font-weight:600;margin-bottom:6px}
+  .section-title{font-family:'Playfair Display',serif;font-size:32px;color:var(--forest);font-weight:700;line-height:1.2}
+  .section-sub{color:#5a7a65;font-size:15px;margin-top:8px;line-height:1.6;font-weight:300}
+  
+  /* TREK CARDS */
+  .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .trek-card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid rgba(0,0,0,0.06);transition:all 0.25s;cursor:pointer}
+  .trek-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.12)}
+  .card-img{height:160px;position:relative;display:flex;align-items:flex-end;padding:12px}
+  .card-img-1{background:linear-gradient(180deg,rgba(29,158,117,0.3) 0%,rgba(13,31,22,0.85) 100%),linear-gradient(135deg,#1d9e75,#0d6b4a)}
+  .card-img-2{background:linear-gradient(180deg,rgba(55,138,221,0.3) 0%,rgba(12,68,124,0.85) 100%),linear-gradient(135deg,#378add,#0c447c)}
+  .card-img-3{background:linear-gradient(180deg,rgba(216,90,48,0.3) 0%,rgba(153,60,29,0.85) 100%),linear-gradient(135deg,#d85a30,#993c1d)}
+  .card-img-4{background:linear-gradient(180deg,rgba(127,119,221,0.3) 0%,rgba(83,74,183,0.85) 100%),linear-gradient(135deg,#7f77dd,#534ab7)}
+  .card-img-5{background:linear-gradient(180deg,rgba(200,168,75,0.3) 0%,rgba(133,79,11,0.85) 100%),linear-gradient(135deg,#c8a84b,#854f0b)}
+  .card-img-6{background:linear-gradient(180deg,rgba(99,153,34,0.3) 0%,rgba(59,109,17,0.85) 100%),linear-gradient(135deg,#639922,#3b6d11)}
+  .mountain-svg{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);opacity:0.25}
+  .card-difficulty{display:inline-block;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+  .diff-easy{background:rgba(99,153,34,0.25);color:#3b6d11}
+  .diff-mod{background:rgba(200,168,75,0.25);color:#633806}
+  .diff-hard{background:rgba(216,90,48,0.25);color:#993c1d}
+  .card-name{font-family:'Playfair Display',serif;font-size:15px;color:#fff;font-weight:700}
+  .card-body{padding:14px}
+  .card-meta{display:flex;gap:12px;margin-bottom:10px}
+  .meta-item{font-size:12px;color:#5a7a65;display:flex;align-items:center;gap:3px}
+  .card-price{display:flex;justify-content:space-between;align-items:center}
+  .price-val{font-size:18px;font-weight:700;color:var(--forest);font-family:'Playfair Display',serif}
+  .price-per{font-size:11px;color:#8a9e90;margin-left:2px}
+  .book-btn{background:var(--peak);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+  
+  /* FEATURES */
+  .features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .feature-card{background:#fff;border-radius:12px;padding:20px;border:1px solid rgba(0,0,0,0.06);text-align:center}
+  .feature-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 12px}
+  .feature-card h4{font-size:14px;font-weight:600;color:var(--forest);margin-bottom:6px}
+  .feature-card p{font-size:12px;color:#7a9a82;line-height:1.5}
+  
+  /* TESTIMONIALS */
+  .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .testimonial{background:#fff;border-radius:12px;padding:20px;border:1px solid rgba(0,0,0,0.06)}
+  .stars{color:var(--gold);font-size:13px;margin-bottom:10px}
+  .t-text{font-size:13px;color:#4a6a52;line-height:1.6;font-style:italic;margin-bottom:14px}
+  .t-author{display:flex;align-items:center;gap:10px}
+  .t-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff}
+  .t-name{font-size:13px;font-weight:600;color:var(--forest)}
+  .t-loc{font-size:11px;color:#8a9e90}
+  
+  /* TREKS LIST PAGE */
+  .page-header{background:linear-gradient(135deg,var(--forest),var(--mountain));padding:3rem 2.5rem;color:#fff}
+  .page-header h2{font-family:'Playfair Display',serif;font-size:36px;color:#fff;margin-bottom:6px}
+  .page-header p{color:rgba(255,255,255,0.7);font-size:15px;font-weight:300}
+  .filters-bar{background:#fff;border-bottom:1px solid rgba(0,0,0,0.08);padding:1rem 2.5rem;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .filter-chip{background:var(--sky);border:1px solid rgba(61,122,82,0.2);color:var(--mountain);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;transition:all 0.2s}
+  .filter-chip:hover,.filter-chip.active{background:var(--mountain);color:#fff}
+  .filter-label{font-size:12px;font-weight:600;color:#8a9e90;text-transform:uppercase;letter-spacing:1px}
+  .treks-list{padding:2rem 2.5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  
+  /* TREK DETAIL */
+  .trek-hero{background:linear-gradient(180deg,rgba(13,31,22,0.4) 0%,rgba(13,31,22,0.8) 100%),linear-gradient(135deg,#1d9e75,#0d6b4a);height:280px;display:flex;align-items:flex-end;padding:2rem 2.5rem;position:relative}
+  .trek-hero h2{font-family:'Playfair Display',serif;font-size:42px;color:#fff;font-weight:900}
+  .trek-hero-badges{display:flex;gap:8px;margin-bottom:10px}
+  .trek-badge{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:4px 12px;border-radius:12px;font-size:11px;font-weight:500}
+  .trek-detail-body{display:grid;grid-template-columns:1fr 300px;gap:2rem;padding:2rem 2.5rem}
+  .trek-info h3{font-family:'Playfair Display',serif;font-size:20px;color:var(--forest);margin-bottom:12px}
+  .trek-info p{font-size:14px;color:#4a6a52;line-height:1.8;margin-bottom:1.5rem;font-weight:300}
+  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem}
+  .info-item{background:var(--sky);border-radius:10px;padding:14px}
+  .info-item-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#7a9a82;margin-bottom:4px}
+  .info-item-val{font-size:18px;font-weight:700;color:var(--forest);font-family:'Playfair Display',serif}
+  .booking-card{background:#fff;border-radius:14px;border:1.5px solid rgba(61,122,82,0.2);padding:1.5rem;position:sticky;top:80px;height:fit-content}
+  .booking-card h4{font-family:'Playfair Display',serif;font-size:22px;color:var(--forest);margin-bottom:1rem}
+  .booking-price{font-size:32px;font-weight:700;color:var(--forest);font-family:'Playfair Display',serif;margin-bottom:4px}
+  .booking-price span{font-size:14px;color:#8a9e90;font-weight:400}
+  .date-list{display:flex;flex-direction:column;gap:8px;margin:1rem 0}
+  .date-item{background:var(--sky);border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;font-size:13px;cursor:pointer;border:1.5px solid transparent;transition:all 0.2s}
+  .date-item:hover{border-color:var(--peak);background:#fff}
+  .date-item.selected{border-color:var(--peak);background:#fff}
+  .slots{font-size:11px;color:var(--peak);font-weight:600}
+  .btn-book{background:var(--forest);color:#fff;border:none;padding:14px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;width:100%;font-family:'DM Sans',sans-serif;margin-top:12px;transition:all 0.2s}
+  .btn-book:hover{background:var(--mountain)}
+  
+  /* ABOUT */
+  .about-hero{background:linear-gradient(135deg,#0d1f16,#1a3a2a,#2d5a3d);padding:4rem 2.5rem;text-align:center}
+  .about-hero h2{font-family:'Playfair Display',serif;font-size:42px;color:#fff;margin-bottom:1rem}
+  .about-hero p{color:rgba(255,255,255,0.7);font-size:16px;max-width:600px;margin:0 auto;line-height:1.7;font-weight:300}
+  .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .team-card{background:#fff;border-radius:12px;padding:20px;border:1px solid rgba(0,0,0,0.06);text-align:center}
+  .team-avatar{width:64px;height:64px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff}
+  .team-card h5{font-size:15px;font-weight:600;color:var(--forest);margin-bottom:3px}
+  .team-card p{font-size:12px;color:#7a9a82}
+  .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .value-card{background:#fff;border-radius:12px;padding:20px;border-left:3px solid var(--peak)}
+  .value-card h4{font-size:15px;font-weight:600;color:var(--forest);margin-bottom:8px}
+  .value-card p{font-size:13px;color:#5a7a65;line-height:1.6;font-weight:300}
+  
+  /* CONTACT */
+  .contact-body{display:grid;grid-template-columns:1fr 1fr;gap:2rem;padding:2.5rem}
+  .contact-form{background:#fff;border-radius:14px;padding:2rem;border:1px solid rgba(0,0,0,0.07)}
+  .contact-form h3{font-family:'Playfair Display',serif;font-size:24px;color:var(--forest);margin-bottom:1.5rem}
+  .form-group{margin-bottom:1rem}
+  .form-group label{display:block;font-size:12px;font-weight:600;color:#5a7a65;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .form-group input,.form-group select,.form-group textarea{width:100%;background:var(--sky);border:1px solid rgba(61,122,82,0.15);border-radius:8px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border 0.2s}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--peak)}
+  .form-group textarea{height:100px;resize:none}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .contact-info{display:flex;flex-direction:column;gap:14px}
+  .info-card{background:#fff;border-radius:12px;padding:18px;border:1px solid rgba(0,0,0,0.06);display:flex;gap:14px;align-items:flex-start}
+  .info-icon{width:40px;height:40px;border-radius:10px;background:var(--sky);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+  .info-card h5{font-size:14px;font-weight:600;color:var(--forest);margin-bottom:3px}
+  .info-card p{font-size:13px;color:#7a9a82;line-height:1.5}
+  .map-placeholder{background:linear-gradient(135deg,var(--sky),#d4ede2);border-radius:12px;height:180px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(61,122,82,0.15);color:var(--mountain);font-size:14px;font-weight:500}
+  
+  /* GALLERY */
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:2rem 2.5rem}
+  .gallery-item{border-radius:12px;overflow:hidden;aspect-ratio:4/3;position:relative;cursor:pointer}
+  .gallery-item:nth-child(1){grid-column:span 2;aspect-ratio:2/1}
+  .gallery-item:nth-child(5){grid-column:span 2;aspect-ratio:2/1}
+  .g1{background:linear-gradient(135deg,#1d9e75,#085041)}
+  .g2{background:linear-gradient(135deg,#378add,#042c53)}
+  .g3{background:linear-gradient(135deg,#d85a30,#4a1b0c)}
+  .g4{background:linear-gradient(135deg,#639922,#173404)}
+  .g5{background:linear-gradient(135deg,#7f77dd,#26215c)}
+  .g6{background:linear-gradient(135deg,#c8a84b,#412402)}
+  .gallery-overlay{position:absolute;inset:0;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;transition:all 0.3s}
+  .gallery-item:hover .gallery-overlay{background:rgba(0,0,0,0.3)}
+  .gallery-label{color:#fff;font-size:13px;font-weight:600;opacity:0;transition:opacity 0.3s;font-family:'Playfair Display',serif}
+  .gallery-item:hover .gallery-label{opacity:1}
+  .gallery-mountain{position:absolute;bottom:0;left:0;right:0;height:60px;opacity:0.3}
+  
+  /* FOOTER */
+  footer{background:var(--dark);padding:3rem 2.5rem 1.5rem;margin-top:auto}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2rem}
+  .footer-brand .logo{font-size:20px;margin-bottom:10px;display:block}
+  .footer-brand p{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.6;font-weight:300}
+  .footer-col h6{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.4);margin-bottom:12px;font-weight:600}
+  .footer-col a{display:block;color:rgba(255,255,255,0.6);font-size:13px;margin-bottom:8px;text-decoration:none;cursor:pointer;transition:color 0.2s}
+  .footer-col a:hover{color:var(--gold)}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:1.2rem;display:flex;justify-content:space-between;align-items:center}
+  .footer-bottom p{font-size:12px;color:rgba(255,255,255,0.3)}
+  .social-links{display:flex;gap:8px}
+  .social-link{width:30px;height:30px;border-radius:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all 0.2s;color:rgba(255,255,255,0.5);text-decoration:none}
+  .social-link:hover{background:rgba(200,168,75,0.15);border-color:rgba(200,168,75,0.3);color:var(--gold)}
+  
+  /* NEWSLETTER */
+  .newsletter-section{background:linear-gradient(135deg,var(--forest),var(--mountain));padding:3rem 2.5rem;display:flex;justify-content:space-between;align-items:center;gap:2rem}
+  .newsletter-text h3{font-family:'Playfair Display',serif;font-size:28px;color:#fff;margin-bottom:6px}
+  .newsletter-text p{color:rgba(255,255,255,0.6);font-size:14px;font-weight:300}
+  .newsletter-form{display:flex;gap:10px;flex-shrink:0}
+  .newsletter-form input{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:11px 16px;border-radius:8px;font-size:14px;width:240px;font-family:'DM Sans',sans-serif}
+  .newsletter-form input::placeholder{color:rgba(255,255,255,0.4)}
+  .newsletter-form input:focus{outline:none;border-color:rgba(200,168,75,0.5)}
+  
+  /* MOBILE TAG */
+  .mobile-scroll{font-size:11px;color:rgba(255,255,255,0.4);text-align:center;padding:8px;background:var(--dark)}
+</style>
+
+<h2 class="sr-only">TrekIndia - Complete Trekking Website UI with all pages: Home, Treks, Detail, About, Contact, Gallery</h2>
+
+<div id="app">
+  <nav>
+    <div class="logo">Trek<span>India</span></div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showPage('home',this)">Home</button>
+      <button class="nav-tab" onclick="showPage('treks',this)">All Treks</button>
+      <button class="nav-tab" onclick="showPage('detail',this)">Trek Detail</button>
+      <button class="nav-tab" onclick="showPage('gallery',this)">Gallery</button>
+      <button class="nav-tab" onclick="showPage('about',this)">About Us</button>
+      <button class="nav-tab" onclick="showPage('contact',this)">Contact</button>
+    </div>
+    <button class="nav-cta">Book Now</button>
+  </nav>
+
+  <!-- HOME PAGE -->
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <svg class="hero-mountains" width="500" height="300" viewBox="0 0 500 300">
+        <polygon points="0,300 80,120 160,300" fill="rgba(255,255,255,0.06)"/>
+        <polygon points="60,300 160,80 260,300" fill="rgba(255,255,255,0.08)"/>
+        <polygon points="150,300 250,40 350,300" fill="rgba(255,255,255,0.1)"/>
+        <polygon points="250,300 350,90 450,300" fill="rgba(255,255,255,0.07)"/>
+        <polygon points="370,300 450,140 500,300" fill="rgba(255,255,255,0.05)"/>
+      </svg>
+      <div class="hero-content">
+        <div class="hero-badge">🏔 India's Finest Trekking</div>
+        <h1>Where Every<br/>Step Tells a<br/><em>New Story</em></h1>
+        <p>From the snow-kissed peaks of Kedarkantha to the meadows of Kashmir — we craft journeys that transform you.</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('treks',document.querySelectorAll('.nav-tab')[1])">Explore Treks</button>
+          <button class="btn-outline" onclick="showPage('about',document.querySelectorAll('.nav-tab')[4])">Our Story</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Documented Trails</div></div>
+      <div class="stat"><div class="stat-num">35K+</div><div class="stat-label">Happy Trekkers</div></div>
+      <div class="stat"><div class="stat-num">4.9★</div><div class="stat-label">Average Rating</div></div>
+      <div class="stat"><div class="stat-num">18+</div><div class="stat-label">Years Experience</div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-tag">Featured Treks</div>
+        <div class="section-title">Choose Your Adventure</div>
+        <div class="section-sub">Curated trails for every kind of explorer — from beginners to seasoned mountaineers</div>
+      </div>
+      <div class="cards-grid">
+        <div class="trek-card" onclick="showPage('detail',document.querySelectorAll('.nav-tab')[2])">
+          <div class="card-img card-img-1">
+            <svg class="mountain-svg" width="120" height="50" viewBox="0 0 120 50"><polygon points="0,50 30,10 60,50" fill="white"/><polygon points="40,50 70,5 100,50" fill="white"/><polygon points="80,50 100,20 120,50" fill="white"/></svg>
+            <div><div class="card-difficulty diff-easy">Easy</div><div class="card-name">Kedarkantha Peak</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <div class="meta-item">📍 Uttarakhand</div>
+              <div class="meta-item">⏱ 6 Days</div>
+              <div class="meta-item">📏 20 km</div>
+            </div>
+            <div class="card-price">
+              <div><span class="price-val">₹8,500</span><span class="price-per">/person</span></div>
+              <button class="book-btn">Book Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="trek-card" onclick="showPage('detail',document.querySelectorAll('.nav-tab')[2])">
+          <div class="card-img card-img-2">
+            <svg class="mountain-svg" width="120" height="50" viewBox="0 0 120 50"><polygon points="0,50 40,5 80,50" fill="white"/><polygon points="60,50 90,15 120,50" fill="white"/></svg>
+            <div><div class="card-difficulty diff-hard">Challenging</div><div class="card-name">Rupin Pass</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <div class="meta-item">📍 Himachal</div>
+              <div class="meta-item">⏱ 8 Days</div>
+              <div class="meta-item">📏 52 km</div>
+            </div>
+            <div class="card-price">
+              <div><span class="price-val">₹14,200</span><span class="price-per">/person</span></div>
+              <button class="book-btn">Book Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="trek-card" onclick="showPage('detail',document.querySelectorAll('.nav-tab')[2])">
+          <div class="card-img card-img-3">
+            <svg class="mountain-svg" width="120" height="50" viewBox="0 0 120 50"><polygon points="20,50 60,8 100,50" fill="white"/><polygon points="0,50 25,25 50,50" fill="white"/><polygon points="80,50 105,20 120,50" fill="white"/></svg>
+            <div><div class="card-difficulty diff-mod">Moderate</div><div class="card-name">Valley of Flowers</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <div class="meta-item">📍 Uttarakhand</div>
+              <div class="meta-item">⏱ 5 Days</div>
+              <div class="meta-item">📏 38 km</div>
+            </div>
+            <div class="card-price">
+              <div><span class="price-val">₹11,000</span><span class="price-per">/person</span></div>
+              <button class="book-btn">Book Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="trek-card" onclick="showPage('detail',document.querySelectorAll('.nav-tab')[2])">
+          <div class="card-img card-img-4">
+            <svg class="mountain-svg" width="120" height="50" viewBox="0 0 120 50"><polygon points="10,50 50,10 90,50" fill="white"/><polygon points="70,50 100,18 120,50" fill="white"/></svg>
+            <div><div class="card-difficulty diff-hard">Hard</div><div class="card-name">Pin Parvati Pass</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <div class="meta-item">📍 Spiti</div>
+              <div class="meta-item">⏱ 11 Days</div>
+              <div class="meta-item">📏 110 km</div>
+            </div>
+            <div class="card-price">
+              <div><span class="price-val">₹22,000</span><span class="price-per">/person</span></div>
+              <button class="book-btn">Book Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="trek-card" onclick="showPage('detail',document.querySelectorAll('.nav-tab')[2])">
+          <div class="card-img card-img-5">
+            <svg class="mountain-svg" width="120" height="50" viewBox="0 0 120 50"><polygon points="0,50 30,15 60,50" fill="white"/><polygon points="40,50 80,5 120,50" fill="white"/></svg>
+            <div><div class="card-difficulty diff-easy">Easy</div><div class="card-name">Deoriatal Trek</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <div class="meta-item">📍 Chopta</div>
+              <div class="meta-item">⏱ 4 Days</div>
+              <div class="meta-item">📏 14 km</div>
+            </div>
+            <div class="card-price">
+              <div><span class="price-val">₹6,500</span><span class="price-per">/person</span></div>
+              <button class="book-btn">Book Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="trek-card" onclick="showPage('detail',document.querySelectorAll('.nav-tab')[2])">
+          <div class="card-img card-img-6">
+            <svg class="mountain-svg" width="120" height="50" viewBox="0 0 120 50"><polygon points="0,50 40,12 80,50" fill="white"/><polygon points="55,50 90,8 120,50" fill="white"/></svg>
+            <div><div class="card-difficulty diff-mod">Moderate</div><div class="card-name">Sandakphu Trek</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <div class="meta-item">📍 Darjeeling</div>
+              <div class="meta-item">⏱ 7 Days</div>
+              <div class="meta-item">📏 57 km</div>
+            </div>
+            <div class="card-price">
+              <div><span class="price-val">₹12,800</span><span class="price-per">/person</span></div>
+              <button class="book-btn">Book Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section section-alt">
+      <div class="section-header">
+        <div class="section-tag">Why Choose Us</div>
+        <div class="section-title">Beyond Just a Trek</div>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon" style="background:#e1f5ee">🛡️</div>
+          <h4>Certified Safety</h4>
+          <p>Wilderness First Responder trained guides, expedition-grade gear & emergency protocols</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:#e6f1fb">🌿</div>
+          <h4>Zero Waste Policy</h4>
+          <p>Every trek leaves the mountains cleaner than we found them — guaranteed</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:#faeeda">🗺️</div>
+          <h4>GPS Documented</h4>
+          <p>Over 500 trails documented with precise maps, waypoints & altitude profiles</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:#fcebeb">❤️</div>
+          <h4>Life-Changing</h4>
+          <p>Mindfully designed experiences that connect you deeply with nature and yourself</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-tag">What Trekkers Say</div>
+        <div class="section-title">Stories That Inspire</div>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p class="t-text">"The Kedarkantha trek completely changed my perspective on life. The guides were incredibly knowledgeable and the experience was beautifully organized."</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background:#1d9e75">RK</div>
+            <div><div class="t-name">Rahul Khanna</div><div class="t-loc">Software Engineer, Bangalore</div></div>
+          </div>
+        </div>
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p class="t-text">"Best decision of my life. The Rupin Pass trek was challenging but every step was worth it. The campsite views were absolutely breathtaking!"</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background:#378add">PS</div>
+            <div><div class="t-name">Priya Sharma</div><div class="t-loc">Doctor, Delhi</div></div>
+          </div>
+        </div>
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p class="t-text">"TrekIndia's zero waste policy genuinely impressed me. We actually cleaned up trail litter! This is how adventure tourism should be done."</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background:#d85a30">AM</div>
+            <div><div class="t-name">Arjun Mehta</div><div class="t-loc">Entrepreneur, Mumbai</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="newsletter-section">
+      <div class="newsletter-text">
+        <h3>Never Miss a Trek</h3>
+        <p>Get early access to new routes, seasonal deals & trekking tips straight to your inbox</p>
+      </div>
+      <div class="newsletter-form">
+        <input type="email" placeholder="your@email.com"/>
+        <button class="btn-primary">Subscribe</button>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo">Trek<span>India</span></span>
+          <p>India's most trusted trekking organization. Transforming lives through mindful mountain experiences since 2006.</p>
+        </div>
+        <div class="footer-col">
+          <h6>Explore</h6>
+          <a onclick="showPage('treks',document.querySelectorAll('.nav-tab')[1])">All Treks</a>
+          <a>Upcoming Dates</a>
+          <a>Trek Calendar</a>
+          <a>Corporate Treks</a>
+        </div>
+        <div class="footer-col">
+          <h6>Company</h6>
+          <a onclick="showPage('about',document.querySelectorAll('.nav-tab')[4])">About Us</a>
+          <a>Careers</a>
+          <a>Blog</a>
+          <a>Press</a>
+        </div>
+        <div class="footer-col">
+          <h6>Support</h6>
+          <a onclick="showPage('contact',document.querySelectorAll('.nav-tab')[5])">Contact</a>
+          <a>FAQs</a>
+          <a>Safety Policy</a>
+          <a>Cancellation</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 TrekIndia. All rights reserved.</p>
+        <div class="social-links">
+          <a class="social-link">in</a>
+          <a class="social-link">ig</a>
+          <a class="social-link">yt</a>
+          <a class="social-link">fb</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ALL TREKS PAGE -->
+  <div class="page" id="page-treks">
+    <div class="page-header">
+      <h2>All Treks</h2>
+      <p>500+ documented trails across the Himalayas, Western Ghats & beyond</p>
+    </div>
+    <div class="filters-bar">
+      <span class="filter-label">Filter by:</span>
+      <span class="filter-chip active">All</span>
+      <span class="filter-chip">Easy</span>
+      <span class="filter-chip">Moderate</span>
+      <span class="filter-chip">Challenging</span>
+      <span class="filter-chip">Uttarakhand</span>
+      <span class="filter-chip">Himachal</span>
+      <span class="filter-chip">Kashmir</span>
+      <span class="filter-chip">Darjeeling</span>
+      <span class="filter-chip">Under 5 Days</span>
+    </div>
+    <div class="treks-list">
+      <div class="trek-card" onclick="showPage('detail',document.querySelectorAll('.nav-tab')[2])">
+        <div class="card-img card-img-1"><div><div class="card-difficulty diff-easy">Easy</div><div class="card-name">Kedarkantha Peak</div></div></div>
+        <div class="card-body"><div class="card-meta"><div class="meta-item">📍 Uttarakhand</div><div class="meta-item">⏱ 6 Days</div><div class="meta-item">📏 20 km</div></div><div class="card-price"><div><span class="price-val">₹8,500</span><span class="price-per">/person</span></div><button class="book-btn">View Trek</button></div></div>
+      </div>
+      <div class="trek-card" onclick="showPage('detail',document.querySelectorAll('.nav-tab')[2])">
+        <div class="card-img card-img-2"><div><div class="card-difficulty diff-hard">Challenging</div><div class="card-name">Rupin Pass</div></div></div>
+        <div class="card-body"><div class="card-meta"><div class="meta-item">📍 Himachal</div><div class="meta-item">⏱ 8 Days</div><div class="meta-item">📏 52 km</div></div><div class="card-price"><div><span class="price-val">₹14,200</span><span class="price-per">/person</span></div><button class="book-btn">View Trek</button></div></div>
+      </div>
+      <div class="trek-card" onclick="showPage('detail',document.querySelectorAll('.nav-tab')[2])">
+        <div class="card-img card-img-3"><div><div class="card-difficulty diff-mod">Moderate</div><div class="card-name">Valley of Flowers</div></div></div>
+        <div class="card-body"><div class="card-meta"><div class="meta-item">📍 Uttarakhand</div><div class="meta-item">⏱ 5 Days</div><div class="meta-item">📏 38 km</div></div><div class="card-price"><div><span class="price-val">₹11,000</span><span class="price-per">/person</span></div><button class="book-btn">View Trek</button></div></div>
+      </div>
+      <div class="trek-card" onclick="showPage('detail',document.querySelectorAll('.nav-tab')[2])">
+        <div class="card-img card-img-4"><div><div class="card-difficulty diff-hard">Hard</div><div class="card-name">Pin Parvati Pass</div></div></div>
+        <div class="card-body"><div class="card-meta"><div class="meta-item">📍 Spiti</div><div class="meta-item">⏱ 11 Days</div><div class="meta-item">📏 110 km</div></div><div class="card-price"><div><span class="price-val">₹22,000</span><span class="price-per">/person</span></div><button class="book-btn">View Trek</button></div></div>
+      </div>
+      <div class="trek-card" onclick="showPage('detail',document.querySelectorAll('.nav-tab')[2])">
+        <div class="card-img card-img-5"><div><div class="card-difficulty diff-easy">Easy</div><div class="card-name">Deoriatal Trek</div></div></div>
+        <div class="card-body"><div class="card-meta"><div class="meta-item">📍 Chopta</div><div class="meta-item">⏱ 4 Days</div><div class="meta-item">📏 14 km</div></div><div class="card-price"><div><span class="price-val">₹6,500</span><span class="price-per">/person</span></div><button class="book-btn">View Trek</button></div></div>
+      </div>
+      <div class="trek-card" onclick="showPage('detail',document.querySelectorAll('.nav-tab')[2])">
+        <div class="card-img card-img-6"><div><div class="card-difficulty diff-mod">Moderate</div><div class="card-name">Sandakphu Trek</div></div></div>
+        <div class="card-body"><div class="card-meta"><div class="meta-item">📍 Darjeeling</div><div class="meta-item">⏱ 7 Days</div><div class="meta-item">📏 57 km</div></div><div class="card-price"><div><span class="price-val">₹12,800</span><span class="price-per">/person</span></div><button class="book-btn">View Trek</button></div></div>
+      </div>
+    </div>
+    <footer>
+      <div class="footer-bottom" style="padding:1.5rem 2.5rem">
+        <p style="color:rgba(255,255,255,0.3);font-size:12px">© 2025 TrekIndia. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- TREK DETAIL PAGE -->
+  <div class="page" id="page-detail">
+    <div class="trek-hero">
+      <div>
+        <div class="trek-hero-badges">
+          <span class="trek-badge">Easy</span>
+          <span class="trek-badge">⭐ 4.9 (342 reviews)</span>
+          <span class="trek-badge">🏔 3,800m altitude</span>
+        </div>
+        <h2>Kedarkantha Peak</h2>
+      </div>
+    </div>
+    <div class="trek-detail-body">
+      <div class="trek-info">
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Duration</div><div class="info-item-val">6 Days</div></div>
+          <div class="info-item"><div class="info-item-label">Distance</div><div class="info-item-val">20 km</div></div>
+          <div class="info-item"><div class="info-item-label">Max Altitude</div><div class="info-item-val">3,800m</div></div>
+          <div class="info-item"><div class="info-item-label">Difficulty</div><div class="info-item-val">Easy</div></div>
+        </div>
+        <h3>About This Trek</h3>
+        <p>Kedarkantha is one of the most popular winter treks in India, and for good reason. Standing at 3,800 meters, the summit offers panoramic views of Swargarohini, Kalanag, and the majestic Bandarpoonch peaks. The trail winds through dense pine forests, open meadows dusted with snow, and ancient shepherd villages.</p>
+        <h3>What's Included</h3>
+        <p>All camping equipment, professional trek leader, cook and support staff, all meals from Day 1 dinner to Day 6 breakfast, forest permits, first aid kit with oxygen cylinder, and comprehensive trek documentation.</p>
+        <h3>Itinerary Highlights</h3>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:12px;align-items:flex-start;padding:10px;background:var(--sky);border-radius:8px"><div style="background:var(--peak);color:#fff;min-width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;margin-top:1px">1</div><div><div style="font-weight:600;font-size:13px;color:var(--forest)">Sankri — Drive from Dehradun</div><div style="font-size:12px;color:#7a9a82;margin-top:2px">Overnight train + base camp arrival</div></div></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;padding:10px;background:var(--sky);border-radius:8px"><div style="background:var(--peak);color:#fff;min-width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;margin-top:1px">2</div><div><div style="font-weight:600;font-size:13px;color:var(--forest)">Sankri to Juda Ka Talab</div><div style="font-size:12px;color:#7a9a82;margin-top:2px">4km trek through rhododendron forest</div></div></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;padding:10px;background:var(--sky);border-radius:8px"><div style="background:var(--peak);color:#fff;min-width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;margin-top:1px">3</div><div><div style="font-weight:600;font-size:13px;color:var(--forest)">Summit Day — Kedarkantha Peak</div><div style="font-size:12px;color:#7a9a82;margin-top:2px">Pre-dawn start, 360° panoramic summit views</div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="booking-card">
+          <h4>Book This Trek</h4>
+          <div class="booking-price">₹8,500 <span>per person</span></div>
+          <div style="font-size:12px;color:var(--peak);margin-bottom:4px">✓ Free cancellation upto 15 days before</div>
+          <div style="font-size:12px;color:#8a9e90;margin-bottom:12px">Select your batch date:</div>
+          <div class="date-list">
+            <div class="date-item selected">
+              <span>Dec 21 – Dec 26, 2025</span>
+              <span class="slots">3 slots left</span>
+            </div>
+            <div class="date-item">
+              <span>Jan 4 – Jan 9, 2026</span>
+              <span class="slots">8 slots left</span>
+            </div>
+            <div class="date-item">
+              <span>Jan 18 – Jan 23, 2026</span>
+              <span class="slots">12 slots left</span>
+            </div>
+            <div class="date-item">
+              <span>Feb 1 – Feb 6, 2026</span>
+              <span class="slots">Filling fast</span>
+            </div>
+          </div>
+          <button class="btn-book">Book Now — ₹2,500 advance</button>
+          <div style="text-align:center;margin-top:10px;font-size:11px;color:#8a9e90">🔒 Secure payment via Razorpay</div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="footer-bottom" style="padding:1.5rem 2.5rem">
+        <p style="color:rgba(255,255,255,0.3);font-size:12px">© 2025 TrekIndia. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- GALLERY PAGE -->
+  <div class="page" id="page-gallery">
+    <div class="page-header">
+      <h2>Photo Gallery</h2>
+      <p>Moments captured from our most breathtaking trails</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item g1">
+        <svg class="gallery-mountain" viewBox="0 0 400 80"><polygon points="0,80 80,10 160,80" fill="white"/><polygon points="100,80 200,5 300,80" fill="white"/><polygon points="250,80 340,20 400,80" fill="white"/></svg>
+        <div class="gallery-overlay"><span class="gallery-label">Kedarkantha Summit</span></div>
+      </div>
+      <div class="gallery-item g2">
+        <svg class="gallery-mountain" viewBox="0 0 400 80"><polygon points="0,80 100,15 200,80" fill="white"/><polygon points="180,80 290,10 400,80" fill="white"/></svg>
+        <div class="gallery-overlay"><span class="gallery-label">Rupin Pass Crossing</span></div>
+      </div>
+      <div class="gallery-item g3">
+        <svg class="gallery-mountain" viewBox="0 0 400 80"><polygon points="50,80 150,8 250,80" fill="white"/><polygon points="300,80 370,25 400,80" fill="white"/></svg>
+        <div class="gallery-overlay"><span class="gallery-label">Valley of Flowers</span></div>
+      </div>
+      <div class="gallery-item g4">
+        <svg class="gallery-mountain" viewBox="0 0 400 80"><polygon points="0,80 60,20 120,80" fill="white"/><polygon points="100,80 200,5 300,80" fill="white"/><polygon points="280,80 350,18 400,80" fill="white"/></svg>
+        <div class="gallery-overlay"><span class="gallery-label">Pine Forest Trail</span></div>
+      </div>
+      <div class="gallery-item g5">
+        <svg class="gallery-mountain" viewBox="0 0 400 80"><polygon points="0,80 80,12 160,80" fill="white"/><polygon points="120,80 230,8 340,80" fill="white"/><polygon points="300,80 370,22 400,80" fill="white"/></svg>
+        <div class="gallery-overlay"><span class="gallery-label">Sandakphu Sunrise</span></div>
+      </div>
+      <div class="gallery-item g6">
+        <svg class="gallery-mountain" viewBox="0 0 400 80"><polygon points="30,80 130,10 230,80" fill="white"/><polygon points="200,80 300,15 400,80" fill="white"/></svg>
+        <div class="gallery-overlay"><span class="gallery-label">High Altitude Camps</span></div>
+      </div>
+    </div>
+    <footer>
+      <div class="footer-bottom" style="padding:1.5rem 2.5rem">
+        <p style="color:rgba(255,255,255,0.3);font-size:12px">© 2025 TrekIndia. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ABOUT PAGE -->
+  <div class="page" id="page-about">
+    <div class="about-hero">
+      <h2>We Changed How India Treks</h2>
+      <p>Founded in 2006 with a single trail and a bold dream — to make the Himalayas accessible, safe, and transformative for every Indian.</p>
+    </div>
+    <div class="section">
+      <div class="section-header">
+        <div class="section-tag">Our Mission</div>
+        <div class="section-title">More Than Adventure</div>
+        <div class="section-sub">We believe trekking has the power to transform lives. Every trek we design is built around that belief — connecting people with nature, with each other, and with themselves.</div>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <h4>🌿 Environmental Responsibility</h4>
+          <p>Our Green Trails initiative has cleaned over 2,000 kg of waste from mountain trails. We leave every campsite cleaner than we found it — always.</p>
+        </div>
+        <div class="value-card">
+          <h4>🛡️ Safety Above All</h4>
+          <p>Every trek leader is Wilderness First Responder certified. We carry satellite phones, oxygen cylinders, and maintain real-time emergency protocols.</p>
+        </div>
+        <div class="value-card">
+          <h4>🗺️ Documentation First</h4>
+          <p>We documented Kedarkantha, Rupin Pass, and Buran Ghati when they were just shepherd paths. We now have India's largest trekking documentation library.</p>
+        </div>
+        <div class="value-card">
+          <h4>🤝 Community Built</h4>
+          <p>We work with and empower local mountain communities — providing livelihoods, training, and sustainable income through responsible tourism.</p>
+        </div>
+        <div class="value-card">
+          <h4>💡 Education Through Experience</h4>
+          <p>Every trek is a classroom. Trekkers learn navigation, survival skills, ecology, and mindfulness as part of the journey — not as an afterthought.</p>
+        </div>
+        <div class="value-card">
+          <h4>♾️ Transformation Focus</h4>
+          <p>The person who starts a trek and the person who returns are rarely the same. We design every touchpoint to facilitate genuine inner growth.</p>
+        </div>
+      </div>
+    </div>
+    <div class="section section-alt">
+      <div class="section-header">
+        <div class="section-tag">The Team</div>
+        <div class="section-title">Passionate Mountain People</div>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-avatar" style="background:#1d9e75">SK</div>
+          <h5>Sandhya Kumar</h5>
+          <p>Founder & CEO</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar" style="background:#378add">RV</div>
+          <h5>Raj Varma</h5>
+          <p>Head of Safety</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar" style="background:#d85a30">MP</div>
+          <h5>Meera Patel</h5>
+          <p>Trek Documentation</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar" style="background:#7f77dd">AT</div>
+          <h5>Arun Thapa</h5>
+          <p>Senior Trek Leader</p>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="footer-bottom" style="padding:1.5rem 2.5rem">
+        <p style="color:rgba(255,255,255,0.3);font-size:12px">© 2025 TrekIndia. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- CONTACT PAGE -->
+  <div class="page" id="page-contact">
+    <div class="page-header">
+      <h2>Get in Touch</h2>
+      <p>Have questions? Our trek experts are here to help you plan the perfect adventure</p>
+    </div>
+    <div class="contact-body">
+      <div class="contact-form">
+        <h3>Send Us a Message</h3>
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" placeholder="Rahul"/></div>
+          <div class="form-group"><label>Last Name</label><input type="text" placeholder="Sharma"/></div>
+        </div>
+        <div class="form-group"><label>Email Address</label><input type="email" placeholder="rahul@email.com"/></div>
+        <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+91 98765 43210"/></div>
+        <div class="form-group"><label>Interested Trek</label>
+          <select>
+            <option>Select a trek...</option>
+            <option>Kedarkantha Peak</option>
+            <option>Rupin Pass</option>
+            <option>Valley of Flowers</option>
+            <option>Pin Parvati Pass</option>
+            <option>Sandakphu Trek</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Message</label><textarea placeholder="Tell us about your experience level, group size, preferred dates..."></textarea></div>
+        <button class="btn-primary" style="width:100%;padding:13px">Send Message</button>
+      </div>
+      <div class="contact-info">
+        <div class="info-card">
+          <div class="info-icon">📞</div>
+          <div><h5>Call Us</h5><p>+91 98765 43210<br/>Mon – Sat, 9am – 6pm IST</p></div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📧</div>
+          <div><h5>Email Us</h5><p>hello@trekindia.com<br/>Responses within 4 hours</p></div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📍</div>
+          <div><h5>Head Office</h5><p>42, Mountain View Road<br/>Dehradun, Uttarakhand 248001</p></div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">⏰</div>
+          <div><h5>Office Hours</h5><p>Monday – Saturday<br/>9:00 AM – 6:00 PM IST</p></div>
+        </div>
+        <div class="map-placeholder">📍 Dehradun, Uttarakhand — View on Maps</div>
+      </div>
+    </div>
+    <footer>
+      <div class="footer-bottom" style="padding:1.5rem 2.5rem">
+        <p style="color:rgba(255,255,255,0.3);font-size:12px">© 2025 TrekIndia. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<script>
+function showPage(id, tab) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  if (tab) tab.classList.add('active');
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll('.filter-chip').forEach(chip => {
+  chip.addEventListener('click', function() {
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+document.querySelectorAll('.date-item').forEach(item => {
+  item.addEventListener('click', function() {
+    document.querySelectorAll('.date-item').forEach(d => d.classList.remove('selected'));
+    this.classList.add('selected');
+  });
+});
+</script>

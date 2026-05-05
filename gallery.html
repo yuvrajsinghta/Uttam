@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery — Shikhar</title>
+  <link rel="stylesheet" href="css/global.css"/>
+  <style>
+    .page-hero {
+      background: var(--ink);
+      padding: 9rem 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero-bg { position:absolute;inset:0; background:linear-gradient(135deg,#040d07,#0a1a0f 50%,#1c3d26 100%); }
+    .page-hero h1 { font-family:var(--font-display); font-size:clamp(2.5rem,6vw,5rem); font-weight:300; color:white; letter-spacing:-0.03em; margin-top:8px; }
+    .page-hero p { color:rgba(255,255,255,0.5); font-size:1rem; margin-top:8px; font-weight:300; }
+    .page-hero-content { position:relative;z-index:1; }
+
+    /* GALLERY FILTER */
+    .gallery-filter {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--frost);
+      margin-bottom: 2rem;
+    }
+    .gallery-filter-inner { display:flex;align-items:center;gap:8px;flex-wrap:wrap; }
+    .g-chip {
+      padding:7px 16px; border-radius:var(--r-full);
+      font-size:0.8125rem;font-weight:500;
+      border:1.5px solid var(--mist);color:var(--slate);
+      background:transparent;
+      transition:all var(--dur-base) var(--ease);cursor:pointer;
+    }
+    .g-chip:hover { border-color:var(--fern);color:var(--fern); }
+    .g-chip.active { background:var(--ink);color:white;border-color:var(--ink); }
+
+    /* MASONRY-STYLE GALLERY */
+    .gallery-masonry {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto;
+      gap: 10px;
+      padding-bottom: 4rem;
+    }
+
+    .gallery-item {
+      border-radius: var(--r-md);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-item-bg {
+      position: absolute; inset: 0;
+      transition: transform var(--dur-slow) var(--ease);
+    }
+    .gallery-item:hover .gallery-item-bg { transform: scale(1.06); }
+    .gallery-item-overlay {
+      position: absolute; inset: 0;
+      background: rgba(10,26,15,0);
+      display: flex; align-items: flex-end;
+      padding: 1rem;
+      transition: background var(--dur-base) var(--ease);
+    }
+    .gallery-item:hover .gallery-item-overlay { background: rgba(10,26,15,0.48); }
+    .gallery-caption {
+      font-family: var(--font-display);
+      font-size: 0.9375rem;
+      color: white;
+      font-weight: 300;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all var(--dur-base) var(--ease);
+    }
+    .gallery-item:hover .gallery-caption { opacity:1; transform:translateY(0); }
+
+    /* Grid placements - masonry effect */
+    .gi-1  { grid-column: span 5; aspect-ratio: 4/3; }
+    .gi-2  { grid-column: span 4; aspect-ratio: 4/3; }
+    .gi-3  { grid-column: span 3; aspect-ratio: 3/4; grid-row: span 2; }
+    .gi-4  { grid-column: span 3; aspect-ratio: 1; }
+    .gi-5  { grid-column: span 3; aspect-ratio: 1; }
+    .gi-6  { grid-column: span 2; aspect-ratio: 1; }
+    .gi-7  { grid-column: span 4; aspect-ratio: 3/2; }
+    .gi-8  { grid-column: span 4; aspect-ratio: 3/2; }
+    .gi-9  { grid-column: span 3; aspect-ratio: 4/3; }
+    .gi-10 { grid-column: span 3; aspect-ratio: 4/3; }
+    .gi-11 { grid-column: span 6; aspect-ratio: 16/7; }
+    .gi-12 { grid-column: span 3; aspect-ratio: 4/3; }
+
+    /* LIGHTBOX STYLES (from global.css + extras) */
+    .lightbox { position:fixed;inset:0;z-index:9999;opacity:0;pointer-events:none;transition:opacity 0.3s; }
+    .lightbox.open { opacity:1;pointer-events:auto; }
+    .lightbox-backdrop { position:absolute;inset:0;background:rgba(4,13,7,0.94);backdrop-filter:blur(16px); }
+    .lightbox-inner { position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem; }
+    .lightbox-media { width:min(720px,90vw);aspect-ratio:4/3;border-radius:var(--r-lg);overflow:hidden;position:relative; }
+    .lightbox-caption { font-family:var(--font-display);font-size:1.25rem;color:white;font-weight:300;text-align:center; }
+    .lightbox-close { position:absolute;top:1.5rem;right:1.5rem;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all var(--dur-base);cursor:pointer; }
+    .lightbox-close:hover { background:rgba(255,255,255,0.2); }
+    .lightbox-prev,.lightbox-next { position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;font-size:1.25rem;display:flex;align-items:center;justify-content:center;transition:all var(--dur-base);cursor:pointer; }
+    .lightbox-prev { left:1.5rem; }
+    .lightbox-next { right:1.5rem; }
+    .lightbox-prev:hover,.lightbox-next:hover { background:rgba(255,255,255,0.25); }
+    .lightbox-counter { font-size:0.8125rem;color:rgba(255,255,255,0.45);letter-spacing:0.1em; }
+
+    @media(max-width:1024px){
+      .gallery-masonry { grid-template-columns:repeat(6,1fr); }
+      .gi-1,.gi-2,.gi-5,.gi-7,.gi-8 { grid-column:span 3; }
+      .gi-3,.gi-4,.gi-6,.gi-9,.gi-10,.gi-12 { grid-column:span 3; }
+      .gi-3 { grid-row:span 1; aspect-ratio:4/3; }
+      .gi-11 { grid-column:span 6; }
+    }
+    @media(max-width:640px){
+      .gallery-masonry { grid-template-columns:repeat(2,1fr); gap:6px; }
+      .gi-1,.gi-2,.gi-3,.gi-4,.gi-5,.gi-6,.gi-7,.gi-8,.gi-9,.gi-10,.gi-12 { grid-column:span 1; aspect-ratio:4/3; grid-row:span 1; }
+      .gi-11 { grid-column:span 2; aspect-ratio:16/9; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-text">Shikhar</span><span class="nav-logo-accent">.</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="treks.html" class="nav-link">All Treks</a></li>
+        <li><a href="gallery.html" class="nav-link active">Gallery</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="treks.html" class="nav-book">Book a Trek</a>
+        <button class="hamburger" aria-label="Menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="treks.html" class="nav-link">All Treks</a>
+  <a href="gallery.html" class="nav-link">Gallery</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="contact.html" class="nav-link">Contact</a>
+  <a href="treks.html" class="nav-book">Book a Trek</a>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container page-hero-content">
+    <p class="eyebrow" style="color:var(--gold)">Moments from the Trail</p>
+    <h1>Gallery</h1>
+    <p>Every photograph tells a story of a transformation</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="gallery-filter">
+      <div class="gallery-filter-inner">
+        <button class="g-chip active">All Photos</button>
+        <button class="g-chip">Summits</button>
+        <button class="g-chip">Camps</button>
+        <button class="g-chip">Trails</button>
+        <button class="g-chip">People</button>
+        <button class="g-chip">Wildlife</button>
+        <button class="g-chip">Winter</button>
+      </div>
+    </div>
+
+    <div class="gallery-masonry">
+      <div class="gallery-item gi-1 reveal">
+        <div class="gallery-item-bg bg-keda"></div>
+        <div class="gallery-item-overlay">
+          <span class="gallery-caption">Kedarkantha Summit, 3,800m</span>
+        </div>
+      </div>
+      <div class="gallery-item gi-2 reveal reveal-delay-1">
+        <div class="gallery-item-bg bg-rupin"></div>
+        <div class="gallery-item-overlay">
+          <span class="gallery-caption">Rupin Pass Snow Bridge</span>
+        </div>
+      </div>
+      <div class="gallery-item gi-3 reveal reveal-delay-2">
+        <div class="gallery-item-bg bg-vof"></div>
+        <div class="gallery-item-overlay">
+          <span class="gallery-caption">Valley of Flowers in Bloom</span>
+        </div>
+      </div>
+      <div class="gallery-item gi-4 reveal">
+        <div class="gallery-item-bg bg-deori"></div>
+        <div class="gallery-item-overlay">
+          <span class="gallery-caption">Deoriatal Lake Reflection</span>
+        </div>
+      </div>
+      <div class="gallery-item gi-5 reveal reveal-delay-1">
+        <div class="gallery-item-bg bg-goech"></div>
+        <div class="gallery-item-overlay">
+          <span class="gallery-caption">Goecha La — Kangchenjunga View</span>
+        </div>
+      </div>
+      <div class="gallery-item gi-6 reveal reveal-delay-2">
+        <div class="gallery-item-bg bg-pin"></div>
+        <div class="gallery-item-overlay">
+          <span class="gallery-caption">Spiti Moonscape</span>
+        </div>
+      </div>
+      <div class="gallery-item gi-7 reveal">
+        <div class="gallery-item-bg bg-sanda"></div>
+        <div class="gallery-item-overlay">
+          <span class="gallery-caption">Sandakphu — 4 Peaks Sunrise</span>
+        </div>
+      </div>
+      <div class="gallery-item gi-8 reveal reveal-delay-1">
+        <div class="gallery-item-bg bg-hampt"></div>
+        <div class="gallery-item-overlay">
+          <span class="gallery-caption">Hampta Pass Crossing</span>
+        </div>
+      </div>
+      <div class="gallery-item gi-9 reveal">
+        <div class="gallery-item-bg bg-goech"></div>
+        <div class="gallery-item-overlay">
+          <span class="gallery-caption">Base Camp Morning</span>
+        </div>
+      </div>
+      <div class="gallery-item gi-10 reveal reveal-delay-1">
+        <div class="gallery-item-bg bg-keda"></div>
+        <div class="gallery-item-overlay">
+          <span class="gallery-caption">Pine Forest — Winter Trail</span>
+        </div>
+      </div>
+      <div class="gallery-item gi-11 reveal">
+        <div class="gallery-item-bg bg-rupin"></div>
+        <div class="gallery-item-overlay">
+          <span class="gallery-caption">High Altitude Campsite — 4,000m</span>
+        </div>
+      </div>
+      <div class="gallery-item gi-12 reveal reveal-delay-2">
+        <div class="gallery-item-bg bg-vof"></div>
+        <div class="gallery-item-overlay">
+          <span class="gallery-caption">Alpine Meadows at Dusk</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="newsletter">
+  <div class="container">
+    <div class="newsletter-inner">
+      <div class="newsletter-text">
+        <h3>Follow Our Journey</h3>
+        <p>Get trail photos &amp; stories in your inbox every month</p>
+      </div>
+      <form class="newsletter-form" onsubmit="return false;">
+        <input type="email" class="newsletter-input" placeholder="your@email.com"/>
+        <button type="submit" class="btn btn-gold">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="nav-logo"><span class="nav-logo-text">Shikhar</span><span class="nav-logo-accent">.</span></div>
+        <p class="footer-brand-desc">India's most trusted trekking organisation since 2006.</p>
+      </div>
+      <div><div class="footer-col-title">Pages</div><a href="index.html" class="footer-link">Home</a><a href="treks.html" class="footer-link">All Treks</a><a href="gallery.html" class="footer-link">Gallery</a><a href="about.html" class="footer-link">About</a></div>
+      <div><div class="footer-col-title">Company</div><a href="about.html" class="footer-link">About Us</a><a href="#" class="footer-link">Blog</a><a href="#" class="footer-link">Careers</a></div>
+      <div><div class="footer-col-title">Support</div><a href="contact.html" class="footer-link">Contact</a><a href="#" class="footer-link">FAQs</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Shikhar. All rights reserved.</p>
+      <div class="social-row"><a class="social-btn">in</a><a class="social-btn">ig</a><a class="social-btn">yt</a></div>
+    </div>
+  </div>
+</footer>
+<script src="js/main.js"></script>
+<script>
+  // Gallery chip filter (UI only)
+  document.querySelectorAll('.g-chip').forEach(chip => {
+    chip.addEventListener('click', function() {
+      document.querySelectorAll('.g-chip').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

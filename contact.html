@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us — Shikhar</title>
+  <link rel="stylesheet" href="css/global.css"/>
+  <style>
+    .contact-hero {
+      background: linear-gradient(160deg,#040d07 0%,#0a1a0f 40%,#1c3d26 100%);
+      padding: 9rem 0 4.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-hero-bg-svg {
+      position:absolute;bottom:0;left:0;right:0;pointer-events:none;
+    }
+    .contact-hero-content { position:relative;z-index:1; }
+    .contact-hero h1 {
+      font-family:var(--font-display);
+      font-size:clamp(2.5rem,6vw,5rem);
+      font-weight:300;
+      color:white;
+      letter-spacing:-0.03em;
+      margin-top:8px;
+      margin-bottom:10px;
+    }
+    .contact-hero p { color:rgba(255,255,255,0.5);font-size:1rem;font-weight:300; }
+
+    /* MAIN LAYOUT */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 3.5rem;
+      padding: 4rem 0 6rem;
+      align-items: flex-start;
+    }
+
+    /* FORM */
+    .contact-form-wrap {
+      background: white;
+      border-radius: var(--r-xl);
+      padding: 2.5rem;
+      border: 1px solid rgba(10,26,15,0.07);
+      box-shadow: var(--sh-md);
+    }
+    .contact-form-wrap h2 {
+      font-family:var(--font-display);
+      font-size:1.75rem;
+      font-weight:400;
+      color:var(--ink);
+      margin-bottom:0.5rem;
+    }
+    .contact-form-wrap > p { font-size:0.875rem;color:var(--fog);margin-bottom:2rem;font-weight:300; }
+
+    .subject-chips { display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem; }
+    .subject-chip {
+      padding:7px 16px;
+      border-radius:var(--r-full);
+      font-size:0.8125rem;
+      font-weight:500;
+      border:1.5px solid var(--mist);
+      color:var(--slate);
+      background:transparent;
+      transition:all var(--dur-base) var(--ease);
+      cursor:pointer;
+    }
+    .subject-chip:hover { border-color:var(--fern);color:var(--fern); }
+    .subject-chip.active { background:var(--ink);color:white;border-color:var(--ink); }
+
+    .form-submit-row { display:flex;gap:12px;align-items:center;margin-top:1.5rem;flex-wrap:wrap; }
+    .form-privacy { font-size:0.75rem;color:var(--fog);font-weight:300; }
+
+    /* INFO SIDEBAR */
+    .contact-info { display:flex;flex-direction:column;gap:16px; }
+
+    .info-card {
+      background:white;
+      border-radius:var(--r-lg);
+      padding:1.5rem;
+      border:1px solid rgba(10,26,15,0.07);
+      display:flex;gap:1rem;align-items:flex-start;
+      transition:transform var(--dur-slow) var(--ease-spring),box-shadow var(--dur-slow) var(--ease);
+    }
+    .info-card:hover { transform:translateY(-3px);box-shadow:var(--sh-md); }
+    .info-icon {
+      width:44px;height:44px;
+      border-radius:12px;
+      background:var(--offwhite);
+      border:1px solid var(--frost);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.125rem;
+      flex-shrink:0;
+    }
+    .info-content h4 { font-size:0.875rem;font-weight:700;color:var(--ink);margin-bottom:4px; }
+    .info-content p { font-size:0.8125rem;color:var(--fog);line-height:1.65;font-weight:300; }
+    .info-content a { color:var(--fern);font-weight:600; }
+
+    /* MAP PLACEHOLDER */
+    .map-card {
+      background:white;
+      border-radius:var(--r-lg);
+      overflow:hidden;
+      border:1px solid rgba(10,26,15,0.07);
+    }
+    .map-visual {
+      height:200px;
+      background: linear-gradient(135deg,#e8f3eb,#d4ebe0,#b8d9c4);
+      position:relative;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .map-pin {
+      display:flex;flex-direction:column;align-items:center;gap:4px;
+    }
+    .map-pin-dot {
+      width:20px;height:20px;border-radius:50%;
+      background:var(--fern);
+      box-shadow:0 0 0 6px rgba(62,122,80,0.2);
+    }
+    .map-pin-label {
+      background:white;
+      padding:4px 12px;
+      border-radius:var(--r-full);
+      font-size:0.75rem;
+      font-weight:600;
+      color:var(--ink);
+      box-shadow:var(--sh-sm);
+      white-space:nowrap;
+    }
+    .map-grid-lines {
+      position:absolute;inset:0;
+      background-image:
+        linear-gradient(rgba(62,122,80,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(62,122,80,0.08) 1px, transparent 1px);
+      background-size:30px 30px;
+    }
+    .map-body { padding:1.25rem; }
+    .map-body h4 { font-size:0.9375rem;font-weight:600;color:var(--ink);margin-bottom:4px; }
+    .map-body p { font-size:0.8125rem;color:var(--fog);font-weight:300;margin-bottom:10px; }
+
+    /* OFFICE HOURS */
+    .hours-table { width:100%;border-collapse:collapse; }
+    .hours-table tr { border-bottom:1px solid var(--frost); }
+    .hours-table tr:last-child { border-bottom:none; }
+    .hours-table td { padding:8px 0;font-size:0.8125rem; }
+    .hours-table td:first-child { color:var(--fog);font-weight:400; }
+    .hours-table td:last-child { color:var(--ink);font-weight:600;text-align:right; }
+    .hours-open { color:var(--fern) !important; }
+
+    /* FAQ PREVIEW */
+    .faq-section { padding:0 0 5rem; }
+    .faq-grid { display:grid;grid-template-columns:1fr 1fr;gap:16px; }
+    .faq-item {
+      background:white;
+      border-radius:var(--r-lg);
+      padding:1.5rem;
+      border:1px solid rgba(10,26,15,0.07);
+    }
+    .faq-item h4 { font-size:0.9375rem;font-weight:600;color:var(--ink);margin-bottom:8px; }
+    .faq-item p { font-size:0.875rem;color:var(--fog);line-height:1.65;font-weight:300; }
+
+    @media(max-width:1024px){
+      .contact-layout { grid-template-columns:1fr; }
+    }
+    @media(max-width:768px){
+      .faq-grid { grid-template-columns:1fr; }
+      .contact-form-wrap { padding:1.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-text">Shikhar</span><span class="nav-logo-accent">.</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="treks.html" class="nav-link">All Treks</a></li>
+        <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link active">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="treks.html" class="nav-book">Book a Trek</a>
+        <button class="hamburger" aria-label="Menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="treks.html" class="nav-link">All Treks</a>
+  <a href="gallery.html" class="nav-link">Gallery</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="contact.html" class="nav-link">Contact</a>
+  <a href="treks.html" class="nav-book">Book a Trek</a>
+</div>
+
+<!-- HERO -->
+<div class="contact-hero">
+  <svg class="contact-hero-bg-svg" viewBox="0 0 1440 160" preserveAspectRatio="none">
+    <polygon points="0,160 0,100 300,50 600,120 900,40 1200,110 1440,70 1440,160" fill="rgba(255,255,255,0.025)"/>
+  </svg>
+  <div class="container contact-hero-content reveal">
+    <p class="eyebrow" style="color:var(--gold)">We're Here to Help</p>
+    <h1>Get in Touch</h1>
+    <p>Questions about a trek? Our experts respond within 4 hours</p>
+  </div>
+</div>
+
+<!-- MAIN CONTACT SECTION -->
+<div class="container">
+  <div class="contact-layout">
+
+    <!-- FORM -->
+    <div class="contact-form-wrap reveal">
+      <h2>Send Us a Message</h2>
+      <p>Tell us about your experience level, group size and which trek interests you — we'll get back with tailored advice.</p>
+
+      <div style="margin-bottom:1.5rem">
+        <div class="form-label" style="margin-bottom:10px">What can we help with?</div>
+        <div class="subject-chips">
+          <button class="subject-chip active">Trek Inquiry</button>
+          <button class="subject-chip">Booking Help</button>
+          <button class="subject-chip">Cancellation</button>
+          <button class="subject-chip">Safety Question</button>
+          <button class="subject-chip">Corporate Trek</button>
+          <button class="subject-chip">Other</button>
+        </div>
+      </div>
+
+      <form id="contactForm">
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label">First Name *</label>
+            <input type="text" class="form-input" placeholder="Rahul" required/>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Last Name *</label>
+            <input type="text" class="form-input" placeholder="Sharma" required/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label">Email Address *</label>
+            <input type="email" class="form-input" placeholder="rahul@email.com" required/>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-input" placeholder="+91 98765 43210"/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label">Trek Interested In</label>
+            <select class="form-select">
+              <option value="">Select a trek…</option>
+              <option>Kedarkantha Peak</option>
+              <option>Rupin Pass</option>
+              <option>Valley of Flowers</option>
+              <option>Pin Parvati Pass</option>
+              <option>Deoriatal – Chandrashila</option>
+              <option>Sandakphu Trek</option>
+              <option>Hampta Pass</option>
+              <option>Goecha La</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Group Size</label>
+            <select class="form-select">
+              <option>Solo</option>
+              <option>2 people</option>
+              <option>3–5 people</option>
+              <option>6–10 people</option>
+              <option>10+ people</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Preferred Month</label>
+          <select class="form-select">
+            <option value="">Select a month…</option>
+            <option>December 2025</option>
+            <option>January 2026</option>
+            <option>February 2026</option>
+            <option>March 2026</option>
+            <option>April 2026</option>
+            <option>May 2026</option>
+            <option>Flexible</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Your Message</label>
+          <textarea class="form-textarea" placeholder="Tell us about your fitness level, past trekking experience, any special requirements, questions about the trail…" style="min-height:130px"></textarea>
+        </div>
+        <div class="form-submit-row">
+          <button type="submit" class="btn btn-primary btn-lg">Send Message →</button>
+          <p class="form-privacy">🔒 We never share your data. Privacy first.</p>
+        </div>
+      </form>
+    </div>
+
+    <!-- SIDEBAR INFO -->
+    <div class="contact-info">
+
+      <div class="info-card reveal">
+        <div class="info-icon">📞</div>
+        <div class="info-content">
+          <h4>Call or WhatsApp</h4>
+          <p>+91 98765 43210<br/>+91 98765 43211</p>
+          <a href="tel:+919876543210">Call Now →</a>
+        </div>
+      </div>
+
+      <div class="info-card reveal reveal-delay-1">
+        <div class="info-icon">✉️</div>
+        <div class="info-content">
+          <h4>Email Us</h4>
+          <p>hello@shikhar.in<br/>Response within 4 hours</p>
+          <a href="mailto:hello@shikhar.in">Send Email →</a>
+        </div>
+      </div>
+
+      <div class="info-card reveal reveal-delay-2">
+        <div class="info-icon">📍</div>
+        <div class="info-content">
+          <h4>Head Office</h4>
+          <p>42, Mountain View Road<br/>Dehradun, Uttarakhand 248001</p>
+        </div>
+      </div>
+
+      <!-- HOURS -->
+      <div class="info-card reveal reveal-delay-3" style="flex-direction:column;gap:0.75rem">
+        <div style="display:flex;align-items:center;gap:0.875rem">
+          <div class="info-icon">🕐</div>
+          <div class="info-content"><h4>Office Hours</h4></div>
+        </div>
+        <table class="hours-table">
+          <tr><td>Monday – Friday</td><td class="hours-open">9:00 AM – 7:00 PM</td></tr>
+          <tr><td>Saturday</td><td class="hours-open">9:00 AM – 5:00 PM</td></tr>
+          <tr><td>Sunday</td><td style="color:var(--fog)">WhatsApp only</td></tr>
+        </table>
+        <div style="display:inline-flex;align-items:center;gap:6px;background:#dcfce7;color:#166534;padding:5px 12px;border-radius:var(--r-full);font-size:0.75rem;font-weight:700;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#16a34a;display:inline-block"></span>
+          We're open right now
+        </div>
+      </div>
+
+      <!-- MAP -->
+      <div class="map-card reveal">
+        <div class="map-visual">
+          <div class="map-grid-lines"></div>
+          <div class="map-pin">
+            <div class="map-pin-dot"></div>
+            <div class="map-pin-label">Shikhar HQ — Dehradun</div>
+          </div>
+        </div>
+        <div class="map-body">
+          <h4>Visit Us</h4>
+          <p>42, Mountain View Road, near ISBT, Dehradun</p>
+          <a href="https://maps.google.com" target="_blank" class="btn btn-outline-dark btn-sm" style="border-radius:var(--r-full)">Open in Maps ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FAQ SECTION -->
+<section class="faq-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="eyebrow">Quick Answers</p>
+      <h2 class="display-sm" style="margin-top:6px;color:var(--ink)">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item reveal">
+        <h4>What fitness level do I need for Kedarkantha?</h4>
+        <p>Moderate fitness — able to walk 5–7 km a day with a light daypack. No prior trekking experience needed, but being comfortable walking uphill for 3–4 hours is important.</p>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <h4>What's included in the trek cost?</h4>
+        <p>All camping equipment, trek leader, cook & support staff, all meals from Day 1 dinner onwards, permits, first aid with oxygen cylinder, and any Shikhar base camp stays.</p>
+      </div>
+      <div class="faq-item reveal">
+        <h4>How do I get to the trek base?</h4>
+        <p>Most treks start from Dehradun, Rishikesh or Haridwar. We share detailed transport info 2 weeks before your trek. We can help arrange shared vehicles too.</p>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <h4>What is your cancellation policy?</h4>
+        <p>Free cancellation up to 15 days before the trek. 50% refund 8–15 days before. No refund within 7 days — but we'll help you reschedule to a future batch at no cost.</p>
+      </div>
+      <div class="faq-item reveal">
+        <h4>Can solo women trek safely with Shikhar?</h4>
+        <p>Absolutely. 40% of our trekkers are solo women. Our groups are curated, guides are trained in inclusivity, and we have women-only batches for select treks on request.</p>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <h4>Do you offer corporate or school group treks?</h4>
+        <p>Yes — we design custom corporate and school programmes with team-building elements, safety briefings and flexible scheduling. Contact us for a custom quote.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="newsletter">
+  <div class="container">
+    <div class="newsletter-inner">
+      <div class="newsletter-text">
+        <h3>Stay Connected</h3>
+        <p>Trek alerts, seasonal tips &amp; trail stories</p>
+      </div>
+      <form class="newsletter-form" onsubmit="return false;">
+        <input type="email" class="newsletter-input" placeholder="your@email.com"/>
+        <button type="submit" class="btn btn-gold">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="nav-logo"><span class="nav-logo-text">Shikhar</span><span class="nav-logo-accent">.</span></div>
+        <p class="footer-brand-desc">India's most trusted trekking organisation since 2006.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Explore</div>
+        <a href="treks.html" class="footer-link">All Treks</a>
+        <a href="treks.html" class="footer-link">Upcoming Batches</a>
+        <a href="gallery.html" class="footer-link">Gallery</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <a href="about.html" class="footer-link">About Us</a>
+        <a href="#" class="footer-link">Blog</a>
+        <a href="#" class="footer-link">Careers</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Support</div>
+        <a href="contact.html" class="footer-link">Contact Us</a>
+        <a href="#" class="footer-link">FAQs</a>
+        <a href="#" class="footer-link">Cancellation Policy</a>
+        <a href="#" class="footer-link">Safety Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Shikhar. All rights reserved.</p>
+      <div class="social-row">
+        <a class="social-btn" href="#">in</a>
+        <a class="social-btn" href="#">ig</a>
+        <a class="social-btn" href="#">yt</a>
+        <a class="social-btn" href="#">fb</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="js/main.js"></script>
+<script>
+  // Subject chips
+  document.querySelectorAll('.subject-chip').forEach(chip => {
+    chip.addEventListener('click', function() {
+      document.querySelectorAll('.subject-chip').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

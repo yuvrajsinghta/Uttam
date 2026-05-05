@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kedarkantha Peak — Shikhar</title>
+  <link rel="stylesheet" href="css/global.css"/>
+  <style>
+    .detail-hero {
+      height: clamp(320px, 50vh, 520px);
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 2.5rem;
+      overflow: hidden;
+    }
+    .detail-hero-bg { position:absolute;inset:0; transition:transform 6s ease; }
+    .detail-hero:hover .detail-hero-bg { transform:scale(1.03); }
+    .detail-hero-overlay {
+      position:absolute;inset:0;
+      background: linear-gradient(to top, rgba(5,12,7,0.92) 0%, rgba(5,12,7,0.35) 50%, transparent 100%);
+    }
+    .detail-hero-content { position:relative;z-index:1; width:100%; }
+    .detail-breadcrumb { font-size:0.75rem; color:rgba(255,255,255,0.45); margin-bottom:0.75rem; }
+    .detail-breadcrumb a { color:rgba(255,255,255,0.55); }
+    .detail-breadcrumb span { margin:0 6px; }
+    .detail-hero h1 {
+      font-family:var(--font-display);
+      font-size:clamp(2rem,5vw,4rem);
+      font-weight:300;
+      color:white;
+      letter-spacing:-0.025em;
+      margin-bottom:1rem;
+    }
+    .detail-badges { display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px; }
+
+    /* BODY LAYOUT */
+    .detail-body {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 2.5rem;
+      padding: 3rem 0 5rem;
+      align-items: flex-start;
+    }
+
+    /* LEFT CONTENT */
+    .detail-section { margin-bottom: 2.5rem; }
+    .detail-section h2 {
+      font-family:var(--font-display);
+      font-size:1.5rem;
+      font-weight:400;
+      color:var(--ink);
+      margin-bottom:1rem;
+      padding-bottom:0.75rem;
+      border-bottom:1px solid var(--frost);
+    }
+    .detail-section p { font-size:0.9375rem; color:var(--slate); line-height:1.8; font-weight:300; margin-bottom:1rem; }
+
+    .quick-facts {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 12px;
+      margin-bottom: 2.5rem;
+    }
+    .fact-item {
+      background: var(--offwhite);
+      border-radius: var(--r-md);
+      padding: 1.1rem;
+      text-align: center;
+    }
+    .fact-icon { font-size:1.375rem; margin-bottom:6px; }
+    .fact-label { font-size:0.6875rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--fog); margin-bottom:4px; }
+    .fact-value { font-family:var(--font-display); font-size:1.375rem; font-weight:600; color:var(--ink); }
+
+    /* ITINERARY */
+    .itinerary { display:flex; flex-direction:column; gap:0; }
+    .itinerary-day {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 16px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .itinerary-day::before {
+      content:'';
+      position:absolute;
+      left: 19px; top:40px; bottom:0;
+      width:2px;
+      background: var(--mist);
+    }
+    .itinerary-day:last-child::before { display:none; }
+    .day-num {
+      width:40px;height:40px;border-radius:50%;
+      background:var(--ink);color:white;
+      display:flex;align-items:center;justify-content:center;
+      font-size:0.8125rem;font-weight:700;
+      flex-shrink:0;z-index:1;
+    }
+    .day-content { padding-top:8px; }
+    .day-title { font-size:0.9375rem; font-weight:600; color:var(--ink); margin-bottom:4px; }
+    .day-desc { font-size:0.875rem; color:var(--fog); line-height:1.65; font-weight:300; }
+    .day-stats { display:flex; gap:12px; margin-top:6px; }
+    .day-stat { font-size:0.75rem; color:var(--fern); font-weight:600; }
+
+    /* INCLUDES */
+    .includes-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; }
+    .include-item, .exclude-item {
+      display:flex; align-items:flex-start; gap:10px;
+      padding:8px 0;
+      font-size:0.875rem;
+      border-bottom:1px solid var(--frost);
+    }
+    .include-icon { color:#166534; font-size:0.875rem; flex-shrink:0; margin-top:1px; }
+    .exclude-icon { color:#991b1b; font-size:0.875rem; flex-shrink:0; margin-top:1px; }
+
+    /* BOOKING CARD */
+    .booking-card {
+      background: white;
+      border-radius: var(--r-xl);
+      border: 1.5px solid rgba(10,26,15,0.09);
+      padding: 1.75rem;
+      position: sticky;
+      top: 90px;
+      box-shadow: var(--sh-lg);
+    }
+    .booking-card h3 { font-family:var(--font-display); font-size:1.5rem; font-weight:400; color:var(--ink); margin-bottom:4px; }
+    .booking-price { font-family:var(--font-display); font-size:2.5rem; font-weight:600; color:var(--ink); line-height:1; }
+    .booking-price sub { font-family:var(--font-body); font-size:0.8125rem; font-weight:400; color:var(--fog); }
+    .booking-free-cancel { font-size:0.8125rem; color:var(--fern); font-weight:600; margin-bottom:1.25rem; }
+
+    .date-list { display:flex;flex-direction:column;gap:8px;margin:1rem 0 1.25rem; }
+    .date-item {
+      background:var(--offwhite);
+      border:1.5px solid transparent;
+      border-radius:var(--r-md);
+      padding:0.875rem 1rem;
+      display:flex;justify-content:space-between;align-items:center;
+      cursor:pointer;
+      transition:all var(--dur-base) var(--ease);
+    }
+    .date-item:hover { border-color:var(--mist); background:white; }
+    .date-item.active { border-color:var(--fern); background:white; box-shadow:0 0 0 3px rgba(62,122,80,0.08); }
+    .date-item-left { font-size:0.875rem; font-weight:500; color:var(--ink); }
+    .date-item-left small { display:block; font-size:0.75rem; color:var(--fog); font-weight:400; margin-top:1px; }
+    .date-slots { font-size:0.75rem; font-weight:700; }
+    .slots-low { color:#c84b2a; }
+    .slots-ok { color:var(--fern); }
+
+    .booking-divider { height:1px; background:var(--frost); margin:1rem 0; }
+    .booking-total { display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem; }
+    .booking-total span { font-size:0.875rem; color:var(--fog); }
+    .booking-total strong { font-family:var(--font-display);font-size:1.375rem;font-weight:600;color:var(--ink); }
+    .booking-secure { text-align:center; font-size:0.75rem; color:var(--fog); margin-top:10px; }
+
+    /* PHOTO STRIP */
+    .photo-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 2rem;
+      border-radius: var(--r-md);
+      overflow: hidden;
+    }
+    .photo-strip-item { aspect-ratio:4/3; position:relative; overflow:hidden; cursor:pointer; }
+    .photo-strip-item:first-child { grid-column:span 2; aspect-ratio:2/1; }
+    .photo-strip-bg { position:absolute;inset:0;transition:transform var(--dur-slow) var(--ease); }
+    .photo-strip-item:hover .photo-strip-bg { transform:scale(1.05); }
+
+    @media(max-width:1024px) {
+      .detail-body { grid-template-columns:1fr; }
+      .booking-card { position:static; }
+      .quick-facts { grid-template-columns:repeat(2,1fr); }
+    }
+    @media(max-width:768px) {
+      .quick-facts { grid-template-columns:repeat(2,1fr); }
+      .includes-grid { grid-template-columns:1fr; }
+      .photo-strip { grid-template-columns:1fr 1fr; }
+      .photo-strip-item:first-child { grid-column:span 2; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav light-nav" id="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-text">Shikhar</span><span class="nav-logo-accent">.</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="treks.html" class="nav-link active">All Treks</a></li>
+        <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="#booking" class="nav-book">Book This Trek</a>
+        <button class="hamburger" aria-label="Menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="treks.html" class="nav-link">All Treks</a>
+  <a href="gallery.html" class="nav-link">Gallery</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="contact.html" class="nav-link">Contact</a>
+  <a href="#booking" class="nav-book">Book This Trek</a>
+</div>
+
+<!-- HERO -->
+<div class="detail-hero">
+  <div class="detail-hero-bg bg-keda"></div>
+  <svg style="position:absolute;bottom:0;left:0;right:0;pointer-events:none;opacity:0.12" viewBox="0 0 1440 200" preserveAspectRatio="none"><polygon points="0,200 0,120 200,50 400,130 600,40 800,120 1000,55 1200,120 1440,60 1440,200" fill="white"/></svg>
+  <div class="detail-hero-overlay"></div>
+  <div class="container detail-hero-content">
+    <div class="detail-breadcrumb">
+      <a href="index.html">Home</a><span>›</span>
+      <a href="treks.html">All Treks</a><span>›</span>
+      Kedarkantha Peak
+    </div>
+    <div class="detail-badges">
+      <span class="badge badge-easy">Easy</span>
+      <span class="badge badge-glass">⭐ 4.9 (342 reviews)</span>
+      <span class="badge badge-glass">🏔 3,800m Altitude</span>
+      <span class="badge badge-glass">❄️ Best: Dec–Apr</span>
+    </div>
+    <h1>Kedarkantha Peak</h1>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="container">
+  <div class="detail-body">
+
+    <!-- LEFT -->
+    <div>
+      <!-- Photo Strip -->
+      <div class="photo-strip reveal">
+        <div class="photo-strip-item"><div class="photo-strip-bg bg-keda"></div></div>
+        <div class="photo-strip-item"><div class="photo-strip-bg bg-deori"></div></div>
+        <div class="photo-strip-item"><div class="photo-strip-bg bg-vof"></div></div>
+      </div>
+
+      <!-- Quick Facts -->
+      <div class="quick-facts reveal">
+        <div class="fact-item">
+          <div class="fact-icon">⏱</div>
+          <div class="fact-label">Duration</div>
+          <div class="fact-value">6 Days</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-icon">📏</div>
+          <div class="fact-label">Distance</div>
+          <div class="fact-value">20 km</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-icon">🏔</div>
+          <div class="fact-label">Max Altitude</div>
+          <div class="fact-value">3,800m</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-icon">👥</div>
+          <div class="fact-label">Group Size</div>
+          <div class="fact-value">8–15</div>
+        </div>
+      </div>
+
+      <!-- About -->
+      <div class="detail-section reveal">
+        <h2>About This Trek</h2>
+        <p>Kedarkantha is one of the most popular winter treks in India, and for good reason. Standing at 3,800 metres, the summit offers panoramic views of Swargarohini, Kalanag, Bandarpoonch and the majestic Khatling range.</p>
+        <p>The trail winds through dense pine forests laden with snow, open meadows, and centuries-old shepherd villages. In winter, the entire landscape transforms into a pristine white canvas — making it one of the most photogenic treks in the country.</p>
+      </div>
+
+      <!-- Itinerary -->
+      <div class="detail-section reveal">
+        <h2>Day-by-Day Itinerary</h2>
+        <div class="itinerary">
+          <div class="itinerary-day">
+            <div class="day-num">1</div>
+            <div class="day-content">
+              <div class="day-title">Dehradun → Sankri (Overnight Drive)</div>
+              <p class="day-desc">Board a shared vehicle from Dehradun. Arrive at Sankri — our base village at 1,920m. Rest and acclimatise. Briefing from your trek leader.</p>
+              <div class="day-stats"><span class="day-stat">📍 Altitude: 1,920m</span></div>
+            </div>
+          </div>
+          <div class="itinerary-day">
+            <div class="day-num">2</div>
+            <div class="day-content">
+              <div class="day-title">Sankri → Juda Ka Talab</div>
+              <p class="day-desc">Trek through oak and rhododendron forests to the frozen lake of Juda Ka Talab. Campsite here is magical in winter.</p>
+              <div class="day-stats"><span class="day-stat">📍 2,750m</span><span class="day-stat">📏 4.5 km</span><span class="day-stat">⏱ 4–5 hrs</span></div>
+            </div>
+          </div>
+          <div class="itinerary-day">
+            <div class="day-num">3</div>
+            <div class="day-content">
+              <div class="day-title">Juda Ka Talab → Kedarkantha Base Camp</div>
+              <p class="day-desc">Short but steep climb to a wide alpine meadow at the base of the summit. Stunning views emerge as the treeline thins.</p>
+              <div class="day-stats"><span class="day-stat">📍 3,450m</span><span class="day-stat">📏 4 km</span><span class="day-stat">⏱ 3–4 hrs</span></div>
+            </div>
+          </div>
+          <div class="itinerary-day">
+            <div class="day-num">4</div>
+            <div class="day-content">
+              <div class="day-title">Summit Day — Kedarkantha Peak</div>
+              <p class="day-desc">Pre-dawn start (3 AM). A steep climb through deep snow leads to the 3,800m summit by sunrise. 360° panoramic views. Return to Sankri via a different trail.</p>
+              <div class="day-stats"><span class="day-stat">📍 3,800m SUMMIT</span><span class="day-stat">📏 13 km</span><span class="day-stat">⏱ 8–9 hrs</span></div>
+            </div>
+          </div>
+          <div class="itinerary-day">
+            <div class="day-num">5</div>
+            <div class="day-content">
+              <div class="day-title">Buffer / Rest Day at Sankri</div>
+              <p class="day-desc">Scheduled rest day for weather contingency or to rest sore muscles. Optional village exploration.</p>
+            </div>
+          </div>
+          <div class="itinerary-day">
+            <div class="day-num">6</div>
+            <div class="day-content">
+              <div class="day-title">Sankri → Dehradun (Drive)</div>
+              <p class="day-desc">Morning drive back. Arrive Dehradun by afternoon. Trek ends here — carry memories for a lifetime.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Includes / Excludes -->
+      <div class="detail-section reveal">
+        <h2>What's Included</h2>
+        <div class="includes-grid">
+          <div>
+            <div class="include-item"><span class="include-icon">✓</span> All camping equipment (tent, sleeping bag, mat)</div>
+            <div class="include-item"><span class="include-icon">✓</span> Certified trek leader & support staff</div>
+            <div class="include-item"><span class="include-icon">✓</span> All meals Day 1 dinner → Day 6 breakfast</div>
+            <div class="include-item"><span class="include-icon">✓</span> Forest & wildlife permits</div>
+            <div class="include-item"><span class="include-icon">✓</span> First aid kit with oxygen cylinder</div>
+            <div class="include-item"><span class="include-icon">✓</span> Sankri accommodation (Day 1)</div>
+          </div>
+          <div>
+            <div class="exclude-item"><span class="exclude-icon">✕</span> Transport to/from Dehradun</div>
+            <div class="exclude-item"><span class="exclude-icon">✕</span> Personal trekking gear & clothing</div>
+            <div class="exclude-item"><span class="exclude-icon">✕</span> Travel insurance</div>
+            <div class="exclude-item"><span class="exclude-icon">✕</span> Any food/drinks outside meals</div>
+            <div class="exclude-item"><span class="exclude-icon">✕</span> Porter charges (if needed)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT - BOOKING CARD -->
+    <div id="booking">
+      <div class="booking-card reveal">
+        <h3>Book This Trek</h3>
+        <div class="booking-price">₹8,500 <sub>/ person</sub></div>
+        <div style="margin:6px 0 14px">
+          <div class="booking-free-cancel">✓ Free cancellation upto 15 days before</div>
+          <div style="font-size:0.8125rem;color:var(--fog)">Select your batch date:</div>
+        </div>
+        <div class="date-list">
+          <div class="date-item active">
+            <div class="date-item-left">Dec 21 – Dec 26, 2025<small>6 days · Sankri start</small></div>
+            <span class="date-slots slots-low">3 left!</span>
+          </div>
+          <div class="date-item">
+            <div class="date-item-left">Jan 4 – Jan 9, 2026<small>6 days · Sankri start</small></div>
+            <span class="date-slots slots-ok">8 slots</span>
+          </div>
+          <div class="date-item">
+            <div class="date-item-left">Jan 18 – Jan 23, 2026<small>6 days · Sankri start</small></div>
+            <span class="date-slots slots-ok">12 slots</span>
+          </div>
+          <div class="date-item">
+            <div class="date-item-left">Feb 1 – Feb 6, 2026<small>6 days · Sankri start</small></div>
+            <span class="date-slots slots-ok">Filling fast</span>
+          </div>
+        </div>
+        <div style="margin-bottom:14px">
+          <label class="form-label">Number of Trekkers</label>
+          <select class="form-select">
+            <option>1 trekker</option>
+            <option>2 trekkers</option>
+            <option>3 trekkers</option>
+            <option>4+ trekkers</option>
+          </select>
+        </div>
+        <div class="booking-divider"></div>
+        <div class="booking-total">
+          <span>Advance to confirm (30%)</span>
+          <strong>₹2,550</strong>
+        </div>
+        <button class="btn btn-primary btn-lg" style="width:100%;border-radius:var(--r-md)" onclick="alert('🎉 Booking confirmed! Our team will call you within 2 hours.')">Confirm Booking</button>
+        <p class="booking-secure">🔒 Secure payment · SSL encrypted · Razorpay</p>
+        <div class="booking-divider"></div>
+        <div style="display:flex;gap:10px;font-size:0.8125rem;color:var(--fog);text-align:center">
+          <div style="flex:1">📞 Questions?<br/><a href="contact.html" style="color:var(--fern);font-weight:600">Call us</a></div>
+          <div style="flex:1">📋 Full details?<br/><a href="#" style="color:var(--fern);font-weight:600">Download PDF</a></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="newsletter">
+  <div class="container">
+    <div class="newsletter-inner">
+      <div class="newsletter-text">
+        <h3>Stay Updated</h3>
+        <p>Get batch alerts and trek tips in your inbox</p>
+      </div>
+      <form class="newsletter-form" onsubmit="return false;">
+        <input type="email" class="newsletter-input" placeholder="your@email.com"/>
+        <button type="submit" class="btn btn-gold">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="nav-logo"><span class="nav-logo-text">Shikhar</span><span class="nav-logo-accent">.</span></div>
+        <p class="footer-brand-desc">India's most trusted trekking organisation since 2006.</p>
+      </div>
+      <div><div class="footer-col-title">Explore</div><a href="treks.html" class="footer-link">All Treks</a><a href="treks.html" class="footer-link">Upcoming Batches</a></div>
+      <div><div class="footer-col-title">Company</div><a href="about.html" class="footer-link">About Us</a><a href="#" class="footer-link">Blog</a></div>
+      <div><div class="footer-col-title">Support</div><a href="contact.html" class="footer-link">Contact</a><a href="#" class="footer-link">FAQs</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Shikhar. All rights reserved.</p>
+      <div class="social-row"><a class="social-btn">in</a><a class="social-btn">ig</a><a class="social-btn">yt</a></div>
+    </div>
+  </div>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>

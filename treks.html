@@ -1,538 +1,481 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>All Treks — Shikhar</title>
-  <link rel="stylesheet" href="css/global.css"/>
-  <style>
-    .page-hero {
-      background: var(--ink);
-      padding: 9rem 0 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .page-hero-bg {
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg,#040d07 0%,#0a1a0f 50%,#1c3d26 100%);
-    }
-    .page-hero-mountains {
-      position: absolute; bottom:0; left:0; right:0; pointer-events:none;
-    }
-    .page-hero-content { position:relative; z-index:1; }
-    .page-hero h1 { font-family:var(--font-display); font-size:clamp(2.5rem,6vw,5rem); font-weight:300; color:white; letter-spacing:-0.03em; margin-top:10px; }
-    .page-hero p { color:rgba(255,255,255,0.5); font-size:1rem; margin-top:8px; font-weight:300; }
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>All Treks — Shikhar</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#080f0a;--pine:#0f2317;--moss:#1a3d28;--fern:#2e6644;--sage:#4a8c60;--mist:#8fbfa0;--dew:#c2deca;--foam:#e8f4ec;--snow:#f5faf6;--white:#ffffff;--gold:#c8a84b;--gold2:#e8cc7a;--slate:#3d5a47;--fog:#7a9a84;--ff-display:'Cormorant',Georgia,serif;--ff-body:'DM Sans',system-ui,sans-serif;--ease-apple:cubic-bezier(.25,.46,.45,.94);--ease-spring:cubic-bezier(.34,1.56,.64,1);--ease-out:cubic-bezier(0,0,.2,1);--r-sm:6px;--r-md:14px;--r-lg:22px;--r-xl:32px;--r-full:9999px;--sh-sm:0 2px 8px rgba(8,15,10,.07);--sh-md:0 8px 30px rgba(8,15,10,.12);--sh-lg:0 20px 60px rgba(8,15,10,.18)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:var(--ff-body);background:var(--white);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}button{cursor:pointer;font-family:inherit;border:none;background:none}
+input,select,textarea{font-family:inherit}ul{list-style:none}
+.wrap{width:100%;max-width:1320px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:var(--r-full);font-size:.875rem;font-weight:600;letter-spacing:.02em;transition:all .35s var(--ease-apple);white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn-ink{background:var(--ink);color:var(--white)}
+.btn-ink:hover{background:var(--moss);transform:translateY(-2px);box-shadow:var(--sh-md)}
+.btn-gold{background:var(--gold);color:var(--ink)}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn-outline{background:transparent;border:1.5px solid var(--dew);color:var(--ink)}
+.btn-outline:hover{background:var(--ink);color:var(--white);border-color:var(--ink)}
+.btn-sm{padding:9px 20px;font-size:.8125rem}
+.eyebrow{font-size:.6875rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sage)}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:var(--r-full);font-size:.6875rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.badge-easy{background:#d1fae5;color:#065f46}.badge-mod{background:#fef3c7;color:#92400e}.badge-hard{background:#fee2e2;color:#991b1b}.badge-gold{background:var(--gold);color:var(--ink)}
+.sr{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
+.sr.show{opacity:1;transform:translateY(0)}
+.d1s{transition-delay:.1s}.d2s{transition-delay:.2s}.d3s{transition-delay:.3s}
+/* NAVBAR */
+.nav{position:fixed;top:0;left:0;right:0;height:72px;z-index:1000;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);box-shadow:var(--sh-sm)}
+.nav-inner{height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--ff-display);font-size:1.625rem;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.logo span{color:var(--fern)}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-a{padding:8px 14px;border-radius:var(--r-sm);font-size:.875rem;font-weight:500;color:var(--slate);transition:all .2s}
+.nav-a:hover,.nav-a.on{color:var(--ink);background:var(--foam)}
+.nav-cta{background:var(--ink);color:white;padding:9px 22px;border-radius:var(--r-full);font-size:.8125rem;font-weight:700;transition:all .25s}
+.nav-cta:hover{background:var(--moss);transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:6px;border-radius:8px}
+.ham-line{width:22px;height:1.5px;background:var(--ink);border-radius:2px;transition:all .3s var(--ease-apple);transform-origin:center}
+.hamburger.open .ham-line:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open .ham-line:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open .ham-line:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mob-menu{display:none;position:fixed;top:72px;left:0;right:0;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);padding:1.5rem;z-index:999;border-bottom:1px solid var(--foam);transform:translateY(-12px);opacity:0;transition:all .3s var(--ease-apple);pointer-events:none}
+.mob-menu.open{transform:translateY(0);opacity:1;pointer-events:auto;display:block}
+.mob-menu .nav-a{display:block;padding:13px 16px;font-size:1rem;color:var(--slate);border-radius:var(--r-md);margin-bottom:4px}
+.mob-menu .nav-cta{display:block;text-align:center;margin-top:1rem;padding:14px;border-radius:var(--r-full);background:var(--ink);color:white;font-weight:700}
+/* PAGE HERO */
+.page-hero{background:var(--ink);padding:9rem 0 4.5rem;position:relative;overflow:hidden}
+.hero-bg-grad{position:absolute;inset:0;background:linear-gradient(160deg,#020604,#0f2317 50%,#1a3d28 100%)}
+.hero-mtns{position:absolute;bottom:0;left:0;right:0;pointer-events:none}
+.hero-content{position:relative;z-index:1}
+.page-hero h1{font-family:var(--ff-display);font-size:clamp(2.5rem,6vw,5rem);font-weight:300;color:white;letter-spacing:-.03em;margin-top:8px}
+.page-hero p{color:rgba(255,255,255,.45);font-size:1rem;margin-top:8px;font-weight:300}
+/* FILTER BAR */
+.filter-bar{position:sticky;top:72px;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(8,15,10,.07);z-index:200;padding:.875rem 0}
+.fbar-inner{display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
+.fgroup{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.fl{font-size:.6875rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--fog);white-space:nowrap}
+.fsep{width:1px;height:20px;background:var(--dew);flex-shrink:0}
+.fc{padding:6px 16px;border-radius:var(--r-full);font-size:.8125rem;font-weight:500;border:1.5px solid var(--dew);color:var(--slate);background:transparent;transition:all .2s var(--ease-apple);cursor:pointer}
+.fc:hover{border-color:var(--fern);color:var(--fern)}
+.fc.on{background:var(--ink);color:white;border-color:var(--ink)}
+/* TREK LIST */
+.sort-row{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0 1rem;flex-wrap:wrap;gap:10px}
+.results-txt{font-size:.875rem;color:var(--fog)}
+.results-txt strong{color:var(--ink)}
+.sort-sel{background:var(--snow);border:1.5px solid var(--dew);border-radius:var(--r-sm);padding:8px 14px;font-size:.8125rem;color:var(--ink);outline:none;cursor:pointer}
+.trek-list{display:flex;flex-direction:column;gap:14px;padding-bottom:5rem}
+.trow{
+  background:white;border-radius:var(--r-xl);border:1px solid rgba(8,15,10,.07);
+  display:grid;grid-template-columns:220px 1fr 190px;overflow:hidden;
+  transition:transform .5s var(--ease-spring),box-shadow .5s var(--ease-apple),border-color .3s;
+}
+.trow:hover{transform:translateX(5px);box-shadow:var(--sh-lg);border-color:var(--dew)}
+.trow-thumb{position:relative;overflow:hidden;min-height:175px}
+.trow-bg{position:absolute;inset:0;transition:transform .6s var(--ease-apple)}
+.trow:hover .trow-bg{transform:scale(1.07)}
+.trow-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(8,15,10,.45),transparent 70%)}
+.trow-body{padding:1.5rem;display:flex;flex-direction:column;justify-content:space-between}
+.trow-title{font-family:var(--ff-display);font-size:1.4rem;font-weight:400;color:var(--ink);margin-bottom:5px}
+.trow-desc{font-size:.875rem;color:var(--fog);line-height:1.65;font-weight:300;margin-bottom:12px}
+.trow-metas{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.tm{font-size:.75rem;color:var(--fog);font-weight:500}
+.trow-tags{display:flex;gap:6px;flex-wrap:wrap}
+.ttag{background:var(--foam);color:var(--fern);padding:3px 10px;border-radius:var(--r-full);font-size:.6875rem;font-weight:600}
+.trow-right{padding:1.5rem;border-left:1px solid var(--foam);display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end}
+.trating{display:flex;align-items:center;gap:4px}
+.tstar{color:var(--gold);font-size:.875rem}
+.tscore{font-size:.875rem;font-weight:700;color:var(--ink)}
+.tcnt{font-size:.75rem;color:var(--fog)}
+.tprice-main{font-family:var(--ff-display);font-size:1.875rem;font-weight:600;color:var(--ink);line-height:1;text-align:right}
+.tprice-note{font-size:.75rem;color:var(--fog);text-align:right;margin-top:2px}
+/* Background classes */
+.bg-k{background:linear-gradient(165deg,#1a5c36,#0d3520 45%,#051a0d)}
+.bg-r{background:linear-gradient(165deg,#1a4a7a,#0c2d52 45%,#060d1a)}
+.bg-v{background:linear-gradient(165deg,#487a3a,#244518 45%,#0c1e06)}
+.bg-p{background:linear-gradient(165deg,#5a3a8a,#321856 45%,#100620)}
+.bg-d{background:linear-gradient(165deg,#7a6228,#4a380a 45%,#1e1400)}
+.bg-s{background:linear-gradient(165deg,#2a608a,#0e3252 45%,#040e1a)}
+.bg-h{background:linear-gradient(165deg,#8a2a3a,#520a18 45%,#1a0006)}
+.bg-g{background:linear-gradient(165deg,#2a7a4a,#0e4224 45%,#04160b)}
+/* NEWSLETTER */
+.nl-band{background:linear-gradient(135deg,var(--moss),var(--fern) 50%,var(--sage));padding:4rem 0}
+.nl-inner{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.nl-text h3{font-family:var(--ff-display);font-size:clamp(1.75rem,3vw,2.5rem);color:white;font-weight:300;margin-bottom:4px}
+.nl-text p{color:rgba(255,255,255,.55);font-size:.9375rem;font-weight:300}
+.nl-form{display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap}
+.nl-input{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.22);color:white;padding:13px 20px;border-radius:var(--r-full);font-size:.875rem;width:260px;outline:none;transition:border-color .3s}
+.nl-input::placeholder{color:rgba(255,255,255,.35)}
+.nl-input:focus{border-color:rgba(255,255,255,.65)}
+/* FOOTER */
+.footer{background:var(--ink);padding-top:4.5rem}
+.footer-main{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3.5rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.fb-logo{font-family:var(--ff-display);font-size:1.75rem;font-weight:600;color:white;margin-bottom:1rem}
+.fb-logo span{color:var(--gold)}
+.fb-desc{font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.8;font-weight:300;max-width:300px;margin-bottom:1.5rem}
+.fsoc{display:flex;gap:8px}
+.fsb{width:36px;height:36px;border-radius:var(--r-sm);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);font-size:.75rem;font-weight:700;transition:all .25s}
+.fsb:hover{border-color:var(--gold);color:var(--gold);background:rgba(200,168,75,.08);transform:translateY(-2px)}
+.fct{font-size:.625rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:1.25rem}
+.fl2{display:block;color:rgba(255,255,255,.48);font-size:.875rem;margin-bottom:.875rem;transition:color .2s}
+.fl2:hover{color:var(--gold)}
+.fawards{display:flex;align-items:center;gap:2rem;flex-wrap:wrap;padding:1.5rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.fai{display:flex;align-items:center;gap:8px}
+.fai-icon{font-size:1.125rem}
+.fai-txt{font-size:.75rem;color:rgba(255,255,255,.32)}
+.fai-txt strong{display:block;color:rgba(255,255,255,.55);font-weight:600;font-size:.8125rem;margin-bottom:1px}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;flex-wrap:wrap;gap:1rem}
+.fcopy{font-size:.8125rem;color:rgba(255,255,255,.22)}
+.flegal{display:flex;gap:1.5rem}
+.flegal a{font-size:.8125rem;color:rgba(255,255,255,.28);transition:color .2s}
+.flegal a:hover{color:rgba(255,255,255,.6)}
+.fnl{margin-top:1.5rem}
+.fnl p{font-size:.75rem;color:rgba(255,255,255,.28);margin-bottom:.75rem}
+.fnl-form{display:flex;gap:8px}
+.fnl-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:white;padding:10px 14px;border-radius:var(--r-full);font-size:.8125rem;outline:none;min-width:0;transition:border-color .3s}
+.fnl-input::placeholder{color:rgba(255,255,255,.22)}
+.fnl-input:focus{border-color:rgba(200,168,75,.4)}
+.fnl-btn{background:var(--gold);color:var(--ink);padding:10px 18px;border-radius:var(--r-full);font-size:.8125rem;font-weight:700;transition:all .25s;flex-shrink:0}
+.fnl-btn:hover{background:var(--gold2)}
 
-    /* STICKY FILTER BAR */
-    .filter-bar {
-      position: sticky;
-      top: 72px;
-      background: rgba(255,255,255,0.97);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(10,26,15,0.08);
-      z-index: 200;
-      padding: 1rem 0;
-    }
-    .filter-bar-inner {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .filter-group {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .filter-label { font-size:0.6875rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--fog); white-space:nowrap; }
-    .filter-sep { width:1px; height:20px; background:var(--mist); flex-shrink:0; }
-    .filter-chip {
-      padding: 6px 14px;
-      border-radius: var(--r-full);
-      font-size: 0.8125rem;
-      font-weight: 500;
-      border: 1.5px solid var(--mist);
-      color: var(--slate);
-      background: transparent;
-      transition: all var(--dur-base) var(--ease);
-    }
-    .filter-chip:hover { border-color: var(--fern); color: var(--fern); }
-    .filter-chip.active { background: var(--ink); color: white; border-color: var(--ink); }
-
-    .sort-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 0 1rem;
-    }
-    .results-count { font-size:0.875rem; color:var(--fog); }
-    .results-count strong { color:var(--ink); font-weight:600; }
-    .sort-select {
-      background: var(--offwhite);
-      border: 1.5px solid var(--mist);
-      border-radius: var(--r-sm);
-      padding: 8px 14px;
-      font-size:0.8125rem;
-      color:var(--ink);
-      outline:none;
-      cursor:pointer;
-    }
-
-    /* TREK LIST LAYOUT */
-    .trek-list { display:flex; flex-direction:column; gap:16px; padding-bottom:5rem; }
-    .trek-row {
-      background: white;
-      border-radius: var(--r-lg);
-      border: 1px solid rgba(10,26,15,0.07);
-      display: grid;
-      grid-template-columns: 240px 1fr 180px;
-      overflow: hidden;
-      transition: transform var(--dur-slow) var(--ease-spring), box-shadow var(--dur-slow) var(--ease);
-    }
-    .trek-row:hover { transform: translateX(6px); box-shadow: var(--sh-lg); }
-    .trek-row__thumb {
-      position: relative;
-      overflow: hidden;
-      min-height: 170px;
-    }
-    .trek-row__thumb-bg { position:absolute;inset:0; transition:transform var(--dur-slow) var(--ease); }
-    .trek-row:hover .trek-row__thumb-bg { transform: scale(1.06); }
-    .trek-row__thumb-overlay { position:absolute;inset:0; background:linear-gradient(to right,rgba(10,26,15,0.45),transparent 70%); }
-
-    .trek-row__body { padding: 1.5rem; display:flex; flex-direction:column; justify-content:space-between; }
-    .trek-row__title { font-family:var(--font-display); font-size:1.375rem; font-weight:400; color:var(--ink); margin-bottom:6px; }
-    .trek-row__desc { font-size:0.875rem; color:var(--fog); line-height:1.65; font-weight:300; margin-bottom:12px; }
-    .trek-row__tags { display:flex; gap:6px; flex-wrap:wrap; }
-    .trek-tag { background:var(--frost); color:var(--fern); padding:3px 10px; border-radius:var(--r-full); font-size:0.75rem; font-weight:600; }
-
-    .trek-row__right {
-      padding: 1.5rem;
-      border-left: 1px solid var(--frost);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-    .trek-rating { display:flex; align-items:center; gap:5px; }
-    .trek-rating-star { color:var(--gold); font-size:0.875rem; }
-    .trek-rating-score { font-size:0.875rem; font-weight:700; color:var(--ink); }
-    .trek-rating-count { font-size:0.75rem; color:var(--fog); }
-    .trek-row__price { text-align:right; }
-    .trek-row__price-main { font-family:var(--font-display); font-size:1.75rem; font-weight:600; color:var(--ink); line-height:1; }
-    .trek-row__price-note { font-size:0.75rem; color:var(--fog); margin-top:2px; }
-
-    @media(max-width:768px){
-      .trek-row { grid-template-columns:1fr; }
-      .trek-row__thumb { min-height:200px; }
-      .trek-row__right { border-left:none; border-top:1px solid var(--frost); flex-direction:row; align-items:center; }
-      .filter-bar-inner { gap:8px; }
-    }
-  </style>
+@media(max-width:900px){
+  .trow{grid-template-columns:1fr}
+  .trow-thumb{min-height:200px}
+  .trow-right{border-left:none;border-top:1px solid var(--foam);flex-direction:row;align-items:center}
+  .footer-main{grid-template-columns:1fr 1fr 1fr;gap:2rem}
+}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .fbar-inner{gap:8px}
+  .footer-main{grid-template-columns:1fr 1fr;gap:1.75rem}
+  .nl-inner{flex-direction:column;text-align:center}
+  .nl-form{flex-direction:column;width:100%}
+  .nl-input{width:100%}
+}
+@media(max-width:480px){
+  .footer-main{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
 </head>
 <body>
-
-<nav class="nav light-nav" id="nav">
-  <div class="container">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <span class="nav-logo-text">Shikhar</span><span class="nav-logo-accent">.</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html" class="nav-link">Home</a></li>
-        <li><a href="treks.html" class="nav-link active">All Treks</a></li>
-        <li><a href="gallery.html" class="nav-link">Gallery</a></li>
-        <li><a href="about.html" class="nav-link">About</a></li>
-        <li><a href="contact.html" class="nav-link">Contact</a></li>
-      </ul>
-      <div class="nav-actions">
-        <a href="trek-detail.html" class="nav-book">Book a Trek</a>
-        <button class="hamburger" aria-label="Menu">
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-        </button>
-      </div>
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo">Shikhar<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-a">Home</a></li>
+      <li><a href="treks.html" class="nav-a on">All Treks</a></li>
+      <li><a href="gallery.html" class="nav-a">Gallery</a></li>
+      <li><a href="about.html" class="nav-a">About</a></li>
+      <li><a href="contact.html" class="nav-a">Contact</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:10px">
+      <a href="trek-detail.html" class="nav-cta">Book a Trek</a>
+      <button class="hamburger" id="ham"><span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span></button>
     </div>
   </div>
 </nav>
-<div class="mobile-menu">
-  <a href="index.html" class="nav-link">Home</a>
-  <a href="treks.html" class="nav-link">All Treks</a>
-  <a href="gallery.html" class="nav-link">Gallery</a>
-  <a href="about.html" class="nav-link">About</a>
-  <a href="contact.html" class="nav-link">Contact</a>
-  <a href="trek-detail.html" class="nav-book">Book a Trek</a>
+<div class="mob-menu" id="mobMenu">
+  <a href="index.html" class="nav-a">Home</a><a href="treks.html" class="nav-a">All Treks</a><a href="gallery.html" class="nav-a">Gallery</a><a href="about.html" class="nav-a">About</a><a href="contact.html" class="nav-a">Contact</a>
+  <a href="trek-detail.html" class="nav-cta" style="display:block;text-align:center;margin-top:1rem;padding:14px;border-radius:var(--r-full)">Book a Trek</a>
 </div>
 
-<!-- PAGE HERO -->
 <div class="page-hero">
-  <div class="page-hero-bg"></div>
-  <svg class="page-hero-mountains" viewBox="0 0 1440 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="0,180 0,120 200,50 400,130 600,40 800,120 1000,55 1200,120 1440,60 1440,180" fill="rgba(255,255,255,0.03)"/>
-    <polygon points="0,180 0,140 300,90 600,150 900,80 1200,145 1440,100 1440,180" fill="rgba(255,255,255,0.04)"/>
-  </svg>
-  <div class="container page-hero-content">
+  <div class="hero-bg-grad"></div>
+  <svg class="hero-mtns" viewBox="0 0 1440 160" preserveAspectRatio="none"><polygon points="0,160 0,100 200,50 400,120 600,35 800,110 1000,50 1200,115 1440,65 1440,160" fill="rgba(255,255,255,0.025)"/><polygon points="0,160 0,125 300,85 600,145 900,70 1200,140 1440,100 1440,160" fill="rgba(255,255,255,0.035)"/></svg>
+  <div class="wrap hero-content sr">
     <p class="eyebrow" style="color:var(--gold)">500+ Documented Trails</p>
     <h1>All Treks</h1>
-    <p>Filter by difficulty, region, season or duration to find your perfect trail</p>
+    <p>Filter by difficulty, region, season or duration — find your perfect trail</p>
   </div>
 </div>
 
-<!-- FILTER BAR -->
 <div class="filter-bar">
-  <div class="container">
-    <div class="filter-bar-inner">
-      <div class="filter-group">
-        <span class="filter-label">Difficulty</span>
-        <button class="filter-chip active" data-filter="all">All</button>
-        <button class="filter-chip" data-filter="easy">Easy</button>
-        <button class="filter-chip" data-filter="moderate">Moderate</button>
-        <button class="filter-chip" data-filter="hard">Hard</button>
+  <div class="wrap">
+    <div class="fbar-inner">
+      <div class="fgroup">
+        <span class="fl">Difficulty</span>
+        <button class="fc on" data-f="all">All</button>
+        <button class="fc" data-f="easy">Easy</button>
+        <button class="fc" data-f="moderate">Moderate</button>
+        <button class="fc" data-f="hard">Hard</button>
       </div>
-      <div class="filter-sep"></div>
-      <div class="filter-group">
-        <span class="filter-label">Region</span>
-        <button class="filter-chip" data-filter="uttarakhand">Uttarakhand</button>
-        <button class="filter-chip" data-filter="himachal">Himachal</button>
-        <button class="filter-chip" data-filter="kashmir">Kashmir</button>
-        <button class="filter-chip" data-filter="darjeeling">Darjeeling</button>
+      <div class="fsep"></div>
+      <div class="fgroup">
+        <span class="fl">Region</span>
+        <button class="fc" data-f="uttarakhand">Uttarakhand</button>
+        <button class="fc" data-f="himachal">Himachal</button>
+        <button class="fc" data-f="kashmir">Kashmir</button>
+        <button class="fc" data-f="darjeeling">Darjeeling</button>
+        <button class="fc" data-f="spiti">Spiti</button>
       </div>
-      <div class="filter-sep"></div>
-      <div class="filter-group">
-        <span class="filter-label">Season</span>
-        <button class="filter-chip" data-filter="winter">Winter</button>
-        <button class="filter-chip" data-filter="summer">Summer</button>
-        <button class="filter-chip" data-filter="spring">Spring</button>
+      <div class="fsep"></div>
+      <div class="fgroup">
+        <span class="fl">Season</span>
+        <button class="fc" data-f="winter">Winter</button>
+        <button class="fc" data-f="summer">Summer</button>
+        <button class="fc" data-f="spring">Spring</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- TREKS SECTION -->
-<section style="padding:0">
-  <div class="container">
-    <div class="sort-bar">
-      <p class="results-count">Showing <strong>8 treks</strong></p>
-      <select class="sort-select">
-        <option>Sort: Popularity</option>
-        <option>Price: Low to High</option>
-        <option>Price: High to Low</option>
-        <option>Duration: Shortest First</option>
-        <option>Altitude: Highest First</option>
-      </select>
+<div style="padding:0 0 2rem">
+  <div class="wrap">
+    <div class="sort-row">
+      <p class="results-txt">Showing <strong id="rcount">8 treks</strong></p>
+      <select class="sort-sel"><option>Sort: Popularity</option><option>Price: Low to High</option><option>Price: High to Low</option><option>Duration: Short First</option><option>Altitude: Highest First</option></select>
     </div>
+    <div class="trek-list" id="trekList">
 
-    <div class="trek-list">
-
-      <div class="trek-row reveal" data-tags="easy uttarakhand winter">
-        <div class="trek-row__thumb">
-          <div class="trek-row__thumb-bg bg-keda"></div>
-          <div class="trek-row__thumb-overlay"></div>
-        </div>
-        <div class="trek-row__body">
+      <div class="trow sr" data-tags="easy uttarakhand winter" onclick="location.href='trek-detail.html'">
+        <div class="trow-thumb"><div class="trow-bg bg-k"></div><div class="trow-overlay"></div></div>
+        <div class="trow-body">
           <div>
-            <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
-              <span class="badge badge-easy">Easy</span>
-              <span class="badge badge-gold">Most Popular</span>
-            </div>
-            <div class="trek-row__title">Kedarkantha Peak</div>
-            <p class="trek-row__desc">India's most-loved winter trek. Walk through snow-laden pine forests to a 3,800m summit with panoramic views of Swargarohini, Kalanag and Bandarpoonch.</p>
-            <div class="trek-card__meta" style="margin-bottom:12px">
-              <span class="trek-meta">📍 Uttarakhand</span>
-              <span class="trek-meta">⏱ 6 Days</span>
-              <span class="trek-meta">📏 20 km</span>
-              <span class="trek-meta">🏔 3,800m</span>
-            </div>
+            <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap"><span class="badge badge-easy">Easy</span><span class="badge badge-gold">Most Popular</span></div>
+            <div class="trow-title">Kedarkantha Peak</div>
+            <p class="trow-desc">India's most-loved winter trek. Snow-laden pine forests, a pre-dawn summit push, and 360° panoramic views of the Himalayan giants at 3,800m.</p>
+            <div class="trow-metas"><span class="tm">📍 Uttarakhand</span><span class="tm">⏱ 6 Days</span><span class="tm">📏 20 km</span><span class="tm">🏔 3,800m</span><span class="tm">👥 8–15 people</span></div>
           </div>
-          <div class="trek-row__tags">
-            <span class="trek-tag">Winter</span>
-            <span class="trek-tag">Snow</span>
-            <span class="trek-tag">Beginner Friendly</span>
-            <span class="trek-tag">Sankri Base</span>
-          </div>
+          <div class="trow-tags"><span class="ttag">Winter</span><span class="ttag">Snow</span><span class="ttag">Beginner Friendly</span><span class="ttag">Sankri Base</span></div>
         </div>
-        <div class="trek-row__right">
-          <div class="trek-rating">
-            <span class="trek-rating-star">★</span>
-            <span class="trek-rating-score">4.9</span>
-            <span class="trek-rating-count">(342)</span>
-          </div>
+        <div class="trow-right">
+          <div class="trating"><span class="tstar">★</span><span class="tscore">4.9</span><span class="tcnt">(342)</span></div>
           <div>
-            <div class="trek-row__price">
-              <div class="trek-row__price-main">₹8,500</div>
-              <div class="trek-row__price-note">per person</div>
-            </div>
-            <a href="trek-detail.html" class="btn btn-primary btn-sm" style="margin-top:12px;width:100%">View &amp; Book</a>
+            <div class="tprice-main">₹8,500</div>
+            <div class="tprice-note">per person</div>
+            <a href="trek-detail.html" class="btn btn-ink btn-sm" style="margin-top:12px;width:100%;border-radius:var(--r-md)" onclick="event.stopPropagation()">View &amp; Book</a>
           </div>
         </div>
       </div>
 
-      <div class="trek-row reveal" data-tags="hard himachal spring">
-        <div class="trek-row__thumb">
-          <div class="trek-row__thumb-bg bg-rupin"></div>
-          <div class="trek-row__thumb-overlay"></div>
-        </div>
-        <div class="trek-row__body">
+      <div class="trow sr d1s" data-tags="hard himachal spring" onclick="location.href='trek-detail.html'">
+        <div class="trow-thumb"><div class="trow-bg bg-r"></div><div class="trow-overlay"></div></div>
+        <div class="trow-body">
           <div>
-            <div style="display:flex;gap:8px;margin-bottom:10px">
-              <span class="badge badge-hard">Challenging</span>
-            </div>
-            <div class="trek-row__title">Rupin Pass</div>
-            <p class="trek-row__desc">A dramatic crossing with hanging villages, snow bridges and a steep snow wall. Crosses from Uttarakhand into Himachal through one of India's most beautiful alpine landscapes.</p>
-            <div class="trek-card__meta" style="margin-bottom:12px">
-              <span class="trek-meta">📍 Himachal Pradesh</span>
-              <span class="trek-meta">⏱ 8 Days</span>
-              <span class="trek-meta">📏 52 km</span>
-              <span class="trek-meta">🏔 4,650m</span>
-            </div>
+            <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap"><span class="badge badge-hard">Challenging</span></div>
+            <div class="trow-title">Rupin Pass</div>
+            <p class="trow-desc">Dramatic snow bridges, hanging villages, a steep 15m snow wall. Crosses from Uttarakhand to Himachal through some of the most breathtaking alpine terrain in India.</p>
+            <div class="trow-metas"><span class="tm">📍 Himachal Pradesh</span><span class="tm">⏱ 8 Days</span><span class="tm">📏 52 km</span><span class="tm">🏔 4,650m</span><span class="tm">👥 8–12 people</span></div>
           </div>
-          <div class="trek-row__tags">
-            <span class="trek-tag">Spring</span>
-            <span class="trek-tag">High Altitude</span>
-            <span class="trek-tag">Snow Bridge</span>
-          </div>
+          <div class="trow-tags"><span class="ttag">Spring</span><span class="ttag">Snow Bridge</span><span class="ttag">High Altitude</span></div>
         </div>
-        <div class="trek-row__right">
-          <div class="trek-rating">
-            <span class="trek-rating-star">★</span>
-            <span class="trek-rating-score">4.8</span>
-            <span class="trek-rating-count">(218)</span>
-          </div>
+        <div class="trow-right">
+          <div class="trating"><span class="tstar">★</span><span class="tscore">4.8</span><span class="tcnt">(218)</span></div>
           <div>
-            <div class="trek-row__price">
-              <div class="trek-row__price-main">₹14,200</div>
-              <div class="trek-row__price-note">per person</div>
-            </div>
-            <a href="trek-detail.html" class="btn btn-primary btn-sm" style="margin-top:12px;width:100%">View &amp; Book</a>
+            <div class="tprice-main">₹14,200</div>
+            <div class="tprice-note">per person</div>
+            <a href="trek-detail.html" class="btn btn-ink btn-sm" style="margin-top:12px;width:100%;border-radius:var(--r-md)" onclick="event.stopPropagation()">View &amp; Book</a>
           </div>
         </div>
       </div>
 
-      <div class="trek-row reveal" data-tags="moderate uttarakhand summer">
-        <div class="trek-row__thumb">
-          <div class="trek-row__thumb-bg bg-vof"></div>
-          <div class="trek-row__thumb-overlay"></div>
-        </div>
-        <div class="trek-row__body">
+      <div class="trow sr d2s" data-tags="moderate uttarakhand summer" onclick="location.href='trek-detail.html'">
+        <div class="trow-thumb"><div class="trow-bg bg-v"></div><div class="trow-overlay"></div></div>
+        <div class="trow-body">
           <div>
-            <div style="display:flex;gap:8px;margin-bottom:10px">
-              <span class="badge badge-moderate">Moderate</span>
-              <span class="badge" style="background:#dbeafe;color:#1d4ed8">UNESCO Site</span>
-            </div>
-            <div class="trek-row__title">Valley of Flowers</div>
-            <p class="trek-row__desc">A UNESCO World Heritage Site carpeted with 300+ species of alpine wildflowers. Combines beautifully with Hemkund Sahib for a spiritually enriching Himalayan journey.</p>
-            <div class="trek-card__meta" style="margin-bottom:12px">
-              <span class="trek-meta">📍 Uttarakhand</span>
-              <span class="trek-meta">⏱ 5 Days</span>
-              <span class="trek-meta">📏 38 km</span>
-              <span class="trek-meta">🏔 3,658m</span>
-            </div>
+            <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap"><span class="badge badge-mod">Moderate</span><span class="badge" style="background:#dbeafe;color:#1d4ed8">UNESCO Site</span></div>
+            <div class="trow-title">Valley of Flowers</div>
+            <p class="trow-desc">A UNESCO World Heritage Site carpeted with 300+ species of alpine wildflowers. Pairs beautifully with Hemkund Sahib for a spiritually enriching Himalayan journey.</p>
+            <div class="trow-metas"><span class="tm">📍 Uttarakhand</span><span class="tm">⏱ 5 Days</span><span class="tm">📏 38 km</span><span class="tm">🏔 3,658m</span><span class="tm">👥 10–16 people</span></div>
           </div>
-          <div class="trek-row__tags">
-            <span class="trek-tag">Monsoon</span>
-            <span class="trek-tag">Wildflowers</span>
-            <span class="trek-tag">UNESCO</span>
-          </div>
+          <div class="trow-tags"><span class="ttag">Monsoon</span><span class="ttag">Wildflowers</span><span class="ttag">UNESCO</span></div>
         </div>
-        <div class="trek-row__right">
-          <div class="trek-rating">
-            <span class="trek-rating-star">★</span>
-            <span class="trek-rating-score">4.9</span>
-            <span class="trek-rating-count">(456)</span>
-          </div>
+        <div class="trow-right">
+          <div class="trating"><span class="tstar">★</span><span class="tscore">4.9</span><span class="tcnt">(456)</span></div>
           <div>
-            <div class="trek-row__price">
-              <div class="trek-row__price-main">₹11,000</div>
-              <div class="trek-row__price-note">per person</div>
-            </div>
-            <a href="trek-detail.html" class="btn btn-primary btn-sm" style="margin-top:12px;width:100%">View &amp; Book</a>
+            <div class="tprice-main">₹11,000</div>
+            <div class="tprice-note">per person</div>
+            <a href="trek-detail.html" class="btn btn-ink btn-sm" style="margin-top:12px;width:100%;border-radius:var(--r-md)" onclick="event.stopPropagation()">View &amp; Book</a>
           </div>
         </div>
       </div>
 
-      <div class="trek-row reveal" data-tags="hard spiti summer">
-        <div class="trek-row__thumb">
-          <div class="trek-row__thumb-bg bg-pin"></div>
-          <div class="trek-row__thumb-overlay"></div>
-        </div>
-        <div class="trek-row__body">
+      <div class="trow sr" data-tags="easy uttarakhand winter" onclick="location.href='trek-detail.html'">
+        <div class="trow-thumb"><div class="trow-bg bg-d"></div><div class="trow-overlay"></div></div>
+        <div class="trow-body">
           <div>
-            <div style="display:flex;gap:8px;margin-bottom:10px">
-              <span class="badge badge-hard">Hard</span>
-              <span class="badge" style="background:#fee2e2;color:#991b1b">Expert Only</span>
-            </div>
-            <div class="trek-row__title">Pin Parvati Pass</div>
-            <p class="trek-row__desc">The ultimate crossover — lush green Parvati Valley to the stark moonscape of Spiti. A 5,300m pass that only a handful of trekkers complete each year.</p>
-            <div class="trek-card__meta" style="margin-bottom:12px">
-              <span class="trek-meta">📍 Spiti Valley</span>
-              <span class="trek-meta">⏱ 11 Days</span>
-              <span class="trek-meta">📏 110 km</span>
-              <span class="trek-meta">🏔 5,300m</span>
-            </div>
+            <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap"><span class="badge badge-easy">Easy</span></div>
+            <div class="trow-title">Deoriatal — Chandrashila</div>
+            <p class="trow-desc">A sacred lake reflecting the Chaukhamba peaks + a 4,000m summit with 360° panoramic views. The perfect introduction to Himalayan trekking.</p>
+            <div class="trow-metas"><span class="tm">📍 Chopta</span><span class="tm">⏱ 4 Days</span><span class="tm">📏 14 km</span><span class="tm">🏔 4,000m</span><span class="tm">👥 8–15 people</span></div>
           </div>
-          <div class="trek-row__tags">
-            <span class="trek-tag">Summer</span>
-            <span class="trek-tag">Remote</span>
-            <span class="trek-tag">High Altitude</span>
-          </div>
+          <div class="trow-tags"><span class="ttag">Winter</span><span class="ttag">Beginner</span><span class="ttag">Weekend</span></div>
         </div>
-        <div class="trek-row__right">
-          <div class="trek-rating">
-            <span class="trek-rating-star">★</span>
-            <span class="trek-rating-score">4.7</span>
-            <span class="trek-rating-count">(89)</span>
-          </div>
+        <div class="trow-right">
+          <div class="trating"><span class="tstar">★</span><span class="tscore">4.8</span><span class="tcnt">(201)</span></div>
           <div>
-            <div class="trek-row__price">
-              <div class="trek-row__price-main">₹22,000</div>
-              <div class="trek-row__price-note">per person</div>
-            </div>
-            <a href="trek-detail.html" class="btn btn-primary btn-sm" style="margin-top:12px;width:100%">View &amp; Book</a>
+            <div class="tprice-main">₹6,500</div>
+            <div class="tprice-note">per person</div>
+            <a href="trek-detail.html" class="btn btn-ink btn-sm" style="margin-top:12px;width:100%;border-radius:var(--r-md)" onclick="event.stopPropagation()">View &amp; Book</a>
           </div>
         </div>
       </div>
 
-      <div class="trek-row reveal" data-tags="easy uttarakhand winter">
-        <div class="trek-row__thumb">
-          <div class="trek-row__thumb-bg bg-deori"></div>
-          <div class="trek-row__thumb-overlay"></div>
-        </div>
-        <div class="trek-row__body">
+      <div class="trow sr d1s" data-tags="moderate darjeeling spring" onclick="location.href='trek-detail.html'">
+        <div class="trow-thumb"><div class="trow-bg bg-s"></div><div class="trow-overlay"></div></div>
+        <div class="trow-body">
           <div>
-            <div style="display:flex;gap:8px;margin-bottom:10px">
-              <span class="badge badge-easy">Easy</span>
-            </div>
-            <div class="trek-row__title">Deoriatal — Chandrashila</div>
-            <p class="trek-row__desc">Two stunning highlights in one short trek. A sacred lake reflecting the Chaukhamba peaks, and a 4,000m summit with 360° views — perfect for first-timers.</p>
-            <div class="trek-card__meta" style="margin-bottom:12px">
-              <span class="trek-meta">📍 Chopta</span>
-              <span class="trek-meta">⏱ 4 Days</span>
-              <span class="trek-meta">📏 14 km</span>
-              <span class="trek-meta">🏔 4,000m</span>
-            </div>
+            <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap"><span class="badge badge-mod">Moderate</span></div>
+            <div class="trow-title">Sandakphu Trek</div>
+            <p class="trow-desc">From Bengal's highest point at 3,636m, see Everest, Kangchenjunga, Lhotse and Makalu — 4 of the world's 5 tallest peaks — in a single sunrise panorama.</p>
+            <div class="trow-metas"><span class="tm">📍 Darjeeling</span><span class="tm">⏱ 7 Days</span><span class="tm">📏 57 km</span><span class="tm">🏔 3,636m</span><span class="tm">👥 8–14 people</span></div>
           </div>
-          <div class="trek-row__tags">
-            <span class="trek-tag">Winter</span>
-            <span class="trek-tag">Beginner</span>
-            <span class="trek-tag">Weekend</span>
-          </div>
+          <div class="trow-tags"><span class="ttag">Spring</span><span class="ttag">Rhododendron</span><span class="ttag">Sunrise</span></div>
         </div>
-        <div class="trek-row__right">
-          <div class="trek-rating">
-            <span class="trek-rating-star">★</span>
-            <span class="trek-rating-score">4.8</span>
-            <span class="trek-rating-count">(201)</span>
-          </div>
+        <div class="trow-right">
+          <div class="trating"><span class="tstar">★</span><span class="tscore">4.8</span><span class="tcnt">(178)</span></div>
           <div>
-            <div class="trek-row__price">
-              <div class="trek-row__price-main">₹6,500</div>
-              <div class="trek-row__price-note">per person</div>
-            </div>
-            <a href="trek-detail.html" class="btn btn-primary btn-sm" style="margin-top:12px;width:100%">View &amp; Book</a>
+            <div class="tprice-main">₹12,800</div>
+            <div class="tprice-note">per person</div>
+            <a href="trek-detail.html" class="btn btn-ink btn-sm" style="margin-top:12px;width:100%;border-radius:var(--r-md)" onclick="event.stopPropagation()">View &amp; Book</a>
           </div>
         </div>
       </div>
 
-      <div class="trek-row reveal" data-tags="moderate darjeeling spring">
-        <div class="trek-row__thumb">
-          <div class="trek-row__thumb-bg bg-sanda"></div>
-          <div class="trek-row__thumb-overlay"></div>
-        </div>
-        <div class="trek-row__body">
+      <div class="trow sr d2s" data-tags="hard spiti summer" onclick="location.href='trek-detail.html'">
+        <div class="trow-thumb"><div class="trow-bg bg-p"></div><div class="trow-overlay"></div></div>
+        <div class="trow-body">
           <div>
-            <div style="display:flex;gap:8px;margin-bottom:10px">
-              <span class="badge badge-moderate">Moderate</span>
-            </div>
-            <div class="trek-row__title">Sandakphu Trek</div>
-            <p class="trek-row__desc">The highest point in West Bengal at 3,636m. On clear mornings, you can see 4 of the world's 5 highest peaks — Everest, Kangchenjunga, Lhotse and Makalu.</p>
-            <div class="trek-card__meta" style="margin-bottom:12px">
-              <span class="trek-meta">📍 Darjeeling</span>
-              <span class="trek-meta">⏱ 7 Days</span>
-              <span class="trek-meta">📏 57 km</span>
-              <span class="trek-meta">🏔 3,636m</span>
-            </div>
+            <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap"><span class="badge badge-hard">Hard</span><span class="badge" style="background:#fee2e2;color:#991b1b">Expert Only</span></div>
+            <div class="trow-title">Pin Parvati Pass</div>
+            <p class="trow-desc">The ultimate crossing: lush Parvati Valley to barren Spiti moonscape at 5,300m. One of the most remote and demanding treks in the entire Himalayas.</p>
+            <div class="trow-metas"><span class="tm">📍 Spiti Valley</span><span class="tm">⏱ 11 Days</span><span class="tm">📏 110 km</span><span class="tm">🏔 5,300m</span><span class="tm">👥 6–10 people</span></div>
           </div>
-          <div class="trek-row__tags">
-            <span class="trek-tag">Spring</span>
-            <span class="trek-tag">Rhododendron</span>
-            <span class="trek-tag">Sunrise Views</span>
+          <div class="trow-tags"><span class="ttag">Summer</span><span class="ttag">Remote</span><span class="ttag">High Altitude</span></div>
+        </div>
+        <div class="trow-right">
+          <div class="trating"><span class="tstar">★</span><span class="tscore">4.7</span><span class="tcnt">(89)</span></div>
+          <div>
+            <div class="tprice-main">₹22,000</div>
+            <div class="tprice-note">per person</div>
+            <a href="trek-detail.html" class="btn btn-ink btn-sm" style="margin-top:12px;width:100%;border-radius:var(--r-md)" onclick="event.stopPropagation()">View &amp; Book</a>
           </div>
         </div>
-        <div class="trek-row__right">
-          <div class="trek-rating">
-            <span class="trek-rating-star">★</span>
-            <span class="trek-rating-score">4.8</span>
-            <span class="trek-rating-count">(178)</span>
-          </div>
+      </div>
+
+      <div class="trow sr" data-tags="moderate himachal summer" onclick="location.href='trek-detail.html'">
+        <div class="trow-thumb"><div class="trow-bg bg-h"></div><div class="trow-overlay"></div></div>
+        <div class="trow-body">
           <div>
-            <div class="trek-row__price">
-              <div class="trek-row__price-main">₹12,800</div>
-              <div class="trek-row__price-note">per person</div>
-            </div>
-            <a href="trek-detail.html" class="btn btn-primary btn-sm" style="margin-top:12px;width:100%">View &amp; Book</a>
+            <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap"><span class="badge badge-mod">Moderate</span></div>
+            <div class="trow-title">Hampta Pass</div>
+            <p class="trow-desc">A stunning contrast trek — cross from the green, lush Kullu Valley to the arid, dramatic Spiti side. The transition at 4,270m is nothing short of magical.</p>
+            <div class="trow-metas"><span class="tm">📍 Himachal</span><span class="tm">⏱ 5 Days</span><span class="tm">📏 35 km</span><span class="tm">🏔 4,270m</span><span class="tm">👥 8–14 people</span></div>
+          </div>
+          <div class="trow-tags"><span class="ttag">Summer</span><span class="ttag">Landscape Contrast</span></div>
+        </div>
+        <div class="trow-right">
+          <div class="trating"><span class="tstar">★</span><span class="tscore">4.7</span><span class="tcnt">(167)</span></div>
+          <div>
+            <div class="tprice-main">₹9,800</div>
+            <div class="tprice-note">per person</div>
+            <a href="trek-detail.html" class="btn btn-ink btn-sm" style="margin-top:12px;width:100%;border-radius:var(--r-md)" onclick="event.stopPropagation()">View &amp; Book</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="trow sr d1s" data-tags="hard kashmir summer" onclick="location.href='trek-detail.html'">
+        <div class="trow-thumb"><div class="trow-bg bg-g"></div><div class="trow-overlay"></div></div>
+        <div class="trow-body">
+          <div>
+            <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap"><span class="badge badge-hard">Challenging</span><span class="badge badge-gold">Must Do</span></div>
+            <div class="trow-title">Kashmir Great Lakes</div>
+            <p class="trow-desc">Seven pristine alpine lakes in seven days — Vishansar, Krishansar, Gadsar, Satsar, Gangabal. Kashmir's crown jewel trek, breathtaking at every turn.</p>
+            <div class="trow-metas"><span class="tm">📍 Kashmir</span><span class="tm">⏱ 7 Days</span><span class="tm">📏 70 km</span><span class="tm">🏔 4,200m</span><span class="tm">👥 8–12 people</span></div>
+          </div>
+          <div class="trow-tags"><span class="ttag">Summer</span><span class="ttag">Alpine Lakes</span><span class="ttag">Kashmir</span></div>
+        </div>
+        <div class="trow-right">
+          <div class="trating"><span class="tstar">★</span><span class="tscore">4.9</span><span class="tcnt">(234)</span></div>
+          <div>
+            <div class="tprice-main">₹16,500</div>
+            <div class="tprice-note">per person</div>
+            <a href="trek-detail.html" class="btn btn-ink btn-sm" style="margin-top:12px;width:100%;border-radius:var(--r-md)" onclick="event.stopPropagation()">View &amp; Book</a>
           </div>
         </div>
       </div>
 
     </div>
   </div>
-</section>
+</div>
 
-<div class="newsletter">
-  <div class="container">
-    <div class="newsletter-inner">
-      <div class="newsletter-text">
+<div class="nl-band">
+  <div class="wrap">
+    <div class="nl-inner">
+      <div class="nl-text">
         <h3>Get New Trek Alerts</h3>
         <p>We add new trails every month — be the first to know</p>
       </div>
-      <form class="newsletter-form" onsubmit="return false;">
-        <input type="email" class="newsletter-input" placeholder="your@email.com"/>
-        <button type="submit" class="btn btn-gold">Notify Me</button>
+      <form class="nl-form" onsubmit="handleNL(event,this)">
+        <input type="email" class="nl-input" placeholder="your@email.com" required/>
+        <button type="submit" class="btn btn-ink btn-lg">Notify Me</button>
       </form>
     </div>
   </div>
 </div>
 
 <footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
+  <div class="wrap">
+    <div class="fawards">
+      <div class="fai"><div class="fai-icon">🏆</div><div class="fai-txt"><strong>India's Best Trek Org</strong>Adventure Tourism Awards 2023</div></div>
+      <div class="fai"><div class="fai-icon">🌿</div><div class="fai-txt"><strong>Green Tourism Award</strong>Ministry of Tourism 2022</div></div>
+      <div class="fai"><div class="fai-icon">⭐</div><div class="fai-txt"><strong>4.9/5 Rated</strong>35,000+ verified reviews</div></div>
+      <div class="fai"><div class="fai-icon">🛡️</div><div class="fai-txt"><strong>Zero Incidents</strong>18 consecutive years</div></div>
+    </div>
+    <div class="footer-main">
       <div>
-        <div class="nav-logo"><span class="nav-logo-text">Shikhar</span><span class="nav-logo-accent">.</span></div>
-        <p class="footer-brand-desc">India's most trusted trekking organisation since 2006.</p>
+        <div class="fb-logo">Shikhar<span>.</span></div>
+        <p class="fb-desc">India's most trusted trekking organisation since 2006. 500+ documented trails, WFR-certified guides, zero-waste promise.</p>
+        <div class="fsoc"><a class="fsb" href="#">Ig</a><a class="fsb" href="#">Yt</a><a class="fsb" href="#">in</a><a class="fsb" href="#">Fb</a><a class="fsb" href="#">Wp</a></div>
+        <div class="fnl"><p>Get trek alerts &amp; stories</p><form class="fnl-form" onsubmit="handleNL(event,this)"><input type="email" class="fnl-input" placeholder="your@email.com" required/><button type="submit" class="fnl-btn">Go</button></form></div>
       </div>
-      <div>
-        <div class="footer-col-title">Pages</div>
-        <a href="index.html" class="footer-link">Home</a>
-        <a href="treks.html" class="footer-link">All Treks</a>
-        <a href="gallery.html" class="footer-link">Gallery</a>
-        <a href="about.html" class="footer-link">About</a>
-        <a href="contact.html" class="footer-link">Contact</a>
-      </div>
-      <div>
-        <div class="footer-col-title">Regions</div>
-        <a href="treks.html" class="footer-link">Uttarakhand</a>
-        <a href="treks.html" class="footer-link">Himachal</a>
-        <a href="treks.html" class="footer-link">Kashmir</a>
-        <a href="treks.html" class="footer-link">Darjeeling</a>
-      </div>
-      <div>
-        <div class="footer-col-title">Support</div>
-        <a href="contact.html" class="footer-link">Contact Us</a>
-        <a href="#" class="footer-link">FAQs</a>
-        <a href="#" class="footer-link">Cancellation</a>
-      </div>
+      <div><div class="fct">Our Treks</div><a href="treks.html" class="fl2">All 500+ Treks</a><a href="treks.html" class="fl2">Upcoming Batches</a><a href="treks.html" class="fl2">Easy Treks</a><a href="treks.html" class="fl2">Moderate Treks</a><a href="treks.html" class="fl2">Challenging Treks</a><a href="treks.html" class="fl2">Corporate Treks</a></div>
+      <div><div class="fct">Destinations</div><a href="treks.html" class="fl2">Uttarakhand</a><a href="treks.html" class="fl2">Himachal Pradesh</a><a href="treks.html" class="fl2">Kashmir</a><a href="treks.html" class="fl2">Sikkim &amp; Bengal</a><a href="treks.html" class="fl2">Spiti Valley</a><a href="treks.html" class="fl2">Ladakh</a></div>
+      <div><div class="fct">Company</div><a href="about.html" class="fl2">About Shikhar</a><a href="about.html" class="fl2">Our Story</a><a href="about.html" class="fl2">Meet the Team</a><a href="#" class="fl2">Careers</a><a href="#" class="fl2">Blog</a></div>
+      <div><div class="fct">Support</div><a href="contact.html" class="fl2">Contact Us</a><a href="#" class="fl2">FAQs</a><a href="#" class="fl2">Safety Policy</a><a href="#" class="fl2">Cancellation</a><a href="#" class="fl2">Gear Checklist</a><div style="margin-top:1.25rem"><div class="fct">Contact</div><p style="font-size:.8125rem;color:rgba(255,255,255,.38);line-height:1.8;font-weight:300">📞 +91 98765 43210<br/>✉️ hello@shikhar.in<br/>📍 Dehradun, Uttarakhand</p></div></div>
     </div>
     <div class="footer-bottom">
-      <p class="footer-copy">© 2025 Shikhar. All rights reserved.</p>
-      <div class="social-row">
-        <a class="social-btn" href="#">in</a>
-        <a class="social-btn" href="#">ig</a>
-        <a class="social-btn" href="#">yt</a>
-      </div>
+      <p class="fcopy">© 2025 Shikhar Trekking Pvt. Ltd. All rights reserved.</p>
+      <div class="flegal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Refund Policy</a></div>
+      <p style="font-size:.75rem;color:rgba(255,255,255,.18)">Made with ❤️ in the Himalayas</p>
     </div>
   </div>
 </footer>
-<script src="js/main.js"></script>
+
+<script>
+// Nav hamburger
+const ham=document.getElementById('ham'),mob=document.getElementById('mobMenu');
+ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('open');document.body.style.overflow=mob.classList.contains('open')?'hidden':'';});
+mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{ham.classList.remove('open');mob.classList.remove('open');document.body.style.overflow='';}));
+// Scroll reveal
+const srEls=document.querySelectorAll('.sr');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');obs.unobserve(e.target)}});},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+srEls.forEach(el=>obs.observe(el));
+// Filter chips
+document.querySelectorAll('.fc').forEach(fc=>{
+  fc.addEventListener('click',function(){
+    // Find parent group and clear group
+    const grp=this.closest('.fgroup');
+    if(grp)grp.querySelectorAll('.fc').forEach(c=>c.classList.remove('on'));
+    this.classList.add('on');
+    const f=this.dataset.f;
+    let count=0;
+    document.querySelectorAll('.trow').forEach(row=>{
+      const tags=row.dataset.tags||'';
+      const show=f==='all'||tags.includes(f);
+      row.style.transition='opacity .3s,transform .3s';
+      if(show){row.style.opacity='1';row.style.transform='';row.style.pointerEvents='';count++;}
+      else{row.style.opacity='.2';row.style.transform='scale(.98)';row.style.pointerEvents='none';}
+    });
+    document.getElementById('rcount').textContent=count+' treks';
+  });
+});
+function handleNL(e,form){e.preventDefault();const btn=form.querySelector('button');btn.textContent='✓ Done!';btn.style.background='#166534';btn.style.color='white';setTimeout(()=>{btn.textContent='Notify Me'||'Go';btn.style.background='';btn.style.color='';form.reset();},3000);}
+</script>
 </body>
 </html>

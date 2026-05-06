@@ -1,231 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kedarkantha Peak — Shikhar</title>
-  <link rel="stylesheet" href="css/global.css"/>
-  <style>
-    .detail-hero {
-      height: clamp(320px, 50vh, 520px);
-      position: relative;
-      display: flex;
-      align-items: flex-end;
-      padding-bottom: 2.5rem;
-      overflow: hidden;
-    }
-    .detail-hero-bg { position:absolute;inset:0; transition:transform 6s ease; }
-    .detail-hero:hover .detail-hero-bg { transform:scale(1.03); }
-    .detail-hero-overlay {
-      position:absolute;inset:0;
-      background: linear-gradient(to top, rgba(5,12,7,0.92) 0%, rgba(5,12,7,0.35) 50%, transparent 100%);
-    }
-    .detail-hero-content { position:relative;z-index:1; width:100%; }
-    .detail-breadcrumb { font-size:0.75rem; color:rgba(255,255,255,0.45); margin-bottom:0.75rem; }
-    .detail-breadcrumb a { color:rgba(255,255,255,0.55); }
-    .detail-breadcrumb span { margin:0 6px; }
-    .detail-hero h1 {
-      font-family:var(--font-display);
-      font-size:clamp(2rem,5vw,4rem);
-      font-weight:300;
-      color:white;
-      letter-spacing:-0.025em;
-      margin-bottom:1rem;
-    }
-    .detail-badges { display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px; }
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Kedarkantha Peak — Shikhar</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#080f0a;--pine:#0f2317;--moss:#1a3d28;--fern:#2e6644;--sage:#4a8c60;--mist:#8fbfa0;--dew:#c2deca;--foam:#e8f4ec;--snow:#f5faf6;--white:#fff;--gold:#c8a84b;--gold2:#e8cc7a;--slate:#3d5a47;--fog:#7a9a84;--ff-display:'Cormorant',Georgia,serif;--ff-body:'DM Sans',system-ui,sans-serif;--ease-apple:cubic-bezier(.25,.46,.45,.94);--ease-spring:cubic-bezier(.34,1.56,.64,1);--ease-out:cubic-bezier(0,0,.2,1);--r-sm:6px;--r-md:14px;--r-lg:22px;--r-xl:32px;--r-full:9999px;--sh-sm:0 2px 8px rgba(8,15,10,.07);--sh-md:0 8px 30px rgba(8,15,10,.12);--sh-lg:0 20px 60px rgba(8,15,10,.18);--sh-xl:0 40px 100px rgba(8,15,10,.25)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{font-size:16px;scroll-behavior:smooth}
+body{font-family:var(--ff-body);background:var(--white);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}button{cursor:pointer;font-family:inherit;border:none;background:none}input,select,textarea{font-family:inherit}ul{list-style:none}
+.wrap{width:100%;max-width:1320px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:var(--r-full);font-size:.875rem;font-weight:600;transition:all .35s var(--ease-apple);white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn-ink{background:var(--ink);color:#fff}
+.btn-ink:hover{background:var(--moss);transform:translateY(-2px);box-shadow:var(--sh-md)}
+.btn-gold{background:var(--gold);color:var(--ink);box-shadow:0 4px 20px rgba(200,168,75,.3)}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn-outline{background:transparent;border:1.5px solid var(--dew);color:var(--ink)}
+.btn-outline:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn-lg{padding:17px 36px;font-size:1rem}.btn-sm{padding:9px 20px;font-size:.8125rem}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:var(--r-full);font-size:.6875rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.badge-easy{background:#d1fae5;color:#065f46}.badge-glass{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(8px)}
+.eyebrow{font-size:.6875rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sage)}
+.sr{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
+.sr.show{opacity:1;transform:translateY(0)}
+.d1s{transition-delay:.1s}.d2s{transition-delay:.2s}.d3s{transition-delay:.3s}.d4s{transition-delay:.4s}
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;height:72px;z-index:1000;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);box-shadow:var(--sh-sm)}
+.nav-inner{height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--ff-display);font-size:1.625rem;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.logo span{color:var(--fern)}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-a{padding:8px 14px;border-radius:var(--r-sm);font-size:.875rem;font-weight:500;color:var(--slate);transition:all .2s}
+.nav-a:hover,.nav-a.on{color:var(--ink);background:var(--foam)}
+.nav-cta{background:var(--ink);color:#fff;padding:9px 22px;border-radius:var(--r-full);font-size:.8125rem;font-weight:700;transition:all .25s}
+.nav-cta:hover{background:var(--moss);transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:6px;border-radius:8px}
+.ham-line{width:22px;height:1.5px;background:var(--ink);border-radius:2px;transition:all .3s;transform-origin:center}
+.hamburger.open .ham-line:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open .ham-line:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open .ham-line:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mob-menu{display:none;position:fixed;top:72px;left:0;right:0;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);padding:1.5rem;z-index:999;border-bottom:1px solid var(--foam);transform:translateY(-12px);opacity:0;transition:all .3s;pointer-events:none}
+.mob-menu.open{transform:translateY(0);opacity:1;pointer-events:auto;display:block}
+.mob-menu .nav-a{display:block;padding:13px 16px;font-size:1rem;color:var(--slate);border-radius:var(--r-md);margin-bottom:4px}
+/* HERO */
+.detail-hero{height:clamp(340px,52vh,560px);position:relative;display:flex;align-items:flex-end;padding-bottom:2.5rem;overflow:hidden}
+.dhero-bg{position:absolute;inset:0;background:linear-gradient(165deg,#1a5c36,#0d3520 45%,#051a0d);transition:transform 6s ease}
+.detail-hero:hover .dhero-bg{transform:scale(1.03)}
+.dhero-mtn{position:absolute;bottom:0;left:0;right:0;pointer-events:none;opacity:.18}
+.dhero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,12,7,.92) 0%,rgba(5,12,7,.3) 55%,transparent 100%)}
+.dhero-content{position:relative;z-index:1;width:100%}
+.dhero-bread{font-size:.75rem;color:rgba(255,255,255,.38);margin-bottom:.75rem}
+.dhero-bread a{color:rgba(255,255,255,.48);transition:color .2s}
+.dhero-bread a:hover{color:rgba(255,255,255,.8)}
+.dhero-bread span{margin:0 6px;opacity:.4}
+.dhero-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:.75rem}
+.dhero h1{font-family:var(--ff-display);font-size:clamp(2rem,5.5vw,4.5rem);font-weight:300;color:#fff;letter-spacing:-.03em;line-height:1}
+/* PHOTO STRIP */
+.photo-strip{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;border-radius:var(--r-xl);overflow:hidden;margin-bottom:2rem}
+.ps-item{aspect-ratio:4/3;position:relative;overflow:hidden;cursor:pointer}
+.ps-item:first-child{aspect-ratio:16/9;grid-row:span 2}
+.ps-bg{position:absolute;inset:0;transition:transform .6s var(--ease-apple)}
+.ps-item:hover .ps-bg{transform:scale(1.06)}
+.ps-overlay{position:absolute;inset:0;background:rgba(8,15,10,0);transition:background .3s}
+.ps-item:hover .ps-overlay{background:rgba(8,15,10,.25)}
+.ps-more{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.875rem;font-weight:600;color:#fff;opacity:0;transition:opacity .3s}
+.ps-item:last-child:hover .ps-more{opacity:1}
+/* BODY LAYOUT */
+.detail-layout{display:grid;grid-template-columns:1fr 380px;gap:2.5rem;padding:2.5rem 0 5rem;align-items:flex-start}
+/* QUICK FACTS */
+.facts-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:2.5rem}
+.fact{background:var(--snow);border-radius:var(--r-lg);padding:1.1rem;text-align:center;border:1px solid rgba(8,15,10,.05);transition:transform .3s var(--ease-spring)}
+.fact:hover{transform:translateY(-3px);box-shadow:var(--sh-sm)}
+.fact-ico{font-size:1.25rem;margin-bottom:5px}
+.fact-lbl{font-size:.625rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--fog);margin-bottom:3px}
+.fact-val{font-family:var(--ff-display);font-size:1.375rem;font-weight:600;color:var(--ink)}
+/* SECTIONS */
+.ds{margin-bottom:2.25rem}
+.ds h2{font-family:var(--ff-display);font-size:1.625rem;font-weight:400;color:var(--ink);margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--foam)}
+.ds p{font-size:.9375rem;color:var(--slate);line-height:1.85;font-weight:300;margin-bottom:1rem}
+/* ITINERARY */
+.itin{display:flex;flex-direction:column}
+.iday{display:grid;grid-template-columns:44px 1fr;gap:16px;padding-bottom:1.75rem;position:relative}
+.iday::before{content:'';position:absolute;left:21px;top:44px;bottom:0;width:2px;background:linear-gradient(to bottom,var(--dew),transparent)}
+.iday:last-child::before{display:none}
+.iday-num{width:44px;height:44px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8125rem;font-weight:700;flex-shrink:0;z-index:1}
+.iday-body{padding-top:9px}
+.iday-title{font-size:.9375rem;font-weight:600;color:var(--ink);margin-bottom:4px}
+.iday-desc{font-size:.875rem;color:var(--fog);line-height:1.65;font-weight:300}
+.iday-stats{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap}
+.istat{font-size:.75rem;color:var(--fern);font-weight:600;background:var(--foam);padding:2px 9px;border-radius:var(--r-full)}
+/* INCLUDES */
+.inc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.inc-col h4{font-size:.8125rem;font-weight:700;color:var(--ink);margin-bottom:.75rem;display:flex;align-items:center;gap:6px}
+.inc-item{display:flex;align-items:flex-start;gap:8px;padding:7px 0;font-size:.875rem;color:var(--slate);border-bottom:1px solid var(--foam)}
+.inc-item:last-child{border-bottom:none}
+.inc-icon{font-size:.8125rem;flex-shrink:0;margin-top:2px}
+/* REVIEWS */
+.review-summary{display:flex;align-items:center;gap:2rem;padding:1.5rem;background:var(--snow);border-radius:var(--r-xl);margin-bottom:1.25rem;flex-wrap:wrap}
+.rs-score{font-family:var(--ff-display);font-size:4rem;font-weight:300;color:var(--ink);line-height:1}
+.rs-stars{display:flex;gap:3px;margin-bottom:4px}
+.rs-star{color:var(--gold);font-size:1.125rem}
+.rs-count{font-size:.8125rem;color:var(--fog)}
+.rs-bars{flex:1;display:flex;flex-direction:column;gap:5px;min-width:180px}
+.rbar-row{display:flex;align-items:center;gap:8px;font-size:.8125rem}
+.rbar-lbl{color:var(--fog);width:36px;text-align:right;flex-shrink:0}
+.rbar-track{flex:1;height:6px;background:var(--dew);border-radius:var(--r-full);overflow:hidden}
+.rbar-fill{height:100%;background:var(--gold);border-radius:var(--r-full)}
+.rbar-pct{color:var(--fog);width:32px;flex-shrink:0}
+.review-card{background:var(--white);border:1px solid rgba(8,15,10,.07);border-radius:var(--r-lg);padding:1.25rem;margin-bottom:12px}
+.rc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem;flex-wrap:wrap;gap:8px}
+.rc-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.875rem;font-weight:700;color:#fff;flex-shrink:0}
+.rc-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rc-name{font-size:.9375rem;font-weight:600;color:var(--ink)}
+.rc-date{font-size:.75rem;color:var(--fog)}
+.rc-stars{display:flex;gap:2px}
+.rc-star{color:var(--gold);font-size:.75rem}
+.rc-verified{background:#d1fae5;color:#065f46;padding:3px 10px;border-radius:var(--r-full);font-size:.6875rem;font-weight:700}
+.rc-text{font-size:.875rem;color:var(--slate);line-height:1.7;font-weight:300}
+/* BOOKING CARD */
+.booking-card{background:#fff;border-radius:var(--r-xl);border:1.5px solid rgba(8,15,10,.08);padding:1.875rem;position:sticky;top:90px;box-shadow:var(--sh-xl)}
+.bc-title{font-family:var(--ff-display);font-size:1.5rem;font-weight:400;color:var(--ink);margin-bottom:2px}
+.bc-price{font-family:var(--ff-display);font-size:2.75rem;font-weight:600;color:var(--ink);line-height:1}
+.bc-price sub{font-family:var(--ff-body);font-size:.8125rem;font-weight:400;color:var(--fog)}
+.bc-cancel{font-size:.8125rem;color:var(--fern);font-weight:600;margin:6px 0 1.25rem}
+.bc-label{font-size:.6875rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--fog);margin-bottom:8px}
+.date-list{display:flex;flex-direction:column;gap:8px;margin-bottom:1.25rem}
+.ditem{background:var(--snow);border:1.5px solid transparent;border-radius:var(--r-md);padding:.875rem 1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all .25s var(--ease-apple)}
+.ditem:hover{border-color:var(--mist);background:#fff}
+.ditem.on{border-color:var(--fern);background:#fff;box-shadow:0 0 0 3px rgba(46,102,68,.08)}
+.ditem-left{font-size:.875rem;font-weight:500;color:var(--ink)}
+.ditem-left small{display:block;font-size:.75rem;color:var(--fog);font-weight:400;margin-top:1px}
+.dslot{font-size:.75rem;font-weight:700}
+.slot-low{color:#c84b2a}.slot-ok{color:var(--fern)}
+.form-label{display:block;font-size:.6875rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--fog);margin-bottom:6px}
+.form-sel{width:100%;background:var(--snow);border:1.5px solid rgba(8,15,10,.1);border-radius:var(--r-md);padding:11px 14px;font-size:.875rem;color:var(--ink);outline:none;transition:border-color .25s;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a8c60' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px}
+.form-sel:focus{border-color:var(--fern)}
+.bc-divider{height:1px;background:var(--foam);margin:1rem 0}
+.bc-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.bc-total span{font-size:.875rem;color:var(--fog)}
+.bc-total strong{font-family:var(--ff-display);font-size:1.5rem;font-weight:600;color:var(--ink)}
+.bc-secure{text-align:center;font-size:.75rem;color:var(--fog);margin-top:10px}
+.bc-links{display:flex;gap:10px;font-size:.8125rem;text-align:center;margin-top:1rem}
+.bc-links a{flex:1;color:var(--fern);font-weight:600;padding:.75rem;background:var(--foam);border-radius:var(--r-md);transition:background .2s}
+.bc-links a:hover{background:var(--dew)}
+/* FOOTER */
+.nl-band{background:linear-gradient(135deg,var(--moss),var(--fern) 50%,var(--sage));padding:4rem 0}
+.nl-inner{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.nl-text h3{font-family:var(--ff-display);font-size:clamp(1.75rem,3vw,2.5rem);color:#fff;font-weight:300;margin-bottom:4px}
+.nl-text p{color:rgba(255,255,255,.55);font-size:.9375rem;font-weight:300}
+.nl-form{display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap}
+.nl-input{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.22);color:#fff;padding:13px 20px;border-radius:var(--r-full);font-size:.875rem;width:260px;outline:none;transition:border-color .3s}
+.nl-input::placeholder{color:rgba(255,255,255,.35)}
+.nl-input:focus{border-color:rgba(255,255,255,.65)}
+.footer{background:var(--ink);padding-top:4.5rem}
+.footer-main{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3.5rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.fb-logo{font-family:var(--ff-display);font-size:1.75rem;font-weight:600;color:#fff;margin-bottom:1rem}
+.fb-logo span{color:var(--gold)}
+.fb-desc{font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.8;font-weight:300;max-width:300px;margin-bottom:1.5rem}
+.fsoc{display:flex;gap:8px}
+.fsb{width:36px;height:36px;border-radius:var(--r-sm);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);font-size:.75rem;font-weight:700;transition:all .25s}
+.fsb:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.fct{font-size:.625rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:1.25rem}
+.fl2{display:block;color:rgba(255,255,255,.48);font-size:.875rem;margin-bottom:.875rem;transition:color .2s}
+.fl2:hover{color:var(--gold)}
+.fawards{display:flex;align-items:center;gap:2rem;flex-wrap:wrap;padding:1.5rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.fai{display:flex;align-items:center;gap:8px}
+.fai-txt{font-size:.75rem;color:rgba(255,255,255,.32)}
+.fai-txt strong{display:block;color:rgba(255,255,255,.55);font-weight:600;font-size:.8125rem;margin-bottom:1px}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;flex-wrap:wrap;gap:1rem}
+.fcopy{font-size:.8125rem;color:rgba(255,255,255,.22)}
+.flegal{display:flex;gap:1.5rem}
+.flegal a{font-size:.8125rem;color:rgba(255,255,255,.28);transition:color .2s}
+.flegal a:hover{color:rgba(255,255,255,.6)}
+.fnl{margin-top:1.5rem}.fnl p{font-size:.75rem;color:rgba(255,255,255,.28);margin-bottom:.75rem}
+.fnl-form{display:flex;gap:8px}
+.fnl-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#fff;padding:10px 14px;border-radius:var(--r-full);font-size:.8125rem;outline:none;min-width:0;transition:border-color .3s}
+.fnl-input::placeholder{color:rgba(255,255,255,.22)}
+.fnl-input:focus{border-color:rgba(200,168,75,.4)}
+.fnl-btn{background:var(--gold);color:var(--ink);padding:10px 18px;border-radius:var(--r-full);font-size:.8125rem;font-weight:700;transition:all .25s;flex-shrink:0}
+.fnl-btn:hover{background:var(--gold2)}
 
-    /* BODY LAYOUT */
-    .detail-body {
-      display: grid;
-      grid-template-columns: 1fr 360px;
-      gap: 2.5rem;
-      padding: 3rem 0 5rem;
-      align-items: flex-start;
-    }
-
-    /* LEFT CONTENT */
-    .detail-section { margin-bottom: 2.5rem; }
-    .detail-section h2 {
-      font-family:var(--font-display);
-      font-size:1.5rem;
-      font-weight:400;
-      color:var(--ink);
-      margin-bottom:1rem;
-      padding-bottom:0.75rem;
-      border-bottom:1px solid var(--frost);
-    }
-    .detail-section p { font-size:0.9375rem; color:var(--slate); line-height:1.8; font-weight:300; margin-bottom:1rem; }
-
-    .quick-facts {
-      display: grid;
-      grid-template-columns: repeat(4,1fr);
-      gap: 12px;
-      margin-bottom: 2.5rem;
-    }
-    .fact-item {
-      background: var(--offwhite);
-      border-radius: var(--r-md);
-      padding: 1.1rem;
-      text-align: center;
-    }
-    .fact-icon { font-size:1.375rem; margin-bottom:6px; }
-    .fact-label { font-size:0.6875rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--fog); margin-bottom:4px; }
-    .fact-value { font-family:var(--font-display); font-size:1.375rem; font-weight:600; color:var(--ink); }
-
-    /* ITINERARY */
-    .itinerary { display:flex; flex-direction:column; gap:0; }
-    .itinerary-day {
-      display: grid;
-      grid-template-columns: 40px 1fr;
-      gap: 16px;
-      padding-bottom: 20px;
-      position: relative;
-    }
-    .itinerary-day::before {
-      content:'';
-      position:absolute;
-      left: 19px; top:40px; bottom:0;
-      width:2px;
-      background: var(--mist);
-    }
-    .itinerary-day:last-child::before { display:none; }
-    .day-num {
-      width:40px;height:40px;border-radius:50%;
-      background:var(--ink);color:white;
-      display:flex;align-items:center;justify-content:center;
-      font-size:0.8125rem;font-weight:700;
-      flex-shrink:0;z-index:1;
-    }
-    .day-content { padding-top:8px; }
-    .day-title { font-size:0.9375rem; font-weight:600; color:var(--ink); margin-bottom:4px; }
-    .day-desc { font-size:0.875rem; color:var(--fog); line-height:1.65; font-weight:300; }
-    .day-stats { display:flex; gap:12px; margin-top:6px; }
-    .day-stat { font-size:0.75rem; color:var(--fern); font-weight:600; }
-
-    /* INCLUDES */
-    .includes-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; }
-    .include-item, .exclude-item {
-      display:flex; align-items:flex-start; gap:10px;
-      padding:8px 0;
-      font-size:0.875rem;
-      border-bottom:1px solid var(--frost);
-    }
-    .include-icon { color:#166534; font-size:0.875rem; flex-shrink:0; margin-top:1px; }
-    .exclude-icon { color:#991b1b; font-size:0.875rem; flex-shrink:0; margin-top:1px; }
-
-    /* BOOKING CARD */
-    .booking-card {
-      background: white;
-      border-radius: var(--r-xl);
-      border: 1.5px solid rgba(10,26,15,0.09);
-      padding: 1.75rem;
-      position: sticky;
-      top: 90px;
-      box-shadow: var(--sh-lg);
-    }
-    .booking-card h3 { font-family:var(--font-display); font-size:1.5rem; font-weight:400; color:var(--ink); margin-bottom:4px; }
-    .booking-price { font-family:var(--font-display); font-size:2.5rem; font-weight:600; color:var(--ink); line-height:1; }
-    .booking-price sub { font-family:var(--font-body); font-size:0.8125rem; font-weight:400; color:var(--fog); }
-    .booking-free-cancel { font-size:0.8125rem; color:var(--fern); font-weight:600; margin-bottom:1.25rem; }
-
-    .date-list { display:flex;flex-direction:column;gap:8px;margin:1rem 0 1.25rem; }
-    .date-item {
-      background:var(--offwhite);
-      border:1.5px solid transparent;
-      border-radius:var(--r-md);
-      padding:0.875rem 1rem;
-      display:flex;justify-content:space-between;align-items:center;
-      cursor:pointer;
-      transition:all var(--dur-base) var(--ease);
-    }
-    .date-item:hover { border-color:var(--mist); background:white; }
-    .date-item.active { border-color:var(--fern); background:white; box-shadow:0 0 0 3px rgba(62,122,80,0.08); }
-    .date-item-left { font-size:0.875rem; font-weight:500; color:var(--ink); }
-    .date-item-left small { display:block; font-size:0.75rem; color:var(--fog); font-weight:400; margin-top:1px; }
-    .date-slots { font-size:0.75rem; font-weight:700; }
-    .slots-low { color:#c84b2a; }
-    .slots-ok { color:var(--fern); }
-
-    .booking-divider { height:1px; background:var(--frost); margin:1rem 0; }
-    .booking-total { display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem; }
-    .booking-total span { font-size:0.875rem; color:var(--fog); }
-    .booking-total strong { font-family:var(--font-display);font-size:1.375rem;font-weight:600;color:var(--ink); }
-    .booking-secure { text-align:center; font-size:0.75rem; color:var(--fog); margin-top:10px; }
-
-    /* PHOTO STRIP */
-    .photo-strip {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 2rem;
-      border-radius: var(--r-md);
-      overflow: hidden;
-    }
-    .photo-strip-item { aspect-ratio:4/3; position:relative; overflow:hidden; cursor:pointer; }
-    .photo-strip-item:first-child { grid-column:span 2; aspect-ratio:2/1; }
-    .photo-strip-bg { position:absolute;inset:0;transition:transform var(--dur-slow) var(--ease); }
-    .photo-strip-item:hover .photo-strip-bg { transform:scale(1.05); }
-
-    @media(max-width:1024px) {
-      .detail-body { grid-template-columns:1fr; }
-      .booking-card { position:static; }
-      .quick-facts { grid-template-columns:repeat(2,1fr); }
-    }
-    @media(max-width:768px) {
-      .quick-facts { grid-template-columns:repeat(2,1fr); }
-      .includes-grid { grid-template-columns:1fr; }
-      .photo-strip { grid-template-columns:1fr 1fr; }
-      .photo-strip-item:first-child { grid-column:span 2; }
-    }
-  </style>
+@media(max-width:1100px){.detail-layout{grid-template-columns:1fr}.booking-card{position:static}.facts-row{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}.photo-strip{grid-template-columns:1fr 1fr}.ps-item:first-child{grid-column:span 2;grid-row:span 1;aspect-ratio:16/9}.inc-grid{grid-template-columns:1fr}.review-summary{flex-direction:column;gap:1rem}.footer-main{grid-template-columns:1fr 1fr;gap:2rem}.nl-inner{flex-direction:column;text-align:center}.nl-form{flex-direction:column;width:100%}.nl-input{width:100%}}
+@media(max-width:480px){.facts-row{grid-template-columns:repeat(2,1fr)}.photo-strip{grid-template-columns:1fr}.ps-item:first-child{grid-column:span 1}.footer-main{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-
-<nav class="nav light-nav" id="nav">
-  <div class="container">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <span class="nav-logo-text">Shikhar</span><span class="nav-logo-accent">.</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html" class="nav-link">Home</a></li>
-        <li><a href="treks.html" class="nav-link active">All Treks</a></li>
-        <li><a href="gallery.html" class="nav-link">Gallery</a></li>
-        <li><a href="about.html" class="nav-link">About</a></li>
-        <li><a href="contact.html" class="nav-link">Contact</a></li>
-      </ul>
-      <div class="nav-actions">
-        <a href="#booking" class="nav-book">Book This Trek</a>
-        <button class="hamburger" aria-label="Menu">
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-        </button>
-      </div>
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo">Shikhar<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-a">Home</a></li>
+      <li><a href="treks.html" class="nav-a on">All Treks</a></li>
+      <li><a href="gallery.html" class="nav-a">Gallery</a></li>
+      <li><a href="about.html" class="nav-a">About</a></li>
+      <li><a href="contact.html" class="nav-a">Contact</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:10px">
+      <a href="#booking" class="nav-cta">Book This Trek</a>
+      <button class="hamburger" id="ham"><span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span></button>
     </div>
   </div>
 </nav>
-<div class="mobile-menu">
-  <a href="index.html" class="nav-link">Home</a>
-  <a href="treks.html" class="nav-link">All Treks</a>
-  <a href="gallery.html" class="nav-link">Gallery</a>
-  <a href="about.html" class="nav-link">About</a>
-  <a href="contact.html" class="nav-link">Contact</a>
-  <a href="#booking" class="nav-book">Book This Trek</a>
+<div class="mob-menu" id="mobMenu">
+  <a href="index.html" class="nav-a">Home</a><a href="treks.html" class="nav-a">All Treks</a><a href="gallery.html" class="nav-a">Gallery</a><a href="about.html" class="nav-a">About</a><a href="contact.html" class="nav-a">Contact</a>
+  <a href="#booking" style="display:block;text-align:center;margin-top:1rem;padding:14px;border-radius:var(--r-full);background:var(--ink);color:#fff;font-weight:700">Book This Trek</a>
 </div>
 
 <!-- HERO -->
 <div class="detail-hero">
-  <div class="detail-hero-bg bg-keda"></div>
-  <svg style="position:absolute;bottom:0;left:0;right:0;pointer-events:none;opacity:0.12" viewBox="0 0 1440 200" preserveAspectRatio="none"><polygon points="0,200 0,120 200,50 400,130 600,40 800,120 1000,55 1200,120 1440,60 1440,200" fill="white"/></svg>
-  <div class="detail-hero-overlay"></div>
-  <div class="container detail-hero-content">
-    <div class="detail-breadcrumb">
-      <a href="index.html">Home</a><span>›</span>
-      <a href="treks.html">All Treks</a><span>›</span>
-      Kedarkantha Peak
-    </div>
-    <div class="detail-badges">
+  <div class="dhero-bg"></div>
+  <svg class="dhero-mtn" viewBox="0 0 1440 220" preserveAspectRatio="none"><polygon points="0,220 0,140 180,70 360,150 540,50 720,140 900,65 1080,145 1260,75 1440,130 1440,220" fill="white"/><polygon points="522,58 540,42 558,58" fill="white" opacity=".8"/><polygon points="882,73 900,55 918,73" fill="white" opacity=".7"/></svg>
+  <div class="dhero-overlay"></div>
+  <div class="wrap dhero-content">
+    <div class="dhero-bread"><a href="index.html">Home</a><span>›</span><a href="treks.html">All Treks</a><span>›</span>Kedarkantha Peak</div>
+    <div class="dhero-badges">
       <span class="badge badge-easy">Easy</span>
       <span class="badge badge-glass">⭐ 4.9 (342 reviews)</span>
       <span class="badge badge-glass">🏔 3,800m Altitude</span>
@@ -236,172 +226,213 @@
 </div>
 
 <!-- BODY -->
-<div class="container">
-  <div class="detail-body">
+<div class="wrap">
+  <div class="detail-layout">
 
     <!-- LEFT -->
     <div>
       <!-- Photo Strip -->
-      <div class="photo-strip reveal">
-        <div class="photo-strip-item"><div class="photo-strip-bg bg-keda"></div></div>
-        <div class="photo-strip-item"><div class="photo-strip-bg bg-deori"></div></div>
-        <div class="photo-strip-item"><div class="photo-strip-bg bg-vof"></div></div>
+      <div class="photo-strip sr">
+        <div class="ps-item"><div class="ps-bg" style="background:linear-gradient(165deg,#1a5c36,#0d3520 45%,#051a0d)"></div><div class="ps-overlay"></div></div>
+        <div class="ps-item"><div class="ps-bg" style="background:linear-gradient(165deg,#487a3a,#244518 45%,#0c1e06)"></div><div class="ps-overlay"></div></div>
+        <div class="ps-item"><div class="ps-bg" style="background:linear-gradient(165deg,#7a6228,#4a380a 45%,#1e1400)"></div><div class="ps-overlay"></div><div class="ps-more">+14 Photos</div></div>
       </div>
 
       <!-- Quick Facts -->
-      <div class="quick-facts reveal">
-        <div class="fact-item">
-          <div class="fact-icon">⏱</div>
-          <div class="fact-label">Duration</div>
-          <div class="fact-value">6 Days</div>
-        </div>
-        <div class="fact-item">
-          <div class="fact-icon">📏</div>
-          <div class="fact-label">Distance</div>
-          <div class="fact-value">20 km</div>
-        </div>
-        <div class="fact-item">
-          <div class="fact-icon">🏔</div>
-          <div class="fact-label">Max Altitude</div>
-          <div class="fact-value">3,800m</div>
-        </div>
-        <div class="fact-item">
-          <div class="fact-icon">👥</div>
-          <div class="fact-label">Group Size</div>
-          <div class="fact-value">8–15</div>
-        </div>
+      <div class="facts-row">
+        <div class="fact sr"><div class="fact-ico">⏱</div><div class="fact-lbl">Duration</div><div class="fact-val">6 Days</div></div>
+        <div class="fact sr d1s"><div class="fact-ico">📏</div><div class="fact-lbl">Distance</div><div class="fact-val">20 km</div></div>
+        <div class="fact sr d2s"><div class="fact-ico">🏔</div><div class="fact-lbl">Max Altitude</div><div class="fact-val">3,800m</div></div>
+        <div class="fact sr d3s"><div class="fact-ico">👥</div><div class="fact-lbl">Group Size</div><div class="fact-val">8–15</div></div>
       </div>
 
       <!-- About -->
-      <div class="detail-section reveal">
+      <div class="ds sr">
         <h2>About This Trek</h2>
-        <p>Kedarkantha is one of the most popular winter treks in India, and for good reason. Standing at 3,800 metres, the summit offers panoramic views of Swargarohini, Kalanag, Bandarpoonch and the majestic Khatling range.</p>
-        <p>The trail winds through dense pine forests laden with snow, open meadows, and centuries-old shepherd villages. In winter, the entire landscape transforms into a pristine white canvas — making it one of the most photogenic treks in the country.</p>
+        <p>Kedarkantha is one of the most celebrated winter treks in India, and it earns that reputation every single season. Standing at 3,800 metres, the summit offers panoramic views of Swargarohini, Kalanag, Bandarpoonch and the Khatling range — a Himalayan canvas that stops even seasoned trekkers in their tracks.</p>
+        <p>The trail winds through dense pine forests dusted with snow, open meadows, and ancient shepherd villages that feel frozen in another century. In winter, the entire landscape becomes pristine white — making it one of the most photographed treks in the country. Even on cloudy days, the journey itself is deeply rewarding.</p>
+        <p>This trek is genuinely accessible to beginners — but it is not without challenge. A 3 AM summit push through knee-deep snow, navigating steep ridgelines in low light, and the cold that bites at altitude are all very real. What Shikhar provides is the preparation, protocols and people to make those challenges feel manageable and ultimately triumphant.</p>
       </div>
 
       <!-- Itinerary -->
-      <div class="detail-section reveal">
+      <div class="ds sr">
         <h2>Day-by-Day Itinerary</h2>
-        <div class="itinerary">
-          <div class="itinerary-day">
-            <div class="day-num">1</div>
-            <div class="day-content">
-              <div class="day-title">Dehradun → Sankri (Overnight Drive)</div>
-              <p class="day-desc">Board a shared vehicle from Dehradun. Arrive at Sankri — our base village at 1,920m. Rest and acclimatise. Briefing from your trek leader.</p>
-              <div class="day-stats"><span class="day-stat">📍 Altitude: 1,920m</span></div>
+        <div class="itin">
+          <div class="iday">
+            <div class="iday-num">1</div>
+            <div class="iday-body">
+              <div class="iday-title">Dehradun → Sankri (Drive + Arrival)</div>
+              <p class="iday-desc">Shared vehicle from Dehradun ISBT at 6 AM. Arrive Sankri by afternoon. Rest, acclimatise, meet your trek leader. Gear check and briefing. Overnight at guesthouse.</p>
+              <div class="iday-stats"><span class="istat">📍 Sankri: 1,920m</span><span class="istat">🚗 Drive: ~9 hrs</span></div>
             </div>
           </div>
-          <div class="itinerary-day">
-            <div class="day-num">2</div>
-            <div class="day-content">
-              <div class="day-title">Sankri → Juda Ka Talab</div>
-              <p class="day-desc">Trek through oak and rhododendron forests to the frozen lake of Juda Ka Talab. Campsite here is magical in winter.</p>
-              <div class="day-stats"><span class="day-stat">📍 2,750m</span><span class="day-stat">📏 4.5 km</span><span class="day-stat">⏱ 4–5 hrs</span></div>
+          <div class="iday">
+            <div class="iday-num">2</div>
+            <div class="iday-body">
+              <div class="iday-title">Sankri → Juda Ka Talab (Trek begins)</div>
+              <p class="iday-desc">Trek through oak and rhododendron forests to the frozen lake of Juda Ka Talab. The forest is dense, atmospheric and absolutely magical in winter snow.</p>
+              <div class="iday-stats"><span class="istat">📍 2,750m</span><span class="istat">📏 4.5 km</span><span class="istat">⏱ 4–5 hrs</span></div>
             </div>
           </div>
-          <div class="itinerary-day">
-            <div class="day-num">3</div>
-            <div class="day-content">
-              <div class="day-title">Juda Ka Talab → Kedarkantha Base Camp</div>
-              <p class="day-desc">Short but steep climb to a wide alpine meadow at the base of the summit. Stunning views emerge as the treeline thins.</p>
-              <div class="day-stats"><span class="day-stat">📍 3,450m</span><span class="day-stat">📏 4 km</span><span class="day-stat">⏱ 3–4 hrs</span></div>
+          <div class="iday">
+            <div class="iday-num">3</div>
+            <div class="iday-body">
+              <div class="iday-title">Juda Ka Talab → Kedarkantha Base Camp</div>
+              <p class="iday-desc">Short but steep climb to a wide alpine meadow at the base of the summit. Stunning views open as the treeline thins. Rest and sleep early — summit day tomorrow.</p>
+              <div class="iday-stats"><span class="istat">📍 3,450m</span><span class="istat">📏 4 km</span><span class="istat">⏱ 3–4 hrs</span></div>
             </div>
           </div>
-          <div class="itinerary-day">
-            <div class="day-num">4</div>
-            <div class="day-content">
-              <div class="day-title">Summit Day — Kedarkantha Peak</div>
-              <p class="day-desc">Pre-dawn start (3 AM). A steep climb through deep snow leads to the 3,800m summit by sunrise. 360° panoramic views. Return to Sankri via a different trail.</p>
-              <div class="day-stats"><span class="day-stat">📍 3,800m SUMMIT</span><span class="day-stat">📏 13 km</span><span class="day-stat">⏱ 8–9 hrs</span></div>
+          <div class="iday">
+            <div class="iday-num">4</div>
+            <div class="iday-body">
+              <div class="iday-title">SUMMIT DAY — Kedarkantha Peak 🏔</div>
+              <p class="iday-desc">Pre-dawn start at 3 AM. A demanding climb through deep snow leads to the 3,800m summit by sunrise. The 360° panoramic views are among the most spectacular in all of India. Descend back to Sankri via a different trail route.</p>
+              <div class="iday-stats"><span class="istat">📍 3,800m SUMMIT</span><span class="istat">📏 13 km</span><span class="istat">⏱ 8–10 hrs</span></div>
             </div>
           </div>
-          <div class="itinerary-day">
-            <div class="day-num">5</div>
-            <div class="day-content">
-              <div class="day-title">Buffer / Rest Day at Sankri</div>
-              <p class="day-desc">Scheduled rest day for weather contingency or to rest sore muscles. Optional village exploration.</p>
+          <div class="iday">
+            <div class="iday-num">5</div>
+            <div class="iday-body">
+              <div class="iday-title">Buffer Day at Sankri</div>
+              <p class="iday-desc">Scheduled rest and weather buffer day. If conditions were perfect, use this for local village exploration and celebration. If weather delayed Day 4 — this day saves the summit.</p>
+              <div class="iday-stats"><span class="istat">📍 Sankri: 1,920m</span></div>
             </div>
           </div>
-          <div class="itinerary-day">
-            <div class="day-num">6</div>
-            <div class="day-content">
-              <div class="day-title">Sankri → Dehradun (Drive)</div>
-              <p class="day-desc">Morning drive back. Arrive Dehradun by afternoon. Trek ends here — carry memories for a lifetime.</p>
+          <div class="iday">
+            <div class="iday-num">6</div>
+            <div class="iday-body">
+              <div class="iday-title">Sankri → Dehradun (Drive home)</div>
+              <p class="iday-desc">Morning departure from Sankri. Arrive Dehradun by evening. Trek ends here. Carry these memories — and this version of yourself — for the rest of your life.</p>
+              <div class="iday-stats"><span class="istat">🚗 Drive: ~9 hrs</span></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Includes / Excludes -->
-      <div class="detail-section reveal">
-        <h2>What's Included</h2>
-        <div class="includes-grid">
+      <!-- What's Included -->
+      <div class="ds sr">
+        <h2>What's Included &amp; Excluded</h2>
+        <div class="inc-grid">
           <div>
-            <div class="include-item"><span class="include-icon">✓</span> All camping equipment (tent, sleeping bag, mat)</div>
-            <div class="include-item"><span class="include-icon">✓</span> Certified trek leader & support staff</div>
-            <div class="include-item"><span class="include-icon">✓</span> All meals Day 1 dinner → Day 6 breakfast</div>
-            <div class="include-item"><span class="include-icon">✓</span> Forest & wildlife permits</div>
-            <div class="include-item"><span class="include-icon">✓</span> First aid kit with oxygen cylinder</div>
-            <div class="include-item"><span class="include-icon">✓</span> Sankri accommodation (Day 1)</div>
+            <h4 style="color:var(--fern)">✓ &nbsp;Included</h4>
+            <div class="inc-item"><span class="inc-icon" style="color:#065f46">✓</span>Camping equipment (tent, sleeping bag, mat)</div>
+            <div class="inc-item"><span class="inc-icon" style="color:#065f46">✓</span>WFR-certified trek leader</div>
+            <div class="inc-item"><span class="inc-icon" style="color:#065f46">✓</span>Cook &amp; all support staff</div>
+            <div class="inc-item"><span class="inc-icon" style="color:#065f46">✓</span>All meals: Day 1 dinner → Day 6 breakfast</div>
+            <div class="inc-item"><span class="inc-icon" style="color:#065f46">✓</span>Forest &amp; wildlife entry permits</div>
+            <div class="inc-item"><span class="inc-icon" style="color:#065f46">✓</span>First aid kit &amp; portable oxygen cylinder</div>
+            <div class="inc-item"><span class="inc-icon" style="color:#065f46">✓</span>Sankri guesthouse on Day 1</div>
+            <div class="inc-item"><span class="inc-icon" style="color:#065f46">✓</span>Garmin inReach satellite communicator</div>
           </div>
           <div>
-            <div class="exclude-item"><span class="exclude-icon">✕</span> Transport to/from Dehradun</div>
-            <div class="exclude-item"><span class="exclude-icon">✕</span> Personal trekking gear & clothing</div>
-            <div class="exclude-item"><span class="exclude-icon">✕</span> Travel insurance</div>
-            <div class="exclude-item"><span class="exclude-icon">✕</span> Any food/drinks outside meals</div>
-            <div class="exclude-item"><span class="exclude-icon">✕</span> Porter charges (if needed)</div>
+            <h4 style="color:#c84b2a">✕ &nbsp;Excluded</h4>
+            <div class="inc-item"><span class="inc-icon" style="color:#991b1b">✕</span>Transport to/from Dehradun</div>
+            <div class="inc-item"><span class="inc-icon" style="color:#991b1b">✕</span>Personal trekking gear &amp; clothing</div>
+            <div class="inc-item"><span class="inc-icon" style="color:#991b1b">✕</span>Travel insurance (strongly recommended)</div>
+            <div class="inc-item"><span class="inc-icon" style="color:#991b1b">✕</span>Food/beverages outside scheduled meals</div>
+            <div class="inc-item"><span class="inc-icon" style="color:#991b1b">✕</span>Porter charges (if personal porter requested)</div>
+            <div class="inc-item"><span class="inc-icon" style="color:#991b1b">✕</span>Anything not mentioned above</div>
           </div>
+        </div>
+      </div>
+
+      <!-- Reviews -->
+      <div class="ds sr">
+        <h2>Trekker Reviews</h2>
+        <div class="review-summary">
+          <div>
+            <div class="rs-score">4.9</div>
+            <div class="rs-stars"><span class="rs-star">★</span><span class="rs-star">★</span><span class="rs-star">★</span><span class="rs-star">★</span><span class="rs-star">★</span></div>
+            <div class="rs-count">Based on 342 reviews</div>
+          </div>
+          <div class="rs-bars">
+            <div class="rbar-row"><span class="rbar-lbl">5★</span><div class="rbar-track"><div class="rbar-fill" style="width:88%"></div></div><span class="rbar-pct">88%</span></div>
+            <div class="rbar-row"><span class="rbar-lbl">4★</span><div class="rbar-track"><div class="rbar-fill" style="width:9%"></div></div><span class="rbar-pct">9%</span></div>
+            <div class="rbar-row"><span class="rbar-lbl">3★</span><div class="rbar-track"><div class="rbar-fill" style="width:2%"></div></div><span class="rbar-pct">2%</span></div>
+            <div class="rbar-row"><span class="rbar-lbl">2★</span><div class="rbar-track"><div class="rbar-fill" style="width:1%"></div></div><span class="rbar-pct">1%</span></div>
+            <div class="rbar-row"><span class="rbar-lbl">1★</span><div class="rbar-track"><div class="rbar-fill" style="width:0%"></div></div><span class="rbar-pct">0%</span></div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="rc-top">
+            <div class="rc-info">
+              <div class="rc-av" style="background:#1d9e75">RK</div>
+              <div><div class="rc-name">Rahul Khanna</div><div class="rc-date">December 2024 · Bangalore</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <div class="rc-stars"><span class="rc-star">★</span><span class="rc-star">★</span><span class="rc-star">★</span><span class="rc-star">★</span><span class="rc-star">★</span></div>
+              <span class="rc-verified">Verified Trekker</span>
+            </div>
+          </div>
+          <p class="rc-text">"The summit at sunrise genuinely made me cry. Not from exhaustion — from beauty. Our guide Arun's commentary on the peaks around us made the moment feel deeply educational and spiritual at once. I've recommended this to everyone I know."</p>
+        </div>
+        <div class="review-card">
+          <div class="rc-top">
+            <div class="rc-info">
+              <div class="rc-av" style="background:#2d70b3">PS</div>
+              <div><div class="rc-name">Priya Sharma</div><div class="rc-date">January 2025 · Delhi</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <div class="rc-stars"><span class="rc-star">★</span><span class="rc-star">★</span><span class="rc-star">★</span><span class="rc-star">★</span><span class="rc-star">★</span></div>
+              <span class="rc-verified">Verified Trekker</span>
+            </div>
+          </div>
+          <p class="rc-text">"As a first-time trekker, I was terrified. By Day 2, I was completely at ease. The guide-to-trekker ratio, the quality of equipment, the camp food (camp food!) — everything exceeded expectations significantly. Shikhar is in a different league."</p>
         </div>
       </div>
     </div>
 
-    <!-- RIGHT - BOOKING CARD -->
+    <!-- RIGHT — BOOKING -->
     <div id="booking">
-      <div class="booking-card reveal">
-        <h3>Book This Trek</h3>
-        <div class="booking-price">₹8,500 <sub>/ person</sub></div>
-        <div style="margin:6px 0 14px">
-          <div class="booking-free-cancel">✓ Free cancellation upto 15 days before</div>
-          <div style="font-size:0.8125rem;color:var(--fog)">Select your batch date:</div>
-        </div>
+      <div class="booking-card sr">
+        <div class="bc-title">Book This Trek</div>
+        <div class="bc-price">₹8,500 <sub>/ person</sub></div>
+        <div class="bc-cancel">✓ Free cancellation up to 15 days before</div>
+
+        <div class="bc-label">Select Batch Date</div>
         <div class="date-list">
-          <div class="date-item active">
-            <div class="date-item-left">Dec 21 – Dec 26, 2025<small>6 days · Sankri start</small></div>
-            <span class="date-slots slots-low">3 left!</span>
+          <div class="ditem on">
+            <div class="ditem-left">Dec 21 – Dec 26, 2025<small>6 days · Sankri start · ❄️ Peak winter</small></div>
+            <span class="dslot slot-low">3 left!</span>
           </div>
-          <div class="date-item">
-            <div class="date-item-left">Jan 4 – Jan 9, 2026<small>6 days · Sankri start</small></div>
-            <span class="date-slots slots-ok">8 slots</span>
+          <div class="ditem">
+            <div class="ditem-left">Jan 4 – Jan 9, 2026<small>6 days · Sankri start · ❄️ Deep snow</small></div>
+            <span class="dslot slot-ok">8 slots</span>
           </div>
-          <div class="date-item">
-            <div class="date-item-left">Jan 18 – Jan 23, 2026<small>6 days · Sankri start</small></div>
-            <span class="date-slots slots-ok">12 slots</span>
+          <div class="ditem">
+            <div class="ditem-left">Jan 18 – Jan 23, 2026<small>6 days · Sankri start</small></div>
+            <span class="dslot slot-ok">12 slots</span>
           </div>
-          <div class="date-item">
-            <div class="date-item-left">Feb 1 – Feb 6, 2026<small>6 days · Sankri start</small></div>
-            <span class="date-slots slots-ok">Filling fast</span>
+          <div class="ditem">
+            <div class="ditem-left">Feb 8 – Feb 13, 2026<small>6 days · Sankri start · 🌨 Late winter</small></div>
+            <span class="dslot slot-ok">15 slots</span>
           </div>
         </div>
-        <div style="margin-bottom:14px">
-          <label class="form-label">Number of Trekkers</label>
-          <select class="form-select">
-            <option>1 trekker</option>
-            <option>2 trekkers</option>
-            <option>3 trekkers</option>
-            <option>4+ trekkers</option>
-          </select>
+
+        <div class="form-label" style="margin-top:.25rem">Number of Trekkers</div>
+        <select class="form-sel" style="margin-bottom:1rem">
+          <option>1 trekker — ₹8,500 total</option>
+          <option>2 trekkers — ₹17,000 total</option>
+          <option>3 trekkers — ₹25,500 total</option>
+          <option>4 trekkers — ₹34,000 total</option>
+          <option>5+ trekkers — group discount applies</option>
+        </select>
+
+        <div class="bc-divider"></div>
+        <div class="bc-total"><span>Advance to confirm (30%)</span><strong>₹2,550</strong></div>
+
+        <button class="btn btn-gold btn-lg" style="width:100%;border-radius:var(--r-md)" onclick="alert('🎉 Booking confirmed! Our team will call you within 2 hours to complete your registration.')">Confirm Booking →</button>
+        <p class="bc-secure">🔒 Secured by Razorpay · SSL encrypted · Full refund if we cancel</p>
+
+        <div class="bc-divider"></div>
+        <div class="bc-links">
+          <a href="contact.html">📞 Have Questions?</a>
+          <a href="#">📋 Download PDF</a>
         </div>
-        <div class="booking-divider"></div>
-        <div class="booking-total">
-          <span>Advance to confirm (30%)</span>
-          <strong>₹2,550</strong>
-        </div>
-        <button class="btn btn-primary btn-lg" style="width:100%;border-radius:var(--r-md)" onclick="alert('🎉 Booking confirmed! Our team will call you within 2 hours.')">Confirm Booking</button>
-        <p class="booking-secure">🔒 Secure payment · SSL encrypted · Razorpay</p>
-        <div class="booking-divider"></div>
-        <div style="display:flex;gap:10px;font-size:0.8125rem;color:var(--fog);text-align:center">
-          <div style="flex:1">📞 Questions?<br/><a href="contact.html" style="color:var(--fern);font-weight:600">Call us</a></div>
-          <div style="flex:1">📋 Full details?<br/><a href="#" style="color:var(--fern);font-weight:600">Download PDF</a></div>
+
+        <div style="margin-top:1.25rem;padding:1rem;background:var(--foam);border-radius:var(--r-md)">
+          <div style="font-size:.8125rem;font-weight:700;color:var(--fern);margin-bottom:6px">🌿 Shikhar Promise</div>
+          <p style="font-size:.8rem;color:var(--slate);line-height:1.6;font-weight:300">WFR guide · Zero waste · Oxygen on board · Free cancel · Small groups only · Full transparency</p>
         </div>
       </div>
     </div>
@@ -409,38 +440,49 @@
   </div>
 </div>
 
-<div class="newsletter">
-  <div class="container">
-    <div class="newsletter-inner">
-      <div class="newsletter-text">
-        <h3>Stay Updated</h3>
-        <p>Get batch alerts and trek tips in your inbox</p>
-      </div>
-      <form class="newsletter-form" onsubmit="return false;">
-        <input type="email" class="newsletter-input" placeholder="your@email.com"/>
-        <button type="submit" class="btn btn-gold">Subscribe</button>
-      </form>
-    </div>
+<div class="nl-band">
+  <div class="wrap nl-inner">
+    <div class="nl-text"><h3>Stay Updated</h3><p>Batch alerts, packing tips &amp; trail stories</p></div>
+    <form class="nl-form" onsubmit="handleNL(event,this)"><input type="email" class="nl-input" placeholder="your@email.com" required/><button type="submit" class="btn btn-ink btn-lg">Subscribe</button></form>
   </div>
 </div>
 
 <footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
+  <div class="wrap">
+    <div class="fawards">
+      <div class="fai"><span style="font-size:1.125rem">🏆</span><div class="fai-txt"><strong>India's Best Trek Org</strong>Adventure Tourism Awards 2023</div></div>
+      <div class="fai"><span style="font-size:1.125rem">🌿</span><div class="fai-txt"><strong>Green Tourism Award</strong>Ministry of Tourism 2022</div></div>
+      <div class="fai"><span style="font-size:1.125rem">⭐</span><div class="fai-txt"><strong>4.9/5 Rated</strong>35,000+ verified reviews</div></div>
+      <div class="fai"><span style="font-size:1.125rem">🛡️</span><div class="fai-txt"><strong>Zero Incidents</strong>18 consecutive years</div></div>
+    </div>
+    <div class="footer-main">
       <div>
-        <div class="nav-logo"><span class="nav-logo-text">Shikhar</span><span class="nav-logo-accent">.</span></div>
-        <p class="footer-brand-desc">India's most trusted trekking organisation since 2006.</p>
+        <div class="fb-logo">Shikhar<span>.</span></div>
+        <p class="fb-desc">India's most trusted trekking organisation since 2006. 500+ documented trails, WFR-certified guides, zero-waste promise.</p>
+        <div class="fsoc"><a class="fsb" href="#">Ig</a><a class="fsb" href="#">Yt</a><a class="fsb" href="#">in</a><a class="fsb" href="#">Fb</a><a class="fsb" href="#">Wp</a></div>
+        <div class="fnl"><p>Get trek alerts &amp; stories</p><form class="fnl-form" onsubmit="handleNL(event,this)"><input type="email" class="fnl-input" placeholder="your@email.com" required/><button type="submit" class="fnl-btn">Go</button></form></div>
       </div>
-      <div><div class="footer-col-title">Explore</div><a href="treks.html" class="footer-link">All Treks</a><a href="treks.html" class="footer-link">Upcoming Batches</a></div>
-      <div><div class="footer-col-title">Company</div><a href="about.html" class="footer-link">About Us</a><a href="#" class="footer-link">Blog</a></div>
-      <div><div class="footer-col-title">Support</div><a href="contact.html" class="footer-link">Contact</a><a href="#" class="footer-link">FAQs</a></div>
+      <div><div class="fct">Our Treks</div><a href="treks.html" class="fl2">All 500+ Treks</a><a href="treks.html" class="fl2">Upcoming Batches</a><a href="treks.html" class="fl2">Easy Treks</a><a href="treks.html" class="fl2">Corporate Treks</a></div>
+      <div><div class="fct">Destinations</div><a href="treks.html" class="fl2">Uttarakhand</a><a href="treks.html" class="fl2">Himachal Pradesh</a><a href="treks.html" class="fl2">Kashmir</a><a href="treks.html" class="fl2">Sikkim &amp; Bengal</a><a href="treks.html" class="fl2">Spiti Valley</a></div>
+      <div><div class="fct">Company</div><a href="about.html" class="fl2">About Shikhar</a><a href="about.html" class="fl2">Our Team</a><a href="#" class="fl2">Careers</a><a href="#" class="fl2">Blog</a></div>
+      <div><div class="fct">Support</div><a href="contact.html" class="fl2">Contact Us</a><a href="#" class="fl2">FAQs</a><a href="#" class="fl2">Safety Policy</a><a href="#" class="fl2">Cancellation</a><a href="#" class="fl2">Gear Checklist</a><div style="margin-top:1.25rem"><div class="fct">Contact</div><p style="font-size:.8125rem;color:rgba(255,255,255,.38);line-height:1.8;font-weight:300">📞 +91 98765 43210<br/>✉️ hello@shikhar.in<br/>📍 Dehradun, Uttarakhand</p></div></div>
     </div>
     <div class="footer-bottom">
-      <p class="footer-copy">© 2025 Shikhar. All rights reserved.</p>
-      <div class="social-row"><a class="social-btn">in</a><a class="social-btn">ig</a><a class="social-btn">yt</a></div>
+      <p class="fcopy">© 2025 Shikhar Trekking Pvt. Ltd. All rights reserved.</p>
+      <div class="flegal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Refund Policy</a><a href="#">Cancellation</a></div>
+      <p style="font-size:.75rem;color:rgba(255,255,255,.18)">Made with ❤️ in the Himalayas</p>
     </div>
   </div>
 </footer>
-<script src="js/main.js"></script>
+<script>
+const ham=document.getElementById('ham'),mob=document.getElementById('mobMenu');
+ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('open');document.body.style.overflow=mob.classList.contains('open')?'hidden':'';});
+mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{ham.classList.remove('open');mob.classList.remove('open');document.body.style.overflow='';}));
+const srEls=document.querySelectorAll('.sr');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');obs.unobserve(e.target)}});},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+srEls.forEach(el=>obs.observe(el));
+document.querySelectorAll('.ditem').forEach(d=>{d.addEventListener('click',function(){document.querySelectorAll('.ditem').forEach(x=>x.classList.remove('on'));this.classList.add('on');});});
+function handleNL(e,form){e.preventDefault();const btn=form.querySelector('button');btn.textContent='✓ Subscribed!';btn.style.background='#166534';btn.style.color='#fff';setTimeout(()=>{btn.textContent=btn.textContent.includes('Subscribe')?'Subscribe':'Go';btn.style.background='';btn.style.color='';form.reset();},3000);}
+</script>
 </body>
 </html>

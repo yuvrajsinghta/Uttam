@@ -1,297 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gallery — Shikhar</title>
-  <link rel="stylesheet" href="css/global.css"/>
-  <style>
-    .page-hero {
-      background: var(--ink);
-      padding: 9rem 0 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .page-hero-bg { position:absolute;inset:0; background:linear-gradient(135deg,#040d07,#0a1a0f 50%,#1c3d26 100%); }
-    .page-hero h1 { font-family:var(--font-display); font-size:clamp(2.5rem,6vw,5rem); font-weight:300; color:white; letter-spacing:-0.03em; margin-top:8px; }
-    .page-hero p { color:rgba(255,255,255,0.5); font-size:1rem; margin-top:8px; font-weight:300; }
-    .page-hero-content { position:relative;z-index:1; }
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Gallery — Shikhar</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#080f0a;--pine:#0f2317;--moss:#1a3d28;--fern:#2e6644;--sage:#4a8c60;--mist:#8fbfa0;--dew:#c2deca;--foam:#e8f4ec;--snow:#f5faf6;--white:#fff;--gold:#c8a84b;--gold2:#e8cc7a;--slate:#3d5a47;--fog:#7a9a84;--ff-display:'Cormorant',Georgia,serif;--ff-body:'DM Sans',system-ui,sans-serif;--ease-apple:cubic-bezier(.25,.46,.45,.94);--ease-spring:cubic-bezier(.34,1.56,.64,1);--ease-out:cubic-bezier(0,0,.2,1);--r-sm:6px;--r-md:14px;--r-lg:22px;--r-xl:32px;--r-full:9999px;--sh-sm:0 2px 8px rgba(8,15,10,.07);--sh-md:0 8px 30px rgba(8,15,10,.12);--sh-lg:0 20px 60px rgba(8,15,10,.18)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{font-size:16px;scroll-behavior:smooth}
+body{font-family:var(--ff-body);background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}button{cursor:pointer;font-family:inherit;border:none;background:none}ul{list-style:none}
+.wrap{width:100%;max-width:1320px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:var(--r-full);font-size:.875rem;font-weight:600;transition:all .35s var(--ease-apple);white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn-gold{background:var(--gold);color:var(--ink)}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,.28);color:#fff}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+.btn-sm{padding:9px 20px;font-size:.8125rem}
+.eyebrow{font-size:.6875rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sage)}
+.sr{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
+.sr.show{opacity:1;transform:translateY(0)}
+.d1s{transition-delay:.1s}.d2s{transition-delay:.2s}.d3s{transition-delay:.3s}
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;height:72px;z-index:1000;transition:background .5s,box-shadow .5s}
+.nav.scrolled{background:rgba(8,15,10,.94);backdrop-filter:blur(24px);box-shadow:0 1px 0 rgba(255,255,255,.06)}
+.nav-inner{height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--ff-display);font-size:1.625rem;font-weight:600;color:#fff;letter-spacing:-.01em}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-a{padding:8px 14px;border-radius:var(--r-sm);font-size:.875rem;font-weight:500;color:rgba(255,255,255,.65);transition:all .2s}
+.nav-a:hover,.nav-a.on{color:#fff;background:rgba(255,255,255,.1)}
+.nav-cta{background:var(--gold);color:var(--ink);padding:9px 22px;border-radius:var(--r-full);font-size:.8125rem;font-weight:700;transition:all .25s}
+.nav-cta:hover{background:var(--gold2);transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:6px;border-radius:8px}
+.ham-line{width:22px;height:1.5px;background:#fff;border-radius:2px;transition:all .3s;transform-origin:center}
+.hamburger.open .ham-line:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open .ham-line:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open .ham-line:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mob-menu{display:none;position:fixed;top:72px;left:0;right:0;background:rgba(8,15,10,.97);backdrop-filter:blur(24px);padding:1.5rem;z-index:999;border-bottom:1px solid rgba(255,255,255,.06);transform:translateY(-12px);opacity:0;transition:all .3s;pointer-events:none}
+.mob-menu.open{transform:translateY(0);opacity:1;pointer-events:auto;display:block}
+.mob-menu .nav-a{display:block;padding:13px 16px;font-size:1rem;color:rgba(255,255,255,.7);border-radius:var(--r-md);margin-bottom:4px}
+/* PAGE HERO */
+.page-hero{min-height:50vh;background:linear-gradient(160deg,#020604,#0f2317 50%,#1a3d28);display:flex;align-items:center;padding:9rem 0 4rem;position:relative;overflow:hidden}
+.hero-mtns{position:absolute;bottom:0;left:0;right:0;pointer-events:none}
+.hero-content{position:relative;z-index:1}
+.page-hero h1{font-family:var(--ff-display);font-size:clamp(2.5rem,7vw,6rem);font-weight:300;color:#fff;letter-spacing:-.035em;line-height:.95;margin-top:10px}
+.page-hero p{color:rgba(255,255,255,.45);font-size:1rem;margin-top:.875rem;font-weight:300;max-width:480px}
+/* FILTER */
+.gfilter{padding:1.5rem 0;border-bottom:1px solid rgba(255,255,255,.07);position:sticky;top:72px;background:rgba(8,15,10,.92);backdrop-filter:blur(20px);z-index:100}
+.gfilter-inner{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.gchip{padding:7px 18px;border-radius:var(--r-full);font-size:.8125rem;font-weight:500;border:1.5px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);background:transparent;transition:all .25s var(--ease-apple)}
+.gchip:hover{border-color:var(--mist);color:var(--mist)}
+.gchip.on{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.4)}
+/* MASONRY GALLERY */
+.gallery-section{padding:2.5rem 0 5rem}
+.gallery-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:8px}
+.gi{border-radius:var(--r-lg);overflow:hidden;position:relative;cursor:pointer}
+.gi-bg{position:absolute;inset:0;transition:transform .7s var(--ease-apple)}
+.gi:hover .gi-bg{transform:scale(1.07)}
+.gi-overlay{position:absolute;inset:0;background:rgba(8,15,10,0);display:flex;align-items:flex-end;padding:1.25rem;transition:background .35s}
+.gi:hover .gi-overlay{background:rgba(8,15,10,.5)}
+.gi-caption{font-family:var(--ff-display);font-size:1rem;font-weight:300;color:#fff;opacity:0;transform:translateY(8px);transition:all .3s var(--ease-apple)}
+.gi-label{position:absolute;top:1rem;left:1rem;background:rgba(8,15,10,.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8);padding:3px 10px;border-radius:var(--r-full);font-size:.6875rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;opacity:0;transform:translateY(-6px);transition:all .3s var(--ease-apple)}
+.gi:hover .gi-caption,.gi:hover .gi-label{opacity:1;transform:translateY(0)}
+/* Grid layout — editorial masonry */
+.gi:nth-child(1){grid-column:span 7;aspect-ratio:16/9}
+.gi:nth-child(2){grid-column:span 5;aspect-ratio:4/3}
+.gi:nth-child(3){grid-column:span 4;aspect-ratio:1}
+.gi:nth-child(4){grid-column:span 4;aspect-ratio:1}
+.gi:nth-child(5){grid-column:span 4;aspect-ratio:1}
+.gi:nth-child(6){grid-column:span 5;aspect-ratio:4/3}
+.gi:nth-child(7){grid-column:span 7;aspect-ratio:16/9}
+.gi:nth-child(8){grid-column:span 4;aspect-ratio:3/4}
+.gi:nth-child(9){grid-column:span 4;aspect-ratio:3/4}
+.gi:nth-child(10){grid-column:span 4;aspect-ratio:3/4}
+.gi:nth-child(11){grid-column:span 6;aspect-ratio:16/7}
+.gi:nth-child(12){grid-column:span 6;aspect-ratio:16/7}
+/* Backgrounds */
+.bg-k{background:linear-gradient(165deg,#1a5c36,#0d3520 45%,#051a0d)}
+.bg-r{background:linear-gradient(165deg,#1a4a7a,#0c2d52 45%,#060d1a)}
+.bg-v{background:linear-gradient(165deg,#487a3a,#244518 45%,#0c1e06)}
+.bg-p{background:linear-gradient(165deg,#5a3a8a,#321856 45%,#100620)}
+.bg-d{background:linear-gradient(165deg,#7a6228,#4a380a 45%,#1e1400)}
+.bg-s{background:linear-gradient(165deg,#2a608a,#0e3252 45%,#040e1a)}
+.bg-h{background:linear-gradient(165deg,#8a2a3a,#520a18 45%,#1a0006)}
+.bg-g{background:linear-gradient(165deg,#2a7a4a,#0e4224 45%,#04160b)}
+/* LIGHTBOX */
+.lb{position:fixed;inset:0;z-index:9999;opacity:0;pointer-events:none;transition:opacity .35s var(--ease-apple)}
+.lb.open{opacity:1;pointer-events:auto}
+.lb-backdrop{position:absolute;inset:0;background:rgba(4,10,6,.96);backdrop-filter:blur(20px)}
+.lb-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;padding:2rem}
+.lb-media{width:min(800px,92vw);max-height:70vh;border-radius:var(--r-xl);overflow:hidden;position:relative;box-shadow:var(--sh-xl)}
+.lb-cap{font-family:var(--ff-display);font-size:1.25rem;font-weight:300;color:rgba(255,255,255,.85);text-align:center}
+.lb-sub{font-size:.8125rem;color:rgba(255,255,255,.38);text-align:center}
+.lb-close{position:absolute;top:1.5rem;right:1.5rem;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .25s}
+.lb-close:hover{background:rgba(255,255,255,.2)}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:1.25rem;display:flex;align-items:center;justify-content:center;transition:all .25s}
+.lb-nav:hover{background:rgba(255,255,255,.22)}
+.lb-prev{left:1.5rem}.lb-next{right:1.5rem}
+.lb-counter{position:absolute;top:1.5rem;left:50%;transform:translateX(-50%);font-size:.75rem;color:rgba(255,255,255,.4);letter-spacing:.12em}
+/* FOOTER */
+.nl-band{background:linear-gradient(135deg,var(--moss),var(--fern) 50%,var(--sage));padding:4rem 0}
+.nl-inner{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.nl-text h3{font-family:var(--ff-display);font-size:clamp(1.75rem,3vw,2.5rem);color:#fff;font-weight:300;margin-bottom:4px}
+.nl-text p{color:rgba(255,255,255,.55);font-size:.9375rem;font-weight:300}
+.nl-form{display:flex;gap:10px;flex-wrap:wrap}
+.nl-input{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.22);color:#fff;padding:13px 20px;border-radius:var(--r-full);font-size:.875rem;width:260px;outline:none;transition:border-color .3s}
+.nl-input::placeholder{color:rgba(255,255,255,.35)}
+.nl-input:focus{border-color:rgba(255,255,255,.65)}
+.footer{background:var(--ink);padding-top:4.5rem}
+.footer-main{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3.5rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.fb-logo{font-family:var(--ff-display);font-size:1.75rem;font-weight:600;color:#fff;margin-bottom:1rem}
+.fb-logo span{color:var(--gold)}
+.fb-desc{font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.8;font-weight:300;max-width:300px;margin-bottom:1.5rem}
+.fsoc{display:flex;gap:8px}
+.fsb{width:36px;height:36px;border-radius:var(--r-sm);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);font-size:.75rem;font-weight:700;transition:all .25s}
+.fsb:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.fct{font-size:.625rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:1.25rem}
+.fl2{display:block;color:rgba(255,255,255,.48);font-size:.875rem;margin-bottom:.875rem;transition:color .2s}
+.fl2:hover{color:var(--gold)}
+.fawards{display:flex;align-items:center;gap:2rem;flex-wrap:wrap;padding:1.5rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.fai-txt{font-size:.75rem;color:rgba(255,255,255,.32)}
+.fai-txt strong{display:block;color:rgba(255,255,255,.55);font-weight:600;margin-bottom:1px}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;flex-wrap:wrap;gap:1rem}
+.fcopy{font-size:.8125rem;color:rgba(255,255,255,.22)}
+.flegal{display:flex;gap:1.5rem}
+.flegal a{font-size:.8125rem;color:rgba(255,255,255,.28);transition:color .2s}
+.flegal a:hover{color:rgba(255,255,255,.6)}
+.fnl{margin-top:1.5rem}.fnl p{font-size:.75rem;color:rgba(255,255,255,.28);margin-bottom:.75rem}
+.fnl-form{display:flex;gap:8px}
+.fnl-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#fff;padding:10px 14px;border-radius:var(--r-full);font-size:.8125rem;outline:none;min-width:0;transition:border-color .3s}
+.fnl-input::placeholder{color:rgba(255,255,255,.22)}
+.fnl-input:focus{border-color:rgba(200,168,75,.4)}
+.fnl-btn{background:var(--gold);color:var(--ink);padding:10px 18px;border-radius:var(--r-full);font-size:.8125rem;font-weight:700;transition:all .25s;flex-shrink:0}
+.fnl-btn:hover{background:var(--gold2)}
 
-    /* GALLERY FILTER */
-    .gallery-filter {
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--frost);
-      margin-bottom: 2rem;
-    }
-    .gallery-filter-inner { display:flex;align-items:center;gap:8px;flex-wrap:wrap; }
-    .g-chip {
-      padding:7px 16px; border-radius:var(--r-full);
-      font-size:0.8125rem;font-weight:500;
-      border:1.5px solid var(--mist);color:var(--slate);
-      background:transparent;
-      transition:all var(--dur-base) var(--ease);cursor:pointer;
-    }
-    .g-chip:hover { border-color:var(--fern);color:var(--fern); }
-    .g-chip.active { background:var(--ink);color:white;border-color:var(--ink); }
-
-    /* MASONRY-STYLE GALLERY */
-    .gallery-masonry {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: auto;
-      gap: 10px;
-      padding-bottom: 4rem;
-    }
-
-    .gallery-item {
-      border-radius: var(--r-md);
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-    }
-    .gallery-item-bg {
-      position: absolute; inset: 0;
-      transition: transform var(--dur-slow) var(--ease);
-    }
-    .gallery-item:hover .gallery-item-bg { transform: scale(1.06); }
-    .gallery-item-overlay {
-      position: absolute; inset: 0;
-      background: rgba(10,26,15,0);
-      display: flex; align-items: flex-end;
-      padding: 1rem;
-      transition: background var(--dur-base) var(--ease);
-    }
-    .gallery-item:hover .gallery-item-overlay { background: rgba(10,26,15,0.48); }
-    .gallery-caption {
-      font-family: var(--font-display);
-      font-size: 0.9375rem;
-      color: white;
-      font-weight: 300;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: all var(--dur-base) var(--ease);
-    }
-    .gallery-item:hover .gallery-caption { opacity:1; transform:translateY(0); }
-
-    /* Grid placements - masonry effect */
-    .gi-1  { grid-column: span 5; aspect-ratio: 4/3; }
-    .gi-2  { grid-column: span 4; aspect-ratio: 4/3; }
-    .gi-3  { grid-column: span 3; aspect-ratio: 3/4; grid-row: span 2; }
-    .gi-4  { grid-column: span 3; aspect-ratio: 1; }
-    .gi-5  { grid-column: span 3; aspect-ratio: 1; }
-    .gi-6  { grid-column: span 2; aspect-ratio: 1; }
-    .gi-7  { grid-column: span 4; aspect-ratio: 3/2; }
-    .gi-8  { grid-column: span 4; aspect-ratio: 3/2; }
-    .gi-9  { grid-column: span 3; aspect-ratio: 4/3; }
-    .gi-10 { grid-column: span 3; aspect-ratio: 4/3; }
-    .gi-11 { grid-column: span 6; aspect-ratio: 16/7; }
-    .gi-12 { grid-column: span 3; aspect-ratio: 4/3; }
-
-    /* LIGHTBOX STYLES (from global.css + extras) */
-    .lightbox { position:fixed;inset:0;z-index:9999;opacity:0;pointer-events:none;transition:opacity 0.3s; }
-    .lightbox.open { opacity:1;pointer-events:auto; }
-    .lightbox-backdrop { position:absolute;inset:0;background:rgba(4,13,7,0.94);backdrop-filter:blur(16px); }
-    .lightbox-inner { position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem; }
-    .lightbox-media { width:min(720px,90vw);aspect-ratio:4/3;border-radius:var(--r-lg);overflow:hidden;position:relative; }
-    .lightbox-caption { font-family:var(--font-display);font-size:1.25rem;color:white;font-weight:300;text-align:center; }
-    .lightbox-close { position:absolute;top:1.5rem;right:1.5rem;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all var(--dur-base);cursor:pointer; }
-    .lightbox-close:hover { background:rgba(255,255,255,0.2); }
-    .lightbox-prev,.lightbox-next { position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;font-size:1.25rem;display:flex;align-items:center;justify-content:center;transition:all var(--dur-base);cursor:pointer; }
-    .lightbox-prev { left:1.5rem; }
-    .lightbox-next { right:1.5rem; }
-    .lightbox-prev:hover,.lightbox-next:hover { background:rgba(255,255,255,0.25); }
-    .lightbox-counter { font-size:0.8125rem;color:rgba(255,255,255,0.45);letter-spacing:0.1em; }
-
-    @media(max-width:1024px){
-      .gallery-masonry { grid-template-columns:repeat(6,1fr); }
-      .gi-1,.gi-2,.gi-5,.gi-7,.gi-8 { grid-column:span 3; }
-      .gi-3,.gi-4,.gi-6,.gi-9,.gi-10,.gi-12 { grid-column:span 3; }
-      .gi-3 { grid-row:span 1; aspect-ratio:4/3; }
-      .gi-11 { grid-column:span 6; }
-    }
-    @media(max-width:640px){
-      .gallery-masonry { grid-template-columns:repeat(2,1fr); gap:6px; }
-      .gi-1,.gi-2,.gi-3,.gi-4,.gi-5,.gi-6,.gi-7,.gi-8,.gi-9,.gi-10,.gi-12 { grid-column:span 1; aspect-ratio:4/3; grid-row:span 1; }
-      .gi-11 { grid-column:span 2; aspect-ratio:16/9; }
-    }
-  </style>
+@media(max-width:1024px){.gallery-grid{grid-template-columns:repeat(6,1fr)}.gi:nth-child(1),.gi:nth-child(7){grid-column:span 6;aspect-ratio:16/8}.gi:nth-child(2),.gi:nth-child(6){grid-column:span 3}.gi:nth-child(3),.gi:nth-child(4),.gi:nth-child(5){grid-column:span 2}.gi:nth-child(8),.gi:nth-child(9),.gi:nth-child(10){grid-column:span 2}.gi:nth-child(11),.gi:nth-child(12){grid-column:span 3}.footer-main{grid-template-columns:1fr 1fr 1fr;gap:2rem}}
+@media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}.gallery-grid{grid-template-columns:repeat(2,1fr);gap:6px}.gi:nth-child(n){grid-column:span 1;aspect-ratio:4/3}.gi:nth-child(1),.gi:nth-child(7),.gi:nth-child(11),.gi:nth-child(12){grid-column:span 2;aspect-ratio:16/9}.footer-main{grid-template-columns:1fr 1fr;gap:2rem}.nl-inner{flex-direction:column;text-align:center}.nl-form{flex-direction:column;width:100%}.nl-input{width:100%}}
+@media(max-width:480px){.gallery-grid{grid-template-columns:1fr}.gi:nth-child(n){grid-column:span 1}.footer-main{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-
 <nav class="nav" id="nav">
-  <div class="container">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <span class="nav-logo-text">Shikhar</span><span class="nav-logo-accent">.</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html" class="nav-link">Home</a></li>
-        <li><a href="treks.html" class="nav-link">All Treks</a></li>
-        <li><a href="gallery.html" class="nav-link active">Gallery</a></li>
-        <li><a href="about.html" class="nav-link">About</a></li>
-        <li><a href="contact.html" class="nav-link">Contact</a></li>
-      </ul>
-      <div class="nav-actions">
-        <a href="treks.html" class="nav-book">Book a Trek</a>
-        <button class="hamburger" aria-label="Menu">
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-        </button>
-      </div>
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo">Shikhar<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-a">Home</a></li>
+      <li><a href="treks.html" class="nav-a">All Treks</a></li>
+      <li><a href="gallery.html" class="nav-a on">Gallery</a></li>
+      <li><a href="about.html" class="nav-a">About</a></li>
+      <li><a href="contact.html" class="nav-a">Contact</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:10px">
+      <a href="treks.html" class="nav-cta">Book a Trek</a>
+      <button class="hamburger" id="ham"><span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span></button>
     </div>
   </div>
 </nav>
-<div class="mobile-menu">
-  <a href="index.html" class="nav-link">Home</a>
-  <a href="treks.html" class="nav-link">All Treks</a>
-  <a href="gallery.html" class="nav-link">Gallery</a>
-  <a href="about.html" class="nav-link">About</a>
-  <a href="contact.html" class="nav-link">Contact</a>
-  <a href="treks.html" class="nav-book">Book a Trek</a>
+<div class="mob-menu" id="mobMenu">
+  <a href="index.html" class="nav-a">Home</a><a href="treks.html" class="nav-a">All Treks</a><a href="gallery.html" class="nav-a">Gallery</a><a href="about.html" class="nav-a">About</a><a href="contact.html" class="nav-a">Contact</a>
+  <a href="treks.html" style="display:block;text-align:center;margin-top:1rem;padding:14px;border-radius:var(--r-full);background:var(--gold);color:var(--ink);font-weight:700">Book a Trek</a>
 </div>
 
 <div class="page-hero">
-  <div class="page-hero-bg"></div>
-  <div class="container page-hero-content">
+  <svg class="hero-mtns" viewBox="0 0 1440 160" preserveAspectRatio="none"><polygon points="0,160 0,100 200,45 400,115 600,30 800,105 1000,48 1200,112 1440,62 1440,160" fill="rgba(255,255,255,0.025)"/><polygon points="0,160 0,125 300,88 600,148 900,72 1200,138 1440,98 1440,160" fill="rgba(255,255,255,0.032)"/></svg>
+  <div class="wrap hero-content sr">
     <p class="eyebrow" style="color:var(--gold)">Moments from the Trail</p>
     <h1>Gallery</h1>
-    <p>Every photograph tells a story of a transformation</p>
+    <p>Every photograph is a story of a transformation — of a person who went up one way and came down another.</p>
   </div>
 </div>
 
-<section class="section">
-  <div class="container">
-    <div class="gallery-filter">
-      <div class="gallery-filter-inner">
-        <button class="g-chip active">All Photos</button>
-        <button class="g-chip">Summits</button>
-        <button class="g-chip">Camps</button>
-        <button class="g-chip">Trails</button>
-        <button class="g-chip">People</button>
-        <button class="g-chip">Wildlife</button>
-        <button class="g-chip">Winter</button>
-      </div>
-    </div>
+<div class="gfilter">
+  <div class="wrap gfilter-inner">
+    <button class="gchip on">All Photos</button>
+    <button class="gchip">Summits</button>
+    <button class="gchip">Camps</button>
+    <button class="gchip">Trails</button>
+    <button class="gchip">Sunrises</button>
+    <button class="gchip">Winter</button>
+    <button class="gchip">People</button>
+    <button class="gchip">Wildlife</button>
+  </div>
+</div>
 
-    <div class="gallery-masonry">
-      <div class="gallery-item gi-1 reveal">
-        <div class="gallery-item-bg bg-keda"></div>
-        <div class="gallery-item-overlay">
-          <span class="gallery-caption">Kedarkantha Summit, 3,800m</span>
-        </div>
+<div class="gallery-section">
+  <div class="wrap">
+    <div class="gallery-grid" id="gallery">
+
+      <div class="gi sr" data-label="Summit" data-cap="Kedarkantha Summit — 3,800m" data-sub="Uttarakhand · December 2024">
+        <div class="gi-bg bg-k"></div>
+        <svg style="position:absolute;bottom:0;left:0;right:0;height:40%;pointer-events:none;opacity:.2" viewBox="0 0 400 100"><polygon points="0,100 80,30 160,100" fill="white"/><polygon points="100,100 200,15 300,100" fill="white"/><polygon points="240,100 320,50 400,100" fill="white"/><polygon points="194,21 200,14 206,21" fill="white" opacity=".9"/></svg>
+        <div class="gi-label" id="l1"></div>
+        <div class="gi-overlay"><span class="gi-caption">Kedarkantha Summit — 3,800m</span></div>
       </div>
-      <div class="gallery-item gi-2 reveal reveal-delay-1">
-        <div class="gallery-item-bg bg-rupin"></div>
-        <div class="gallery-item-overlay">
-          <span class="gallery-caption">Rupin Pass Snow Bridge</span>
-        </div>
+
+      <div class="gi sr d1s" data-cap="Rupin Pass Snow Bridge" data-sub="Himachal Pradesh · May 2024">
+        <div class="gi-bg bg-r"></div>
+        <svg style="position:absolute;bottom:0;left:0;right:0;height:40%;pointer-events:none;opacity:.2" viewBox="0 0 400 100"><polygon points="0,100 100,28 200,100" fill="white"/><polygon points="160,100 280,8 400,100" fill="white"/><polygon points="274,14 280,6 286,14" fill="white" opacity=".8"/></svg>
+        <div class="gi-overlay"><span class="gi-caption">Rupin Pass Snow Bridge</span></div>
       </div>
-      <div class="gallery-item gi-3 reveal reveal-delay-2">
-        <div class="gallery-item-bg bg-vof"></div>
-        <div class="gallery-item-overlay">
-          <span class="gallery-caption">Valley of Flowers in Bloom</span>
-        </div>
+
+      <div class="gi sr d1s" data-cap="Valley of Flowers in Bloom" data-sub="Uttarakhand · August 2024">
+        <div class="gi-bg bg-v"></div>
+        <div class="gi-overlay"><span class="gi-caption">Valley of Flowers in Full Bloom</span></div>
       </div>
-      <div class="gallery-item gi-4 reveal">
-        <div class="gallery-item-bg bg-deori"></div>
-        <div class="gallery-item-overlay">
-          <span class="gallery-caption">Deoriatal Lake Reflection</span>
-        </div>
+
+      <div class="gi sr d2s" data-cap="Spiti Moonscape" data-sub="Spiti Valley · July 2024">
+        <div class="gi-bg bg-p"></div>
+        <div class="gi-overlay"><span class="gi-caption">Spiti Moonscape from Pin Parvati</span></div>
       </div>
-      <div class="gallery-item gi-5 reveal reveal-delay-1">
-        <div class="gallery-item-bg bg-goech"></div>
-        <div class="gallery-item-overlay">
-          <span class="gallery-caption">Goecha La — Kangchenjunga View</span>
-        </div>
+
+      <div class="gi sr d3s" data-cap="Deoriatal Lake Reflection" data-sub="Chopta · January 2024">
+        <div class="gi-bg bg-d"></div>
+        <div class="gi-overlay"><span class="gi-caption">Deoriatal — Chaukhamba Reflection</span></div>
       </div>
-      <div class="gallery-item gi-6 reveal reveal-delay-2">
-        <div class="gallery-item-bg bg-pin"></div>
-        <div class="gallery-item-overlay">
-          <span class="gallery-caption">Spiti Moonscape</span>
-        </div>
+
+      <div class="gi sr d1s" data-cap="Goecha La Base Camp" data-sub="Sikkim · October 2024">
+        <div class="gi-bg bg-g"></div>
+        <div class="gi-overlay"><span class="gi-caption">Goecha La — Kangchenjunga Views</span></div>
       </div>
-      <div class="gallery-item gi-7 reveal">
-        <div class="gallery-item-bg bg-sanda"></div>
-        <div class="gallery-item-overlay">
-          <span class="gallery-caption">Sandakphu — 4 Peaks Sunrise</span>
-        </div>
+
+      <div class="gi sr" data-cap="Sandakphu Sunrise" data-sub="Darjeeling · April 2024">
+        <div class="gi-bg bg-s"></div>
+        <svg style="position:absolute;bottom:0;left:0;right:0;height:40%;pointer-events:none;opacity:.2" viewBox="0 0 400 100"><polygon points="0,100 80,45 160,100" fill="white"/><polygon points="120,100 240,18 360,100" fill="white"/><polygon points="234,24 240,16 246,24" fill="white" opacity=".8"/></svg>
+        <div class="gi-overlay"><span class="gi-caption">Sandakphu — 4 Himalayan Giants at Sunrise</span></div>
       </div>
-      <div class="gallery-item gi-8 reveal reveal-delay-1">
-        <div class="gallery-item-bg bg-hampt"></div>
-        <div class="gallery-item-overlay">
-          <span class="gallery-caption">Hampta Pass Crossing</span>
-        </div>
+
+      <div class="gi sr d1s" data-cap="High Camp — Pre-Dawn" data-sub="Kedarkantha · December 2024">
+        <div class="gi-bg bg-k"></div>
+        <div class="gi-overlay"><span class="gi-caption">High Camp — 3 AM Pre-Dawn Start</span></div>
       </div>
-      <div class="gallery-item gi-9 reveal">
-        <div class="gallery-item-bg bg-goech"></div>
-        <div class="gallery-item-overlay">
-          <span class="gallery-caption">Base Camp Morning</span>
-        </div>
+
+      <div class="gi sr d2s" data-cap="Hampta Pass Crossing" data-sub="Himachal · June 2024">
+        <div class="gi-bg bg-h"></div>
+        <div class="gi-overlay"><span class="gi-caption">Hampta Pass — The Great Contrast</span></div>
       </div>
-      <div class="gallery-item gi-10 reveal reveal-delay-1">
-        <div class="gallery-item-bg bg-keda"></div>
-        <div class="gallery-item-overlay">
-          <span class="gallery-caption">Pine Forest — Winter Trail</span>
-        </div>
+
+      <div class="gi sr d3s" data-cap="Kashmir Great Lakes" data-sub="Kashmir · August 2024">
+        <div class="gi-bg bg-g"></div>
+        <div class="gi-overlay"><span class="gi-caption">Vishansar Lake — Kashmir Great Lakes</span></div>
       </div>
-      <div class="gallery-item gi-11 reveal">
-        <div class="gallery-item-bg bg-rupin"></div>
-        <div class="gallery-item-overlay">
-          <span class="gallery-caption">High Altitude Campsite — 4,000m</span>
-        </div>
+
+      <div class="gi sr" data-cap="Pine Forest Trail — Winter" data-sub="Sankri · December 2024">
+        <div class="gi-bg bg-k"></div>
+        <div class="gi-overlay"><span class="gi-caption">Pine Forest Trail — Sankri to Juda Ka Talab</span></div>
       </div>
-      <div class="gallery-item gi-12 reveal reveal-delay-2">
-        <div class="gallery-item-bg bg-vof"></div>
-        <div class="gallery-item-overlay">
-          <span class="gallery-caption">Alpine Meadows at Dusk</span>
-        </div>
+
+      <div class="gi sr d2s" data-cap="Valley of Flowers — Golden Hour" data-sub="Uttarakhand · July 2024">
+        <div class="gi-bg bg-v"></div>
+        <div class="gi-overlay"><span class="gi-caption">Valley of Flowers — Golden Hour</span></div>
       </div>
+
     </div>
   </div>
-</section>
+</div>
 
-<div class="newsletter">
-  <div class="container">
-    <div class="newsletter-inner">
-      <div class="newsletter-text">
-        <h3>Follow Our Journey</h3>
-        <p>Get trail photos &amp; stories in your inbox every month</p>
-      </div>
-      <form class="newsletter-form" onsubmit="return false;">
-        <input type="email" class="newsletter-input" placeholder="your@email.com"/>
-        <button type="submit" class="btn btn-gold">Subscribe</button>
-      </form>
-    </div>
+<!-- Lightbox -->
+<div class="lb" id="lb">
+  <div class="lb-backdrop" id="lbBd"></div>
+  <div class="lb-inner">
+    <div class="lb-counter" id="lbCtr">1 / 12</div>
+    <div class="lb-media" id="lbMedia"></div>
+    <div class="lb-cap" id="lbCap"></div>
+    <div class="lb-sub" id="lbSub"></div>
+  </div>
+  <button class="lb-close" id="lbClose">✕</button>
+  <button class="lb-nav lb-prev" id="lbPrev">←</button>
+  <button class="lb-nav lb-next" id="lbNext">→</button>
+</div>
+
+<div class="nl-band">
+  <div class="wrap nl-inner">
+    <div class="nl-text"><h3>Follow the Journey</h3><p>Trail photos &amp; stories delivered monthly</p></div>
+    <form class="nl-form" onsubmit="handleNL(event,this)"><input type="email" class="nl-input" placeholder="your@email.com" required/><button type="submit" class="btn btn-ink" style="background:var(--ink)">Subscribe →</button></form>
   </div>
 </div>
 
 <footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
+  <div class="wrap">
+    <div class="fawards" style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap;padding:1.5rem 0;border-bottom:1px solid rgba(255,255,255,.05)">
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:1.125rem">🏆</span><div class="fai-txt"><strong>India's Best Trek Org</strong>Adventure Tourism Awards 2023</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:1.125rem">🌿</span><div class="fai-txt"><strong>Green Tourism Award</strong>Ministry of Tourism 2022</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:1.125rem">⭐</span><div class="fai-txt"><strong>4.9/5 Rated</strong>35,000+ verified reviews</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:1.125rem">🛡️</span><div class="fai-txt"><strong>Zero Incidents</strong>18 consecutive years</div></div>
+    </div>
+    <div class="footer-main">
       <div>
-        <div class="nav-logo"><span class="nav-logo-text">Shikhar</span><span class="nav-logo-accent">.</span></div>
-        <p class="footer-brand-desc">India's most trusted trekking organisation since 2006.</p>
+        <div class="fb-logo">Shikhar<span>.</span></div>
+        <p class="fb-desc">India's most trusted trekking organisation since 2006. 500+ documented trails, WFR-certified guides, zero-waste promise.</p>
+        <div class="fsoc"><a class="fsb" href="#">Ig</a><a class="fsb" href="#">Yt</a><a class="fsb" href="#">in</a><a class="fsb" href="#">Fb</a><a class="fsb" href="#">Wp</a></div>
+        <div class="fnl"><p>Get trek alerts &amp; stories</p><form class="fnl-form" onsubmit="handleNL(event,this)"><input type="email" class="fnl-input" placeholder="your@email.com" required/><button type="submit" class="fnl-btn">Go</button></form></div>
       </div>
-      <div><div class="footer-col-title">Pages</div><a href="index.html" class="footer-link">Home</a><a href="treks.html" class="footer-link">All Treks</a><a href="gallery.html" class="footer-link">Gallery</a><a href="about.html" class="footer-link">About</a></div>
-      <div><div class="footer-col-title">Company</div><a href="about.html" class="footer-link">About Us</a><a href="#" class="footer-link">Blog</a><a href="#" class="footer-link">Careers</a></div>
-      <div><div class="footer-col-title">Support</div><a href="contact.html" class="footer-link">Contact</a><a href="#" class="footer-link">FAQs</a></div>
+      <div><div class="fct">Our Treks</div><a href="treks.html" class="fl2">All 500+ Treks</a><a href="treks.html" class="fl2">Upcoming Batches</a><a href="treks.html" class="fl2">Easy Treks</a><a href="treks.html" class="fl2">Corporate Treks</a></div>
+      <div><div class="fct">Destinations</div><a href="treks.html" class="fl2">Uttarakhand</a><a href="treks.html" class="fl2">Himachal Pradesh</a><a href="treks.html" class="fl2">Kashmir</a><a href="treks.html" class="fl2">Sikkim &amp; Bengal</a><a href="treks.html" class="fl2">Spiti Valley</a></div>
+      <div><div class="fct">Company</div><a href="about.html" class="fl2">About Shikhar</a><a href="about.html" class="fl2">Our Team</a><a href="#" class="fl2">Careers</a><a href="#" class="fl2">Blog</a></div>
+      <div><div class="fct">Support</div><a href="contact.html" class="fl2">Contact Us</a><a href="#" class="fl2">FAQs</a><a href="#" class="fl2">Safety Policy</a><a href="#" class="fl2">Cancellation</a><a href="#" class="fl2">Gear Checklist</a><div style="margin-top:1.25rem"><div class="fct">Contact</div><p style="font-size:.8125rem;color:rgba(255,255,255,.38);line-height:1.8;font-weight:300">📞 +91 98765 43210<br/>✉️ hello@shikhar.in<br/>📍 Dehradun, Uttarakhand</p></div></div>
     </div>
     <div class="footer-bottom">
-      <p class="footer-copy">© 2025 Shikhar. All rights reserved.</p>
-      <div class="social-row"><a class="social-btn">in</a><a class="social-btn">ig</a><a class="social-btn">yt</a></div>
+      <p class="fcopy">© 2025 Shikhar Trekking Pvt. Ltd. All rights reserved.</p>
+      <div class="flegal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Refund Policy</a></div>
+      <p style="font-size:.75rem;color:rgba(255,255,255,.18)">Made with ❤️ in the Himalayas</p>
     </div>
   </div>
 </footer>
-<script src="js/main.js"></script>
+
 <script>
-  // Gallery chip filter (UI only)
-  document.querySelectorAll('.g-chip').forEach(chip => {
-    chip.addEventListener('click', function() {
-      document.querySelectorAll('.g-chip').forEach(c => c.classList.remove('active'));
-      this.classList.add('active');
-    });
-  });
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>60),{passive:true});
+const ham=document.getElementById('ham'),mob=document.getElementById('mobMenu');
+ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('open');document.body.style.overflow=mob.classList.contains('open')?'hidden':'';});
+mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{ham.classList.remove('open');mob.classList.remove('open');document.body.style.overflow='';}));
+const srEls=document.querySelectorAll('.sr');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');obs.unobserve(e.target)}});},{threshold:.06,rootMargin:'0px 0px -40px 0px'});
+srEls.forEach(el=>obs.observe(el));
+document.querySelectorAll('.gchip').forEach(c=>{c.addEventListener('click',function(){document.querySelectorAll('.gchip').forEach(x=>x.classList.remove('on'));this.classList.add('on');});});
+
+// Lightbox
+const items=Array.from(document.querySelectorAll('.gi'));
+const lb=document.getElementById('lb'),lbMedia=document.getElementById('lbMedia'),lbCap=document.getElementById('lbCap'),lbSub=document.getElementById('lbSub'),lbCtr=document.getElementById('lbCtr');
+let cur=0;
+function openLb(i){
+  cur=i;
+  const item=items[i];
+  const bg=item.querySelector('.gi-bg');
+  const bgClass=Array.from(bg.classList).find(c=>c.startsWith('bg-'));
+  lbMedia.className='lb-media '+(bgClass||'');
+  lbMedia.style.minHeight='400px';
+  lbCap.textContent=item.dataset.cap||'';
+  lbSub.textContent=item.dataset.sub||'';
+  lbCtr.textContent=(i+1)+' / '+items.length;
+  lb.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLb(){lb.classList.remove('open');document.body.style.overflow='';}
+items.forEach((item,i)=>item.addEventListener('click',()=>openLb(i)));
+document.getElementById('lbClose').addEventListener('click',closeLb);
+document.getElementById('lbBd').addEventListener('click',closeLb);
+document.getElementById('lbPrev').addEventListener('click',()=>openLb((cur-1+items.length)%items.length));
+document.getElementById('lbNext').addEventListener('click',()=>openLb((cur+1)%items.length));
+document.addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key==='Escape')closeLb();if(e.key==='ArrowLeft')openLb((cur-1+items.length)%items.length);if(e.key==='ArrowRight')openLb((cur+1)%items.length);});
+let tx=0;
+lb.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
+lb.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].clientX;if(Math.abs(d)>50)d>0?openLb((cur+1)%items.length):openLb((cur-1+items.length)%items.length);});
+function handleNL(e,form){e.preventDefault();const btn=form.querySelector('button');const t=btn.textContent;btn.textContent='✓ Done!';btn.style.background='#166534';btn.style.color='#fff';setTimeout(()=>{btn.textContent=t;btn.style.background='';btn.style.color='';form.reset();},3000);}
 </script>
 </body>
 </html>

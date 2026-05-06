@@ -1,389 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About Us — Shikhar</title>
-  <link rel="stylesheet" href="css/global.css"/>
-  <style>
-    .about-hero {
-      min-height: 70vh;
-      background: linear-gradient(160deg,#040d07 0%,#0a1a0f 40%,#1c3d26 80%,#2d5c3a 100%);
-      display: flex;
-      align-items: center;
-      padding: 9rem 0 5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .about-hero-mountains {
-      position:absolute;bottom:0;left:0;right:0;pointer-events:none;
-    }
-    .about-hero-content { position:relative;z-index:1;max-width:700px; }
-    .about-hero h1 {
-      font-family:var(--font-display);
-      font-size:clamp(2.5rem,6vw,5.5rem);
-      font-weight:300;
-      color:white;
-      letter-spacing:-0.03em;
-      line-height:1.0;
-      margin-top:10px;
-      margin-bottom:1.5rem;
-    }
-    .about-hero-sub { font-size:clamp(1rem,1.5vw,1.125rem);color:rgba(255,255,255,0.55);font-weight:300;line-height:1.75;max-width:540px; }
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>About Us — Shikhar</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#080f0a;--pine:#0f2317;--moss:#1a3d28;--fern:#2e6644;--sage:#4a8c60;--mist:#8fbfa0;--dew:#c2deca;--foam:#e8f4ec;--snow:#f5faf6;--white:#fff;--gold:#c8a84b;--gold2:#e8cc7a;--slate:#3d5a47;--fog:#7a9a84;--ff-display:'Cormorant',Georgia,serif;--ff-body:'DM Sans',system-ui,sans-serif;--ease-apple:cubic-bezier(.25,.46,.45,.94);--ease-spring:cubic-bezier(.34,1.56,.64,1);--ease-out:cubic-bezier(0,0,.2,1);--r-sm:6px;--r-md:14px;--r-lg:22px;--r-xl:32px;--r-full:9999px;--sh-sm:0 2px 8px rgba(8,15,10,.07);--sh-md:0 8px 30px rgba(8,15,10,.12);--sh-lg:0 20px 60px rgba(8,15,10,.18)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{font-size:16px;scroll-behavior:smooth}
+body{font-family:var(--ff-body);background:var(--white);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}button{cursor:pointer;font-family:inherit;border:none;background:none}ul{list-style:none}
+.wrap{width:100%;max-width:1320px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:var(--r-full);font-size:.875rem;font-weight:600;transition:all .35s var(--ease-apple);white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn-ink{background:var(--ink);color:#fff}.btn-ink:hover{background:var(--moss);transform:translateY(-2px);box-shadow:var(--sh-md)}
+.btn-gold{background:var(--gold);color:var(--ink)}.btn-gold:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,.3);color:#fff}.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+.btn-outline{background:transparent;border:1.5px solid var(--dew);color:var(--ink)}.btn-outline:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn-lg{padding:17px 36px;font-size:1rem}.btn-sm{padding:9px 20px;font-size:.8125rem}
+.eyebrow{font-size:.6875rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sage)}
+.sr{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
+.sr-l{opacity:0;transform:translateX(-30px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
+.sr-r{opacity:0;transform:translateX(30px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
+.sr.show,.sr-l.show,.sr-r.show{opacity:1;transform:translateY(0) translateX(0)}
+.d1s{transition-delay:.1s}.d2s{transition-delay:.2s}.d3s{transition-delay:.3s}.d4s{transition-delay:.4s}
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;height:72px;z-index:1000;transition:background .5s,box-shadow .5s}
+.nav.scrolled{background:rgba(8,15,10,.94);backdrop-filter:blur(24px);box-shadow:0 1px 0 rgba(255,255,255,.06)}
+.nav-inner{height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--ff-display);font-size:1.625rem;font-weight:600;color:#fff;letter-spacing:-.01em}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-a{padding:8px 14px;border-radius:var(--r-sm);font-size:.875rem;font-weight:500;color:rgba(255,255,255,.65);transition:all .2s}
+.nav-a:hover,.nav-a.on{color:#fff;background:rgba(255,255,255,.1)}
+.nav-cta{background:var(--gold);color:var(--ink);padding:9px 22px;border-radius:var(--r-full);font-size:.8125rem;font-weight:700;transition:all .25s}
+.nav-cta:hover{background:var(--gold2);transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:6px}
+.ham-line{width:22px;height:1.5px;background:#fff;border-radius:2px;transition:all .3s;transform-origin:center}
+.hamburger.open .ham-line:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open .ham-line:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open .ham-line:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mob-menu{display:none;position:fixed;top:72px;left:0;right:0;background:rgba(8,15,10,.97);backdrop-filter:blur(24px);padding:1.5rem;z-index:999;border-bottom:1px solid rgba(255,255,255,.06);transform:translateY(-12px);opacity:0;transition:all .3s;pointer-events:none}
+.mob-menu.open{transform:translateY(0);opacity:1;pointer-events:auto;display:block}
+.mob-menu .nav-a{display:block;padding:13px 16px;font-size:1rem;color:rgba(255,255,255,.7);border-radius:var(--r-md);margin-bottom:4px}
+/* ABOUT HERO */
+.about-hero{min-height:80vh;background:linear-gradient(160deg,#020604,#0f2317 40%,#1a3d28 75%,#2e6644);display:flex;align-items:center;padding:9rem 0 5rem;position:relative;overflow:hidden}
+.ah-mtns{position:absolute;bottom:0;left:0;right:0;pointer-events:none}
+.ah-glow{position:absolute;top:20%;right:5%;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(200,168,75,.07),transparent 70%);pointer-events:none;animation:glowP 6s ease-in-out infinite}
+@keyframes glowP{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.15);opacity:1}}
+.ah-content{position:relative;z-index:1;max-width:680px}
+.ah-eyebrow{display:inline-flex;align-items:center;gap:10px;margin-bottom:1.5rem;opacity:0;animation:hIn .8s var(--ease-out) .3s forwards}
+.ah-bar{width:32px;height:1px;background:var(--gold)}
+.ah-etxt{font-size:.6875rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.ah-h1{font-family:var(--ff-display);font-size:clamp(3rem,8vw,7rem);font-weight:300;line-height:.92;letter-spacing:-.035em;color:#fff;opacity:0;animation:hIn .9s var(--ease-out) .5s forwards}
+.ah-h1 em{font-style:italic;color:var(--gold)}
+.ah-sub{font-size:clamp(1rem,1.5vw,1.15rem);color:rgba(255,255,255,.55);font-weight:300;line-height:1.8;max-width:500px;margin:1.5rem 0 2.5rem;opacity:0;animation:hIn .8s var(--ease-out) .75s forwards}
+.ah-btns{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:hIn .8s var(--ease-out) .95s forwards}
+@keyframes hIn{to{opacity:1;transform:translateY(0)}}
+/* STATS ROW */
+.stats-row{background:var(--pine);border-top:1px solid rgba(200,168,75,.2)}
+.stats-inner{display:grid;grid-template-columns:repeat(4,1fr)}
+.sitem{padding:clamp(1.5rem,3vw,2rem);text-align:center;border-right:1px solid rgba(255,255,255,.06)}
+.sitem:last-child{border-right:none}
+.snum{font-family:var(--ff-display);font-size:clamp(2rem,4vw,3rem);font-weight:300;color:var(--gold);line-height:1}
+.slbl{font-size:.6875rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:6px}
+/* STORY */
+.story-section{padding:clamp(4rem,8vw,7rem) 0}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.story-visual{border-radius:var(--r-2xl,44px);overflow:hidden;aspect-ratio:4/5;position:relative}
+.sv-bg{position:absolute;inset:0;background:linear-gradient(165deg,#1a5c36,#0d3520 45%,#051a0d);transition:transform 6s ease}
+.story-visual:hover .sv-bg{transform:scale(1.03)}
+.sv-mtn{position:absolute;bottom:0;left:0;right:0;height:40%;pointer-events:none;opacity:.2}
+.sv-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,15,10,.65),transparent 50%)}
+.sv-quote{position:absolute;bottom:2rem;left:2rem;right:2rem;font-family:var(--ff-display);font-size:1.375rem;font-style:italic;color:#fff;font-weight:300;line-height:1.5}
+.story-text h2{font-family:var(--ff-display);font-size:clamp(1.75rem,3vw,2.75rem);font-weight:300;color:var(--ink);letter-spacing:-.02em;margin-bottom:1.5rem;line-height:1.1}
+.story-text p{font-size:.9375rem;color:var(--slate);line-height:1.85;font-weight:300;margin-bottom:1rem}
+/* TIMELINE */
+.timeline-section{padding:clamp(4rem,8vw,7rem) 0;background:var(--snow)}
+.tl{position:relative;padding-left:2rem;max-width:720px;margin:0 auto}
+.tl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--gold),var(--dew),transparent)}
+.tl-item{display:grid;grid-template-columns:100px 1fr;gap:1.5rem;padding-bottom:2.5rem;position:relative}
+.tl-item::before{content:'';position:absolute;left:-2.5rem;top:4px;width:12px;height:12px;border-radius:50%;background:var(--fern);border:3px solid var(--white);box-shadow:0 0 0 2px var(--fern)}
+.tl-year{font-family:var(--ff-display);font-size:1.875rem;font-weight:300;color:var(--gold);line-height:1;padding-top:3px}
+.tl-body h4{font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:5px}
+.tl-body p{font-size:.875rem;color:var(--fog);line-height:1.65;font-weight:300}
+/* TEAM */
+.team-section{padding:clamp(4rem,8vw,7rem) 0}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.team-card{background:var(--white);border-radius:var(--r-xl);overflow:hidden;border:1px solid rgba(8,15,10,.07);transition:transform .5s var(--ease-spring),box-shadow .5s var(--ease-apple);text-align:center}
+.team-card:hover{transform:translateY(-8px);box-shadow:var(--sh-lg)}
+.tc-av{width:80px;height:80px;border-radius:50%;margin:2rem auto 1rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;color:#fff}
+.tc-name{font-family:var(--ff-display);font-size:1.25rem;font-weight:400;color:var(--ink);margin-bottom:3px}
+.tc-role{font-size:.8125rem;color:var(--sage);font-weight:600;margin-bottom:.75rem}
+.tc-bio{font-size:.8125rem;color:var(--fog);line-height:1.65;padding:0 1.25rem 1.75rem;font-weight:300}
+/* VALUES */
+.values-section{padding:clamp(4rem,8vw,7rem) 0;background:var(--pine)}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.vc{padding:2rem;border-radius:var(--r-xl);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-left:3px solid var(--gold);transition:transform .4s var(--ease-spring),border-color .3s}
+.vc:hover{transform:translateY(-5px);border-color:rgba(200,168,75,.6);background:rgba(255,255,255,.07)}
+.vc-num{font-family:var(--ff-display);font-size:2.5rem;font-weight:300;color:rgba(200,168,75,.3);line-height:1;margin-bottom:12px}
+.vc h4{font-size:1rem;font-weight:600;color:#fff;margin-bottom:8px}
+.vc p{font-size:.875rem;color:rgba(255,255,255,.45);line-height:1.75;font-weight:300}
+/* AWARDS */
+.awards-section{padding:clamp(3rem,5vw,4.5rem) 0;background:var(--ink)}
+.awards-row{display:flex;align-items:center;justify-content:center;gap:clamp(2rem,4vw,4rem);flex-wrap:wrap}
+.aw-item{text-align:center}
+.aw-icon{font-size:2rem;margin-bottom:8px}
+.aw-title{font-size:.875rem;font-weight:700;color:var(--gold);margin-bottom:3px}
+.aw-sub{font-size:.75rem;color:rgba(255,255,255,.4)}
+/* FOOTER */
+.nl-band{background:linear-gradient(135deg,var(--moss),var(--fern) 50%,var(--sage));padding:4rem 0}
+.nl-inner{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.nl-text h3{font-family:var(--ff-display);font-size:clamp(1.75rem,3vw,2.5rem);color:#fff;font-weight:300;margin-bottom:4px}
+.nl-text p{color:rgba(255,255,255,.55);font-size:.9375rem;font-weight:300}
+.nl-form{display:flex;gap:10px;flex-wrap:wrap}
+.nl-input{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.22);color:#fff;padding:13px 20px;border-radius:var(--r-full);font-size:.875rem;width:260px;outline:none;transition:border-color .3s}
+.nl-input::placeholder{color:rgba(255,255,255,.35)}
+.nl-input:focus{border-color:rgba(255,255,255,.65)}
+.footer{background:var(--ink);padding-top:4.5rem}
+.footer-main{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3.5rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.fb-logo{font-family:var(--ff-display);font-size:1.75rem;font-weight:600;color:#fff;margin-bottom:1rem}
+.fb-logo span{color:var(--gold)}
+.fb-desc{font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.8;font-weight:300;max-width:300px;margin-bottom:1.5rem}
+.fsoc{display:flex;gap:8px}
+.fsb{width:36px;height:36px;border-radius:var(--r-sm);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);font-size:.75rem;font-weight:700;transition:all .25s}
+.fsb:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.fct{font-size:.625rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:1.25rem}
+.fl2{display:block;color:rgba(255,255,255,.48);font-size:.875rem;margin-bottom:.875rem;transition:color .2s}
+.fl2:hover{color:var(--gold)}
+.fawards-strip{display:flex;align-items:center;gap:2rem;flex-wrap:wrap;padding:1.5rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.fai-txt{font-size:.75rem;color:rgba(255,255,255,.32)}
+.fai-txt strong{display:block;color:rgba(255,255,255,.55);font-weight:600;margin-bottom:1px}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;flex-wrap:wrap;gap:1rem}
+.fcopy{font-size:.8125rem;color:rgba(255,255,255,.22)}
+.flegal{display:flex;gap:1.5rem}
+.flegal a{font-size:.8125rem;color:rgba(255,255,255,.28);transition:color .2s}
+.flegal a:hover{color:rgba(255,255,255,.6)}
+.fnl{margin-top:1.5rem}.fnl p{font-size:.75rem;color:rgba(255,255,255,.28);margin-bottom:.75rem}
+.fnl-form{display:flex;gap:8px}
+.fnl-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#fff;padding:10px 14px;border-radius:var(--r-full);font-size:.8125rem;outline:none;min-width:0;transition:border-color .3s}
+.fnl-input::placeholder{color:rgba(255,255,255,.22)}
+.fnl-input:focus{border-color:rgba(200,168,75,.4)}
+.fnl-btn{background:var(--gold);color:var(--ink);padding:10px 18px;border-radius:var(--r-full);font-size:.8125rem;font-weight:700;transition:all .25s;flex-shrink:0}
+.fnl-btn:hover{background:var(--gold2)}
 
-    /* STORY SECTION */
-    .story-grid { display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center; }
-    .story-visual {
-      border-radius:var(--r-xl);
-      overflow:hidden;
-      aspect-ratio:4/5;
-      position:relative;
-    }
-    .story-visual-bg { position:absolute;inset:0; }
-    .story-visual-overlay { position:absolute;inset:0;background:linear-gradient(to top,rgba(10,26,15,0.6) 0%,transparent 50%); }
-    .story-visual-quote {
-      position:absolute;bottom:2rem;left:2rem;right:2rem;
-      font-family:var(--font-display);
-      font-size:1.35rem;
-      font-style:italic;
-      color:white;
-      font-weight:300;
-      line-height:1.5;
-    }
-    .story-text h2 { font-family:var(--font-display);font-size:clamp(1.75rem,3vw,2.5rem);font-weight:300;color:var(--ink);letter-spacing:-0.02em;margin-bottom:1.5rem; }
-    .story-text p { font-size:0.9375rem;color:var(--slate);line-height:1.85;font-weight:300;margin-bottom:1rem; }
-
-    /* TIMELINE */
-    .timeline { position:relative;padding:0 0 2rem; }
-    .timeline::before { content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--mist); }
-    .timeline-item { display:grid;grid-template-columns:120px 1fr;gap:1.5rem;padding-bottom:2.5rem;padding-left:2.5rem;position:relative; }
-    .timeline-item::before {
-      content:'';
-      position:absolute;
-      left:-5px;top:4px;
-      width:12px;height:12px;
-      border-radius:50%;
-      background:var(--fern);
-      border:3px solid white;
-      box-shadow:0 0 0 2px var(--fern);
-    }
-    .timeline-year { font-family:var(--font-display);font-size:1.75rem;font-weight:300;color:var(--gold);line-height:1; padding-top:2px; }
-    .timeline-text h4 { font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:5px; }
-    .timeline-text p { font-size:0.875rem;color:var(--fog);line-height:1.65;font-weight:300; }
-
-    /* TEAM */
-    .team-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:20px; }
-    .team-card {
-      background:white;
-      border-radius:var(--r-lg);
-      overflow:hidden;
-      border:1px solid rgba(10,26,15,0.07);
-      transition:transform var(--dur-slow) var(--ease-spring),box-shadow var(--dur-slow) var(--ease);
-      text-align:center;
-    }
-    .team-card:hover { transform:translateY(-6px);box-shadow:var(--sh-lg); }
-    .team-avatar-wrap {
-      width:80px;height:80px;border-radius:50%;
-      margin:1.75rem auto 1rem;
-      display:flex;align-items:center;justify-content:center;
-      font-size:1.5rem;font-weight:700;color:white;
-    }
-    .team-name { font-family:var(--font-display);font-size:1.125rem;font-weight:400;color:var(--ink);margin-bottom:3px; }
-    .team-role { font-size:0.8125rem;color:var(--fern);font-weight:600;margin-bottom:0.75rem; }
-    .team-bio { font-size:0.8125rem;color:var(--fog);line-height:1.6;padding:0 1.25rem 1.5rem;font-weight:300; }
-
-    /* VALUES */
-    .values-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px; }
-    .value-card {
-      padding:2rem;
-      border-radius:var(--r-lg);
-      background:white;
-      border:1px solid rgba(10,26,15,0.07);
-      border-left:3px solid var(--fern);
-    }
-    .value-num { font-family:var(--font-display);font-size:2.5rem;font-weight:300;color:var(--mist);line-height:1;margin-bottom:12px; }
-    .value-card h4 { font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:8px; }
-    .value-card p { font-size:0.875rem;color:var(--fog);line-height:1.7;font-weight:300; }
-
-    /* AWARDS */
-    .awards-strip { background:var(--ink);padding:3rem 0; }
-    .awards-inner { display:flex;align-items:center;justify-content:center;gap:3rem;flex-wrap:wrap; }
-    .award-item { text-align:center; }
-    .award-icon { font-size:2rem;margin-bottom:8px; }
-    .award-title { font-size:0.875rem;font-weight:600;color:var(--gold);margin-bottom:3px; }
-    .award-sub { font-size:0.75rem;color:rgba(255,255,255,0.4); }
-
-    @media(max-width:1024px){ .team-grid{grid-template-columns:repeat(2,1fr);} }
-    @media(max-width:768px){
-      .story-grid { grid-template-columns:1fr;gap:2.5rem; }
-      .values-grid { grid-template-columns:1fr; }
-      .team-grid { grid-template-columns:repeat(2,1fr); }
-      .timeline-item { grid-template-columns:80px 1fr; }
-      .awards-inner { gap:2rem; }
-    }
-    @media(max-width:480px){ .team-grid{grid-template-columns:1fr;} }
-  </style>
+@media(max-width:1024px){.team-grid{grid-template-columns:repeat(2,1fr)}.values-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}.story-grid{grid-template-columns:1fr;gap:2.5rem}.stats-inner{grid-template-columns:repeat(2,1fr)}.sitem:nth-child(2){border-right:none}.team-grid{grid-template-columns:repeat(2,1fr)}.values-grid{grid-template-columns:1fr}.awards-row{gap:2rem}.footer-main{grid-template-columns:1fr 1fr;gap:2rem}.nl-inner{flex-direction:column;text-align:center}.nl-form{flex-direction:column;width:100%}.nl-input{width:100%}.tl{padding-left:1.5rem}.tl-item{grid-template-columns:70px 1fr;gap:1rem}.tl-item::before{left:-2rem}}
+@media(max-width:480px){.team-grid{grid-template-columns:1fr}.values-grid{grid-template-columns:1fr}.footer-main{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-
 <nav class="nav" id="nav">
-  <div class="container">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <span class="nav-logo-text">Shikhar</span><span class="nav-logo-accent">.</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html" class="nav-link">Home</a></li>
-        <li><a href="treks.html" class="nav-link">All Treks</a></li>
-        <li><a href="gallery.html" class="nav-link">Gallery</a></li>
-        <li><a href="about.html" class="nav-link active">About</a></li>
-        <li><a href="contact.html" class="nav-link">Contact</a></li>
-      </ul>
-      <div class="nav-actions">
-        <a href="treks.html" class="nav-book">Book a Trek</a>
-        <button class="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
-      </div>
-    </div>
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo">Shikhar<span>.</span></a>
+    <ul class="nav-links"><li><a href="index.html" class="nav-a">Home</a></li><li><a href="treks.html" class="nav-a">All Treks</a></li><li><a href="gallery.html" class="nav-a">Gallery</a></li><li><a href="about.html" class="nav-a on">About</a></li><li><a href="contact.html" class="nav-a">Contact</a></li></ul>
+    <div style="display:flex;align-items:center;gap:10px"><a href="treks.html" class="nav-cta">Book a Trek</a><button class="hamburger" id="ham"><span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span></button></div>
   </div>
 </nav>
-<div class="mobile-menu">
-  <a href="index.html" class="nav-link">Home</a>
-  <a href="treks.html" class="nav-link">All Treks</a>
-  <a href="gallery.html" class="nav-link">Gallery</a>
-  <a href="about.html" class="nav-link">About</a>
-  <a href="contact.html" class="nav-link">Contact</a>
-  <a href="treks.html" class="nav-book">Book a Trek</a>
-</div>
+<div class="mob-menu" id="mobMenu"><a href="index.html" class="nav-a">Home</a><a href="treks.html" class="nav-a">All Treks</a><a href="gallery.html" class="nav-a">Gallery</a><a href="about.html" class="nav-a">About</a><a href="contact.html" class="nav-a">Contact</a><a href="treks.html" style="display:block;text-align:center;margin-top:1rem;padding:14px;border-radius:var(--r-full);background:var(--gold);color:var(--ink);font-weight:700">Book a Trek</a></div>
 
 <section class="about-hero">
-  <svg class="about-hero-mountains" viewBox="0 0 1440 200" preserveAspectRatio="none">
-    <polygon points="0,200 0,120 200,50 400,130 600,40 800,120 1000,55 1200,120 1440,60 1440,200" fill="rgba(255,255,255,0.025)"/>
-    <polygon points="0,200 0,145 300,95 600,160 900,85 1200,155 1440,110 1440,200" fill="rgba(255,255,255,0.035)"/>
-  </svg>
-  <div class="container">
-    <div class="about-hero-content reveal">
-      <p class="eyebrow" style="color:var(--gold)">Our Story</p>
-      <h1>We Changed<br/><em style="font-style:italic">How India</em><br/>Treks</h1>
-      <p class="about-hero-sub">Founded in 2006 with one trail and a bold belief — that the Himalayas should be accessible, safe and life-changing for every Indian.</p>
+  <svg class="ah-mtns" viewBox="0 0 1440 220" preserveAspectRatio="none"><polygon points="0,220 0,140 200,65 400,150 600,45 800,140 1000,65 1200,145 1440,75 1440,220" fill="rgba(255,255,255,.022)"/><polygon points="0,220 0,165 300,105 600,175 900,90 1200,165 1440,115 1440,220" fill="rgba(255,255,255,.03)"/><polygon points="574,52 582,42 590,52" fill="rgba(255,255,255,.5)"/><polygon points="774,148 782,136 790,148" fill="rgba(255,255,255,.4)"/></svg>
+  <div class="ah-glow"></div>
+  <div class="wrap">
+    <div class="ah-content">
+      <div class="ah-eyebrow"><span class="ah-bar"></span><span class="ah-etxt">Our Story Since 2006</span></div>
+      <h1 class="ah-h1">We Changed<br/><em>How India</em><br/>Treks</h1>
+      <p class="ah-sub">Founded with one trail, one guide and a bold belief — that the Himalayas should be accessible, safe and life-changing for every Indian who dares to look up.</p>
+      <div class="ah-btns"><a href="treks.html" class="btn btn-gold btn-lg">Explore Treks →</a><a href="contact.html" class="btn btn-ghost btn-lg">Talk to Us</a></div>
     </div>
   </div>
 </section>
 
-<!-- STORY -->
-<section class="section">
-  <div class="container">
+<div class="stats-row"><div class="wrap"><div class="stats-inner">
+  <div class="sitem sr"><div class="snum"><span data-count="500" data-suffix="+">0+</span></div><div class="slbl">Documented Trails</div></div>
+  <div class="sitem sr d1s"><div class="snum"><span data-count="35" data-suffix="K+">0K+</span></div><div class="slbl">Trekkers Served</div></div>
+  <div class="sitem sr d2s"><div class="snum"><span data-count="18" data-suffix=" Yrs">0 Yrs</span></div><div class="slbl">Zero Incidents</div></div>
+  <div class="sitem sr d3s"><div class="snum"><span data-count="2000" data-suffix="kg+">0kg+</span></div><div class="slbl">Waste Removed</div></div>
+</div></div></div>
+
+<section class="story-section">
+  <div class="wrap">
     <div class="story-grid">
-      <div class="story-visual reveal">
-        <div class="story-visual-bg bg-keda"></div>
-        <div class="story-visual-overlay"></div>
-        <div class="story-visual-quote">"The mountains don't care about your job title. They only care about how honest you are with yourself."</div>
+      <div class="story-visual sr-l">
+        <div class="sv-bg"></div>
+        <svg class="sv-mtn" viewBox="0 0 400 120"><polygon points="0,120 80,40 160,120" fill="white"/><polygon points="100,120 200,20 300,120" fill="white"/><polygon points="240,120 320,55 400,120" fill="white"/></svg>
+        <div class="sv-overlay"></div>
+        <div class="sv-quote">"The mountains don't care about your job title. They only care about how honest you are with yourself."<br/><br/>— Sandhya Kumar, Founder</div>
       </div>
-      <div class="story-text reveal reveal-delay-2">
-        <h2>Where It All Began</h2>
-        <p>Shikhar started as a single Kedarkantha batch of 12 trekkers led by our founder Sandhya Kumar — a biologist with a deep love for alpine ecosystems and an equally deep frustration at how poorly the mountains were being treated by early adventure tourism.</p>
-        <p>That first trek changed 12 lives. Word spread. By 2010, we had 200 trekkers. By 2015, we had documented 100 trails and built India's first dedicated trek safety training programme. Today, we've taken 35,000+ trekkers across 500+ documented trails — and removed more waste from the mountains than we have ever brought in.</p>
-        <p>We are still led by the same belief as Day 1: the mountains deserve our respect, and trekkers deserve honest, safe, transformative experiences.</p>
-        <div style="margin-top:1.75rem;display:flex;gap:12px;flex-wrap:wrap;">
-          <a href="treks.html" class="btn btn-primary">Explore Our Treks</a>
-          <a href="contact.html" class="btn btn-outline-dark">Talk to Us</a>
-        </div>
+      <div class="sr-r" style="transition-delay:.2s">
+        <p class="eyebrow">Where It All Began</p>
+        <div style="font-family:var(--ff-display);font-size:clamp(1.75rem,3vw,2.75rem);font-weight:300;color:var(--ink);letter-spacing:-.02em;margin:8px 0 1.5rem;line-height:1.1">From One Trail to<br/><em style="font-style:italic;color:var(--sage)">India's Most Trusted</em></div>
+        <p style="font-size:.9375rem;color:var(--slate);line-height:1.85;font-weight:300;margin-bottom:1rem">Shikhar started as a single Kedarkantha batch of 12 trekkers led by our founder Sandhya Kumar — a biologist with a deep love for alpine ecosystems and an equally deep frustration at how poorly the mountains were being treated by early adventure tourism.</p>
+        <p style="font-size:.9375rem;color:var(--slate);line-height:1.85;font-weight:300;margin-bottom:1rem">That first trek changed 12 lives. Word spread. By 2010, we had 200 trekkers. By 2015, we had documented 100 trails and built India's first dedicated trek safety training programme. Today, 35,000+ trekkers have trusted us across 500+ documented trails.</p>
+        <p style="font-size:.9375rem;color:var(--slate);line-height:1.85;font-weight:300;margin-bottom:2rem">We are still led by the same belief as Day 1: the mountains deserve our respect, and trekkers deserve honest, safe, transformative experiences — not Instagram-optimised shortcuts.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap"><a href="treks.html" class="btn btn-ink">Explore Our Treks</a><a href="contact.html" class="btn btn-outline">Talk to Us</a></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TIMELINE -->
-<section class="section section-alt">
-  <div class="container container-sm">
-    <div class="text-center section-header reveal">
+<section class="timeline-section">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:3rem" class="sr">
       <p class="eyebrow">Our Journey</p>
-      <h2 class="display-md" style="margin-top:6px">Milestones That<br/><em style="font-style:italic;color:var(--fern)">Shaped Us</em></h2>
+      <div style="font-family:var(--ff-display);font-size:clamp(1.75rem,4vw,3rem);font-weight:300;color:var(--ink);letter-spacing:-.02em;margin-top:8px">Milestones That <em style="font-style:italic;color:var(--sage)">Shaped Us</em></div>
     </div>
-    <div class="timeline">
-      <div class="timeline-item reveal">
-        <div class="timeline-year">2006</div>
-        <div class="timeline-text">
-          <h4>First Trek — Kedarkantha</h4>
-          <p>12 trekkers, one guide, a rented tent. The journey that started everything.</p>
-        </div>
-      </div>
-      <div class="timeline-item reveal">
-        <div class="timeline-year">2009</div>
-        <div class="timeline-text">
-          <h4>Green Trails Initiative Launched</h4>
-          <p>We became the first trekking organisation in India to adopt a mandatory zero-waste trek policy for all batches.</p>
-        </div>
-      </div>
-      <div class="timeline-item reveal">
-        <div class="timeline-year">2013</div>
-        <div class="timeline-text">
-          <h4>100 Trails Documented</h4>
-          <p>Our GPS documentation project created India's most accurate trekking database — available to all, for free.</p>
-        </div>
-      </div>
-      <div class="timeline-item reveal">
-        <div class="timeline-year">2016</div>
-        <div class="timeline-text">
-          <h4>Wilderness First Responder Certification Mandatory</h4>
-          <p>Every Shikhar trek leader must be WFR certified — still a rare standard in Indian adventure tourism.</p>
-        </div>
-      </div>
-      <div class="timeline-item reveal">
-        <div class="timeline-year">2020</div>
-        <div class="timeline-text">
-          <h4>10,000 Trekker Milestone</h4>
-          <p>Zero serious incidents across all treks. We recommit to the same safety standards that got us here.</p>
-        </div>
-      </div>
-      <div class="timeline-item reveal">
-        <div class="timeline-year">2025</div>
-        <div class="timeline-text">
-          <h4>35,000+ Trekkers, 500+ Trails</h4>
-          <p>2,000+ kg of waste removed. Still growing. Still learning. Still humbled by the mountains every single day.</p>
-        </div>
-      </div>
+    <div class="tl">
+      <div class="tl-item sr"><div class="tl-year">2006</div><div class="tl-body"><h4>First Trek — Kedarkantha, 12 Trekkers</h4><p>One rented tent, one passionate guide, twelve curious people. The journey that started everything Shikhar is today.</p></div></div>
+      <div class="tl-item sr d1s"><div class="tl-year">2009</div><div class="tl-body"><h4>Green Trails Initiative Launched</h4><p>We became the first trekking organisation in India to adopt mandatory zero-waste protocols for every single batch — before it was fashionable.</p></div></div>
+      <div class="tl-item sr"><div class="tl-year">2012</div><div class="tl-body"><h4>Wilderness First Responder Standard Set</h4><p>All Shikhar trek leaders required to hold WFR certification — a 70-hour medical training programme. Still rare in Indian adventure tourism.</p></div></div>
+      <div class="tl-item sr d1s"><div class="tl-year">2015</div><div class="tl-body"><h4>100 Trails Documented — Free for Everyone</h4><p>Our GPS documentation project created India's most accurate trekking database, available free to all — trekkers, guides and competing companies alike.</p></div></div>
+      <div class="tl-item sr"><div class="tl-year">2019</div><div class="tl-body"><h4>Satellite Communication on All Treks</h4><p>Garmin inReach satellite communicators deployed across all batches. Real-time tracking and SOS at any altitude, any signal condition.</p></div></div>
+      <div class="tl-item sr d1s"><div class="tl-year">2023</div><div class="tl-body"><h4>India's Best Trek Organisation Award</h4><p>Adventure Tourism Awards 2023. Accepted with gratitude — and with the reminder that we earn it fresh on every single trek.</p></div></div>
+      <div class="tl-item sr"><div class="tl-year">2025</div><div class="tl-body"><h4>35,000+ Trekkers · 500+ Trails · Zero Incidents</h4><p>Still growing. Still learning. Still humbled by the mountains every single day. The mission remains exactly what it was in 2006.</p></div></div>
     </div>
   </div>
 </section>
 
-<!-- TEAM -->
-<section class="section">
-  <div class="container">
-    <div class="text-center section-header reveal">
-      <p class="eyebrow">The Team</p>
-      <h2 class="display-md" style="margin-top:6px">Passionate<br/><em style="font-style:italic;color:var(--fern)">Mountain People</em></h2>
+<section class="team-section">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:3rem" class="sr">
+      <p class="eyebrow">The People Behind Shikhar</p>
+      <div style="font-family:var(--ff-display);font-size:clamp(1.75rem,4vw,3rem);font-weight:300;color:var(--ink);letter-spacing:-.02em;margin-top:8px">Passionate <em style="font-style:italic;color:var(--sage)">Mountain People</em></div>
     </div>
     <div class="team-grid">
-      <div class="team-card reveal">
-        <div class="team-avatar-wrap" style="background:#1d9e75">SK</div>
-        <div class="team-name">Sandhya Kumar</div>
-        <div class="team-role">Founder & CEO</div>
-        <p class="team-bio">Marine biologist turned mountaineer. 18 years trekking. First female to lead a Rupin Pass commercial batch.</p>
-      </div>
-      <div class="team-card reveal reveal-delay-1">
-        <div class="team-avatar-wrap" style="background:#2d70b3">Raj V</div>
-        <div class="team-name">Raj Varma</div>
-        <div class="team-role">Head of Safety</div>
-        <p class="team-bio">WFR Instructor. Former Army Medical Corps. Built the safety protocols that have kept our record clean for 18 years.</p>
-      </div>
-      <div class="team-card reveal reveal-delay-2">
-        <div class="team-avatar-wrap" style="background:#c8572a">MP</div>
-        <div class="team-name">Meera Patel</div>
-        <div class="team-role">Trek Documentation Lead</div>
-        <p class="team-bio">GIS expert. Documented 340+ trails personally. Responsible for India's most accurate open-access trekking maps.</p>
-      </div>
-      <div class="team-card reveal reveal-delay-3">
-        <div class="team-avatar-wrap" style="background:#7a5ab8">AT</div>
-        <div class="team-name">Arun Thapa</div>
-        <div class="team-role">Senior Trek Leader</div>
-        <p class="team-bio">Born in Sankri. Has led 180+ Kedarkantha batches. Knows every tree, every campsite, every weather sign on that trail.</p>
-      </div>
+      <div class="team-card sr"><div class="tc-av" style="background:#1d9e75">SK</div><div class="tc-name">Sandhya Kumar</div><div class="tc-role">Founder &amp; CEO</div><p class="tc-bio">Marine biologist turned mountaineer. Trekked every Shikhar trail personally before opening it commercially. First female to lead a commercial Rupin Pass batch in 2011.</p></div>
+      <div class="team-card sr d1s"><div class="tc-av" style="background:#2d70b3">RV</div><div class="tc-name">Raj Varma</div><div class="tc-role">Head of Safety</div><p class="tc-bio">WFR Instructor. Former Army Medical Corps. Designed the safety protocols that have kept our record clean for 18 years. Personally trains every guide.</p></div>
+      <div class="team-card sr d2s"><div class="tc-av" style="background:#c8572a">MP</div><div class="tc-name">Meera Patel</div><div class="tc-role">Trek Documentation Lead</div><p class="tc-bio">GIS expert and field researcher. Has personally documented 340+ trails with GPS, altitude profiles and weather pattern data. The brain behind India's most accurate trek maps.</p></div>
+      <div class="team-card sr d3s"><div class="tc-av" style="background:#7a5ab8">AT</div><div class="tc-name">Arun Thapa</div><div class="tc-role">Senior Trek Leader</div><p class="tc-bio">Born in Sankri village. Has led 200+ Kedarkantha batches. Knows every tree, every campsite, every weather sign on the trail. Our trekkers call him the mountain whisperer.</p></div>
     </div>
   </div>
 </section>
 
-<!-- VALUES -->
-<section class="section section-alt">
-  <div class="container">
-    <div class="text-center section-header reveal">
-      <p class="eyebrow">What Drives Us</p>
-      <h2 class="display-md" style="margin-top:6px">Our Values</h2>
+<section class="values-section">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:3rem" class="sr">
+      <p class="eyebrow" style="color:var(--mist)">What Drives Us</p>
+      <div style="font-family:var(--ff-display);font-size:clamp(1.75rem,4vw,3rem);font-weight:300;color:#fff;letter-spacing:-.02em;margin-top:8px">Our <em style="font-style:italic;color:var(--gold)">Values</em></div>
     </div>
     <div class="values-grid">
-      <div class="value-card reveal">
-        <div class="value-num">01</div>
-        <h4>Leave No Trace</h4>
-        <p>Not a slogan. A non-negotiable rule on every single Shikhar trek. Every trekker carries out more than they carry in.</p>
-      </div>
-      <div class="value-card reveal reveal-delay-1">
-        <div class="value-num">02</div>
-        <h4>Safety Above Summits</h4>
-        <p>We turn back when the mountain says so. No peak is worth a life. Our guides are empowered — always — to make that call.</p>
-      </div>
-      <div class="value-card reveal reveal-delay-2">
-        <div class="value-num">03</div>
-        <h4>Local Communities First</h4>
-        <p>100% of our porters and cooks are hired from mountain villages. We reinvest directly into the communities that let us use their trails.</p>
-      </div>
-      <div class="value-card reveal">
-        <div class="value-num">04</div>
-        <h4>Radical Honesty</h4>
-        <p>We tell you exactly what a trek demands. We don't oversell. We don't create false expectations. We respect you too much for that.</p>
-      </div>
-      <div class="value-card reveal reveal-delay-1">
-        <div class="value-num">05</div>
-        <h4>Documentation for All</h4>
-        <p>Our 500+ trail maps are freely available to anyone — trekking companies included. The mountains belong to everyone.</p>
-      </div>
-      <div class="value-card reveal reveal-delay-2">
-        <div class="value-num">06</div>
-        <h4>Transformation Over Tourism</h4>
-        <p>We measure success by how different our trekkers feel on Day 6 versus Day 1. That's the only metric that matters to us.</p>
-      </div>
+      <div class="vc sr"><div class="vc-num">01</div><h4>Leave No Trace</h4><p>Not a slogan. A non-negotiable. Every trekker carries out more than they carry in. We've removed 2,000+ kg of waste from Indian trails and counting.</p></div>
+      <div class="vc sr d1s"><div class="vc-num">02</div><h4>Safety Above Summits</h4><p>We turn back when the mountain says so. No peak is worth a life. Our guides have unconditional authority to abort any trek, any time, for any safety reason.</p></div>
+      <div class="vc sr d2s"><div class="vc-num">03</div><h4>Local Communities First</h4><p>100% of our porters, cooks and base staff are hired from mountain villages. We reinvest directly into the communities whose trails we use.</p></div>
+      <div class="vc sr"><div class="vc-num">04</div><h4>Radical Honesty</h4><p>We tell you exactly what a trek demands. No overselling. No false expectations. We respect you too much to market a fantasy instead of the real thing.</p></div>
+      <div class="vc sr d1s"><div class="vc-num">05</div><h4>Documentation for All</h4><p>Our 500+ trail maps are freely available to anyone — trekkers, other companies, researchers. The mountains belong to everyone, not to any company.</p></div>
+      <div class="vc sr d2s"><div class="vc-num">06</div><h4>Transformation Over Tourism</h4><p>We measure success by how different our trekkers feel on Day 6 vs Day 1. That inner shift — not the summit photo — is the only metric that matters to us.</p></div>
     </div>
   </div>
 </section>
 
-<!-- AWARDS -->
-<div class="awards-strip">
-  <div class="container">
-    <div class="awards-inner">
-      <div class="award-item reveal">
-        <div class="award-icon">🏆</div>
-        <div class="award-title">India's Best Trek Org</div>
-        <div class="award-sub">Adventure Tourism Awards 2023</div>
-      </div>
-      <div class="award-item reveal reveal-delay-1">
-        <div class="award-icon">🌿</div>
-        <div class="award-title">Green Tourism Award</div>
-        <div class="award-sub">Ministry of Tourism 2022</div>
-      </div>
-      <div class="award-item reveal reveal-delay-2">
-        <div class="award-icon">⭐</div>
-        <div class="award-title">4.9/5 Rating</div>
-        <div class="award-sub">35,000+ verified reviews</div>
-      </div>
-      <div class="award-item reveal reveal-delay-3">
-        <div class="award-icon">🛡️</div>
-        <div class="award-title">Zero Incident Record</div>
-        <div class="award-sub">18 consecutive years</div>
-      </div>
+<section class="awards-section">
+  <div class="wrap">
+    <div class="awards-row">
+      <div class="aw-item sr"><div class="aw-icon">🏆</div><div class="aw-title">India's Best Trek Org</div><div class="aw-sub">Adventure Tourism Awards 2023</div></div>
+      <div class="aw-item sr d1s"><div class="aw-icon">🌿</div><div class="aw-title">Green Tourism Award</div><div class="aw-sub">Ministry of Tourism 2022</div></div>
+      <div class="aw-item sr d2s"><div class="aw-icon">⭐</div><div class="aw-title">4.9/5 Rated</div><div class="aw-sub">35,000+ verified reviews</div></div>
+      <div class="aw-item sr d3s"><div class="aw-icon">🛡️</div><div class="aw-title">Zero Incidents</div><div class="aw-sub">18 consecutive years</div></div>
+      <div class="aw-item sr d4s"><div class="aw-icon">📰</div><div class="aw-title">Featured In</div><div class="aw-sub">Nat Geo · TOI · Outlook India</div></div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="newsletter">
-  <div class="container">
-    <div class="newsletter-inner">
-      <div class="newsletter-text">
-        <h3>Stay Connected</h3>
-        <p>Stories, trail updates &amp; early access — in your inbox</p>
-      </div>
-      <form class="newsletter-form" onsubmit="return false;">
-        <input type="email" class="newsletter-input" placeholder="your@email.com"/>
-        <button type="submit" class="btn btn-gold">Subscribe</button>
-      </form>
-    </div>
-  </div>
-</div>
+<div class="nl-band"><div class="wrap nl-inner"><div class="nl-text sr"><h3>Stay Connected</h3><p>Stories, trail updates &amp; early access — in your inbox</p></div><form class="nl-form sr d2s" onsubmit="handleNL(event,this)"><input type="email" class="nl-input" placeholder="your@email.com" required/><button type="submit" class="btn btn-ink btn-lg">Subscribe →</button></form></div></div>
 
 <footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <div class="nav-logo"><span class="nav-logo-text">Shikhar</span><span class="nav-logo-accent">.</span></div>
-        <p class="footer-brand-desc">India's most trusted trekking organisation since 2006.</p>
-      </div>
-      <div><div class="footer-col-title">Explore</div><a href="treks.html" class="footer-link">All Treks</a><a href="gallery.html" class="footer-link">Gallery</a></div>
-      <div><div class="footer-col-title">Company</div><a href="about.html" class="footer-link">About Us</a><a href="#" class="footer-link">Careers</a><a href="#" class="footer-link">Blog</a></div>
-      <div><div class="footer-col-title">Support</div><a href="contact.html" class="footer-link">Contact</a><a href="#" class="footer-link">FAQs</a></div>
+  <div class="wrap">
+    <div class="fawards-strip">
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:1.125rem">🏆</span><div class="fai-txt"><strong>India's Best Trek Org</strong>Adventure Tourism Awards 2023</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:1.125rem">🌿</span><div class="fai-txt"><strong>Green Tourism Award</strong>Ministry of Tourism 2022</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:1.125rem">⭐</span><div class="fai-txt"><strong>4.9/5 Rated</strong>35,000+ verified reviews</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:1.125rem">🛡️</span><div class="fai-txt"><strong>Zero Incidents</strong>18 consecutive years</div></div>
     </div>
-    <div class="footer-bottom">
-      <p class="footer-copy">© 2025 Shikhar. All rights reserved.</p>
-      <div class="social-row"><a class="social-btn">in</a><a class="social-btn">ig</a><a class="social-btn">yt</a></div>
+    <div class="footer-main">
+      <div><div class="fb-logo">Shikhar<span>.</span></div><p class="fb-desc">India's most trusted trekking organisation since 2006. 500+ documented trails, WFR-certified guides, zero-waste promise.</p><div class="fsoc"><a class="fsb" href="#">Ig</a><a class="fsb" href="#">Yt</a><a class="fsb" href="#">in</a><a class="fsb" href="#">Fb</a><a class="fsb" href="#">Wp</a></div><div class="fnl"><p>Get trek alerts &amp; stories</p><form class="fnl-form" onsubmit="handleNL(event,this)"><input type="email" class="fnl-input" placeholder="your@email.com" required/><button type="submit" class="fnl-btn">Go</button></form></div></div>
+      <div><div class="fct">Our Treks</div><a href="treks.html" class="fl2">All 500+ Treks</a><a href="treks.html" class="fl2">Upcoming Batches</a><a href="treks.html" class="fl2">Easy Treks</a><a href="treks.html" class="fl2">Corporate Treks</a></div>
+      <div><div class="fct">Destinations</div><a href="treks.html" class="fl2">Uttarakhand</a><a href="treks.html" class="fl2">Himachal Pradesh</a><a href="treks.html" class="fl2">Kashmir</a><a href="treks.html" class="fl2">Sikkim &amp; Bengal</a><a href="treks.html" class="fl2">Spiti Valley</a></div>
+      <div><div class="fct">Company</div><a href="about.html" class="fl2">About Shikhar</a><a href="about.html" class="fl2">Our Team</a><a href="#" class="fl2">Careers</a><a href="#" class="fl2">Blog &amp; Articles</a><a href="#" class="fl2">Press &amp; Media</a></div>
+      <div><div class="fct">Support</div><a href="contact.html" class="fl2">Contact Us</a><a href="#" class="fl2">FAQs</a><a href="#" class="fl2">Safety Policy</a><a href="#" class="fl2">Cancellation Policy</a><a href="#" class="fl2">Gear Checklist</a><div style="margin-top:1.25rem"><div class="fct">Contact</div><p style="font-size:.8125rem;color:rgba(255,255,255,.38);line-height:1.8;font-weight:300">📞 +91 98765 43210<br/>✉️ hello@shikhar.in<br/>📍 42 Mountain View Rd,<br/>&nbsp;&nbsp;&nbsp;&nbsp;Dehradun 248001</p></div></div>
     </div>
+    <div class="footer-bottom"><p class="fcopy">© 2025 Shikhar Trekking Pvt. Ltd. All rights reserved.</p><div class="flegal"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Refund Policy</a></div><p style="font-size:.75rem;color:rgba(255,255,255,.18)">Made with ❤️ in the Himalayas</p></div>
   </div>
 </footer>
-<script src="js/main.js"></script>
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>60),{passive:true});
+const ham=document.getElementById('ham'),mob=document.getElementById('mobMenu');
+ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('open');document.body.style.overflow=mob.classList.contains('open')?'hidden':'';});
+mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{ham.classList.remove('open');mob.classList.remove('open');document.body.style.overflow='';}));
+const srEls=document.querySelectorAll('.sr,.sr-l,.sr-r');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');obs.unobserve(e.target)}});},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+srEls.forEach(el=>obs.observe(el));
+function easeOut(t){return 1-Math.pow(1-t,3)}
+document.querySelectorAll('[data-count]').forEach(el=>{
+  const cObs=new IntersectionObserver(([e])=>{if(!e.isIntersecting)return;const target=parseFloat(el.dataset.count);const dec=parseInt(el.dataset.dec||0);const suffix=el.dataset.suffix||'';const dur=1800,start=performance.now();const tick=now=>{const p=Math.min((now-start)/dur,1);el.textContent=(easeOut(p)*target).toFixed(dec)+suffix;if(p<1)requestAnimationFrame(tick);};requestAnimationFrame(tick);cObs.unobserve(el);},{threshold:.5});
+  cObs.observe(el);
+});
+function handleNL(e,form){e.preventDefault();const btn=form.querySelector('button');const t=btn.textContent;btn.textContent='✓ Subscribed!';btn.style.background='#166534';btn.style.color='#fff';setTimeout(()=>{btn.textContent=t;btn.style.background='';btn.style.color='';form.reset();},3000);}
+</script>
 </body>
 </html>

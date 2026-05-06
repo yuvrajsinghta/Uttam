@@ -1,372 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact Us — Shikhar</title>
-  <link rel="stylesheet" href="css/global.css"/>
-  <style>
-    .contact-hero {
-      background: linear-gradient(160deg,#040d07 0%,#0a1a0f 40%,#1c3d26 100%);
-      padding: 9rem 0 4.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .contact-hero-bg-svg {
-      position:absolute;bottom:0;left:0;right:0;pointer-events:none;
-    }
-    .contact-hero-content { position:relative;z-index:1; }
-    .contact-hero h1 {
-      font-family:var(--font-display);
-      font-size:clamp(2.5rem,6vw,5rem);
-      font-weight:300;
-      color:white;
-      letter-spacing:-0.03em;
-      margin-top:8px;
-      margin-bottom:10px;
-    }
-    .contact-hero p { color:rgba(255,255,255,0.5);font-size:1rem;font-weight:300; }
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Contact Us — Shikhar</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#080f0a;--pine:#0f2317;--moss:#1a3d28;--fern:#2e6644;--sage:#4a8c60;--mist:#8fbfa0;--dew:#c2deca;--foam:#e8f4ec;--snow:#f5faf6;--white:#fff;--gold:#c8a84b;--gold2:#e8cc7a;--slate:#3d5a47;--fog:#7a9a84;--ff-display:'Cormorant',Georgia,serif;--ff-body:'DM Sans',system-ui,sans-serif;--ease-apple:cubic-bezier(.25,.46,.45,.94);--ease-spring:cubic-bezier(.34,1.56,.64,1);--ease-out:cubic-bezier(0,0,.2,1);--r-sm:6px;--r-md:14px;--r-lg:22px;--r-xl:32px;--r-full:9999px;--sh-sm:0 2px 8px rgba(8,15,10,.07);--sh-md:0 8px 30px rgba(8,15,10,.12);--sh-lg:0 20px 60px rgba(8,15,10,.18);--sh-xl:0 40px 100px rgba(8,15,10,.25)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{font-size:16px;scroll-behavior:smooth}
+body{font-family:var(--ff-body);background:var(--white);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}button{cursor:pointer;font-family:inherit;border:none;background:none}input,select,textarea{font-family:inherit}ul{list-style:none}
+.wrap{width:100%;max-width:1320px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:var(--r-full);font-size:.875rem;font-weight:600;transition:all .35s var(--ease-apple);white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn-ink{background:var(--ink);color:#fff}.btn-ink:hover{background:var(--moss);transform:translateY(-2px);box-shadow:var(--sh-md)}
+.btn-gold{background:var(--gold);color:var(--ink)}.btn-gold:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(200,168,75,.35)}
+.btn-outline{background:transparent;border:1.5px solid var(--dew);color:var(--ink)}.btn-outline:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn-lg{padding:17px 36px;font-size:1rem}.btn-sm{padding:9px 20px;font-size:.8125rem}
+.eyebrow{font-size:.6875rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sage)}
+.sr{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
+.sr-l{opacity:0;transform:translateX(-28px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
+.sr-r{opacity:0;transform:translateX(28px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
+.sr.show,.sr-l.show,.sr-r.show{opacity:1;transform:translateY(0) translateX(0)}
+.d1s{transition-delay:.1s}.d2s{transition-delay:.2s}.d3s{transition-delay:.3s}
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;height:72px;z-index:1000;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);box-shadow:var(--sh-sm)}
+.nav-inner{height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--ff-display);font-size:1.625rem;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.logo span{color:var(--fern)}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-a{padding:8px 14px;border-radius:var(--r-sm);font-size:.875rem;font-weight:500;color:var(--slate);transition:all .2s}
+.nav-a:hover,.nav-a.on{color:var(--ink);background:var(--foam)}
+.nav-cta{background:var(--ink);color:#fff;padding:9px 22px;border-radius:var(--r-full);font-size:.8125rem;font-weight:700;transition:all .25s}
+.nav-cta:hover{background:var(--moss);transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:6px}
+.ham-line{width:22px;height:1.5px;background:var(--ink);border-radius:2px;transition:all .3s;transform-origin:center}
+.hamburger.open .ham-line:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open .ham-line:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open .ham-line:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mob-menu{display:none;position:fixed;top:72px;left:0;right:0;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);padding:1.5rem;z-index:999;border-bottom:1px solid var(--foam);transform:translateY(-12px);opacity:0;transition:all .3s;pointer-events:none}
+.mob-menu.open{transform:translateY(0);opacity:1;pointer-events:auto;display:block}
+.mob-menu .nav-a{display:block;padding:13px 16px;font-size:1rem;color:var(--slate);border-radius:var(--r-md);margin-bottom:4px}
+/* PAGE HERO */
+.contact-hero{background:linear-gradient(160deg,#020604,#0f2317 40%,#1a3d28);padding:9rem 0 4.5rem;position:relative;overflow:hidden}
+.ch-mtns{position:absolute;bottom:0;left:0;right:0;pointer-events:none}
+.ch-content{position:relative;z-index:1}
+.contact-hero h1{font-family:var(--ff-display);font-size:clamp(2.5rem,7vw,6rem);font-weight:300;color:#fff;letter-spacing:-.035em;margin-top:8px;line-height:.95}
+.contact-hero p{color:rgba(255,255,255,.45);font-size:1rem;margin-top:1rem;font-weight:300;max-width:520px;line-height:1.7}
+/* CONTACT LAYOUT */
+.contact-layout{display:grid;grid-template-columns:1fr 420px;gap:3rem;padding:4rem 0 6rem;align-items:flex-start}
+/* FORM CARD */
+.form-card{background:#fff;border-radius:var(--r-xl);padding:2.5rem;border:1px solid rgba(8,15,10,.07);box-shadow:var(--sh-lg)}
+.form-card h2{font-family:var(--ff-display);font-size:1.875rem;font-weight:400;color:var(--ink);margin-bottom:.5rem}
+.form-card>p{font-size:.875rem;color:var(--fog);margin-bottom:2rem;font-weight:300;line-height:1.65}
+/* Subject chips */
+.subject-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2rem}
+.sc{padding:7px 18px;border-radius:var(--r-full);font-size:.8125rem;font-weight:500;border:1.5px solid var(--dew);color:var(--slate);background:transparent;transition:all .2s var(--ease-apple);cursor:pointer}
+.sc:hover{border-color:var(--fern);color:var(--fern)}
+.sc.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+/* Form fields */
+.fg{margin-bottom:1.1rem}
+.fl{display:block;font-size:.6875rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--fog);margin-bottom:6px}
+.fi,.fsel,.fta{width:100%;background:var(--snow);border:1.5px solid rgba(8,15,10,.1);border-radius:var(--r-md);padding:12px 16px;font-size:.9375rem;color:var(--ink);outline:none;transition:border-color .25s var(--ease-apple),background .25s,box-shadow .25s;appearance:none;-webkit-appearance:none}
+.fi:focus,.fsel:focus,.fta:focus{border-color:var(--fern);background:#fff;box-shadow:0 0 0 3px rgba(46,102,68,.1)}
+.fta{resize:vertical;min-height:130px;line-height:1.6}
+.fsel{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a8c60' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px;background-color:var(--snow)}
+.fsel:focus{background-color:#fff}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-submit-row{display:flex;align-items:center;gap:14px;margin-top:1.5rem;flex-wrap:wrap}
+.form-privacy{font-size:.75rem;color:var(--fog);font-weight:300}
+/* INFO SIDEBAR */
+.info-sidebar{display:flex;flex-direction:column;gap:14px}
+.info-card{background:#fff;border-radius:var(--r-lg);padding:1.5rem;border:1px solid rgba(8,15,10,.07);display:flex;gap:1rem;align-items:flex-start;transition:transform .4s var(--ease-spring),box-shadow .4s var(--ease-apple)}
+.info-card:hover{transform:translateY(-4px);box-shadow:var(--sh-md)}
+.ic-icon{width:46px;height:46px;border-radius:13px;background:var(--foam);border:1px solid rgba(8,15,10,.06);display:flex;align-items:center;justify-content:center;font-size:1.125rem;flex-shrink:0;transition:transform .3s var(--ease-spring)}
+.info-card:hover .ic-icon{transform:scale(1.1) rotate(-3deg)}
+.ic-body h4{font-size:.9375rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.ic-body p{font-size:.8125rem;color:var(--fog);line-height:1.65;font-weight:300}
+.ic-body a{color:var(--fern);font-weight:600;font-size:.8125rem}
+/* Hours card */
+.hours-table{width:100%;border-collapse:collapse;margin-top:.5rem}
+.hours-table tr{border-bottom:1px solid var(--foam)}
+.hours-table tr:last-child{border-bottom:none}
+.hours-table td{padding:7px 0;font-size:.8125rem}
+.hours-table td:first-child{color:var(--fog)}
+.hours-table td:last-child{text-align:right;font-weight:600;color:var(--ink)}
+.hours-open{color:var(--fern) !important}
+.online-badge{display:inline-flex;align-items:center;gap:6px;background:#dcfce7;color:#166534;padding:4px 12px;border-radius:var(--r-full);font-size:.6875rem;font-weight:700;margin-top:.75rem}
+.online-dot{width:7px;height:7px;border-radius:50%;background:#16a34a;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+/* Map card */
+.map-card{background:#fff;border-radius:var(--r-lg);overflow:hidden;border:1px solid rgba(8,15,10,.07)}
+.map-visual{height:200px;background:linear-gradient(135deg,var(--foam),#d4ebe0,var(--dew));position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.map-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(46,102,68,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(46,102,68,.07) 1px,transparent 1px);background-size:28px 28px}
+.map-roads{position:absolute;inset:0;pointer-events:none}
+.map-pin-wrap{display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;z-index:1}
+.map-pin-dot{width:22px;height:22px;border-radius:50%;background:var(--fern);box-shadow:0 0 0 7px rgba(46,102,68,.2)}
+.map-pin-lbl{background:#fff;padding:5px 14px;border-radius:var(--r-full);font-size:.75rem;font-weight:700;color:var(--ink);box-shadow:var(--sh-md);white-space:nowrap}
+.map-body{padding:1.25rem}
+.map-body h4{font-size:.9375rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.map-body p{font-size:.8125rem;color:var(--fog);font-weight:300;margin-bottom:10px}
+/* FAQ */
+.faq-section{padding:0 0 5rem}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.faq-item{background:#fff;border-radius:var(--r-lg);padding:1.5rem;border:1px solid rgba(8,15,10,.07);transition:transform .4s var(--ease-spring),box-shadow .4s;cursor:pointer}
+.faq-item:hover{transform:translateY(-3px);box-shadow:var(--sh-md)}
+.faq-item h4{font-size:.9375rem;font-weight:600;color:var(--ink);margin-bottom:8px;line-height:1.4}
+.faq-item p{font-size:.875rem;color:var(--fog);line-height:1.65;font-weight:300}
+/* FOOTER */
+.nl-band{background:linear-gradient(135deg,var(--moss),var(--fern) 50%,var(--sage));padding:4rem 0}
+.nl-inner{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.nl-text h3{font-family:var(--ff-display);font-size:clamp(1.75rem,3vw,2.5rem);color:#fff;font-weight:300;margin-bottom:4px}
+.nl-text p{color:rgba(255,255,255,.55);font-size:.9375rem;font-weight:300}
+.nl-form{display:flex;gap:10px;flex-wrap:wrap}
+.nl-input{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.22);color:#fff;padding:13px 20px;border-radius:var(--r-full);font-size:.875rem;width:260px;outline:none;transition:border-color .3s}
+.nl-input::placeholder{color:rgba(255,255,255,.35)}
+.nl-input:focus{border-color:rgba(255,255,255,.65)}
+.footer{background:var(--ink);padding-top:4.5rem}
+.footer-main{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3.5rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.fb-logo{font-family:var(--ff-display);font-size:1.75rem;font-weight:600;color:#fff;margin-bottom:1rem}
+.fb-logo span{color:var(--gold)}
+.fb-desc{font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.8;font-weight:300;max-width:300px;margin-bottom:1.5rem}
+.fsoc{display:flex;gap:8px}
+.fsb{width:36px;height:36px;border-radius:var(--r-sm);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);font-size:.75rem;font-weight:700;transition:all .25s}
+.fsb:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.fct{font-size:.625rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:1.25rem}
+.fl2{display:block;color:rgba(255,255,255,.48);font-size:.875rem;margin-bottom:.875rem;transition:color .2s}
+.fl2:hover{color:var(--gold)}
+.fawards-strip{display:flex;align-items:center;gap:2rem;flex-wrap:wrap;padding:1.5rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.fai-txt{font-size:.75rem;color:rgba(255,255,255,.32)}
+.fai-txt strong{display:block;color:rgba(255,255,255,.55);font-weight:600;margin-bottom:1px}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;flex-wrap:wrap;gap:1rem}
+.fcopy{font-size:.8125rem;color:rgba(255,255,255,.22)}
+.flegal{display:flex;gap:1.5rem}
+.flegal a{font-size:.8125rem;color:rgba(255,255,255,.28);transition:color .2s}
+.flegal a:hover{color:rgba(255,255,255,.6)}
+.fnl{margin-top:1.5rem}.fnl p{font-size:.75rem;color:rgba(255,255,255,.28);margin-bottom:.75rem}
+.fnl-form{display:flex;gap:8px}
+.fnl-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#fff;padding:10px 14px;border-radius:var(--r-full);font-size:.8125rem;outline:none;min-width:0;transition:border-color .3s}
+.fnl-input::placeholder{color:rgba(255,255,255,.22)}
+.fnl-input:focus{border-color:rgba(200,168,75,.4)}
+.fnl-btn{background:var(--gold);color:var(--ink);padding:10px 18px;border-radius:var(--r-full);font-size:.8125rem;font-weight:700;transition:all .25s;flex-shrink:0}
+.fnl-btn:hover{background:var(--gold2)}
 
-    /* MAIN LAYOUT */
-    .contact-layout {
-      display: grid;
-      grid-template-columns: 1fr 420px;
-      gap: 3.5rem;
-      padding: 4rem 0 6rem;
-      align-items: flex-start;
-    }
-
-    /* FORM */
-    .contact-form-wrap {
-      background: white;
-      border-radius: var(--r-xl);
-      padding: 2.5rem;
-      border: 1px solid rgba(10,26,15,0.07);
-      box-shadow: var(--sh-md);
-    }
-    .contact-form-wrap h2 {
-      font-family:var(--font-display);
-      font-size:1.75rem;
-      font-weight:400;
-      color:var(--ink);
-      margin-bottom:0.5rem;
-    }
-    .contact-form-wrap > p { font-size:0.875rem;color:var(--fog);margin-bottom:2rem;font-weight:300; }
-
-    .subject-chips { display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem; }
-    .subject-chip {
-      padding:7px 16px;
-      border-radius:var(--r-full);
-      font-size:0.8125rem;
-      font-weight:500;
-      border:1.5px solid var(--mist);
-      color:var(--slate);
-      background:transparent;
-      transition:all var(--dur-base) var(--ease);
-      cursor:pointer;
-    }
-    .subject-chip:hover { border-color:var(--fern);color:var(--fern); }
-    .subject-chip.active { background:var(--ink);color:white;border-color:var(--ink); }
-
-    .form-submit-row { display:flex;gap:12px;align-items:center;margin-top:1.5rem;flex-wrap:wrap; }
-    .form-privacy { font-size:0.75rem;color:var(--fog);font-weight:300; }
-
-    /* INFO SIDEBAR */
-    .contact-info { display:flex;flex-direction:column;gap:16px; }
-
-    .info-card {
-      background:white;
-      border-radius:var(--r-lg);
-      padding:1.5rem;
-      border:1px solid rgba(10,26,15,0.07);
-      display:flex;gap:1rem;align-items:flex-start;
-      transition:transform var(--dur-slow) var(--ease-spring),box-shadow var(--dur-slow) var(--ease);
-    }
-    .info-card:hover { transform:translateY(-3px);box-shadow:var(--sh-md); }
-    .info-icon {
-      width:44px;height:44px;
-      border-radius:12px;
-      background:var(--offwhite);
-      border:1px solid var(--frost);
-      display:flex;align-items:center;justify-content:center;
-      font-size:1.125rem;
-      flex-shrink:0;
-    }
-    .info-content h4 { font-size:0.875rem;font-weight:700;color:var(--ink);margin-bottom:4px; }
-    .info-content p { font-size:0.8125rem;color:var(--fog);line-height:1.65;font-weight:300; }
-    .info-content a { color:var(--fern);font-weight:600; }
-
-    /* MAP PLACEHOLDER */
-    .map-card {
-      background:white;
-      border-radius:var(--r-lg);
-      overflow:hidden;
-      border:1px solid rgba(10,26,15,0.07);
-    }
-    .map-visual {
-      height:200px;
-      background: linear-gradient(135deg,#e8f3eb,#d4ebe0,#b8d9c4);
-      position:relative;
-      display:flex;align-items:center;justify-content:center;
-    }
-    .map-pin {
-      display:flex;flex-direction:column;align-items:center;gap:4px;
-    }
-    .map-pin-dot {
-      width:20px;height:20px;border-radius:50%;
-      background:var(--fern);
-      box-shadow:0 0 0 6px rgba(62,122,80,0.2);
-    }
-    .map-pin-label {
-      background:white;
-      padding:4px 12px;
-      border-radius:var(--r-full);
-      font-size:0.75rem;
-      font-weight:600;
-      color:var(--ink);
-      box-shadow:var(--sh-sm);
-      white-space:nowrap;
-    }
-    .map-grid-lines {
-      position:absolute;inset:0;
-      background-image:
-        linear-gradient(rgba(62,122,80,0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(62,122,80,0.08) 1px, transparent 1px);
-      background-size:30px 30px;
-    }
-    .map-body { padding:1.25rem; }
-    .map-body h4 { font-size:0.9375rem;font-weight:600;color:var(--ink);margin-bottom:4px; }
-    .map-body p { font-size:0.8125rem;color:var(--fog);font-weight:300;margin-bottom:10px; }
-
-    /* OFFICE HOURS */
-    .hours-table { width:100%;border-collapse:collapse; }
-    .hours-table tr { border-bottom:1px solid var(--frost); }
-    .hours-table tr:last-child { border-bottom:none; }
-    .hours-table td { padding:8px 0;font-size:0.8125rem; }
-    .hours-table td:first-child { color:var(--fog);font-weight:400; }
-    .hours-table td:last-child { color:var(--ink);font-weight:600;text-align:right; }
-    .hours-open { color:var(--fern) !important; }
-
-    /* FAQ PREVIEW */
-    .faq-section { padding:0 0 5rem; }
-    .faq-grid { display:grid;grid-template-columns:1fr 1fr;gap:16px; }
-    .faq-item {
-      background:white;
-      border-radius:var(--r-lg);
-      padding:1.5rem;
-      border:1px solid rgba(10,26,15,0.07);
-    }
-    .faq-item h4 { font-size:0.9375rem;font-weight:600;color:var(--ink);margin-bottom:8px; }
-    .faq-item p { font-size:0.875rem;color:var(--fog);line-height:1.65;font-weight:300; }
-
-    @media(max-width:1024px){
-      .contact-layout { grid-template-columns:1fr; }
-    }
-    @media(max-width:768px){
-      .faq-grid { grid-template-columns:1fr; }
-      .contact-form-wrap { padding:1.75rem; }
-    }
-  </style>
+@media(max-width:1024px){.contact-layout{grid-template-columns:1fr}}
+@media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}.frow{grid-template-columns:1fr}.faq-grid{grid-template-columns:1fr}.footer-main{grid-template-columns:1fr 1fr;gap:2rem}.nl-inner{flex-direction:column;text-align:center}.nl-form{flex-direction:column;width:100%}.nl-input{width:100%}}
+@media(max-width:480px){.footer-main{grid-template-columns:1fr}.footer-bottom{flex-direction:column;text-align:center}}
+</style>
 </head>
 <body>
-
-<nav class="nav" id="nav">
-  <div class="container">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <span class="nav-logo-text">Shikhar</span><span class="nav-logo-accent">.</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html" class="nav-link">Home</a></li>
-        <li><a href="treks.html" class="nav-link">All Treks</a></li>
-        <li><a href="gallery.html" class="nav-link">Gallery</a></li>
-        <li><a href="about.html" class="nav-link">About</a></li>
-        <li><a href="contact.html" class="nav-link active">Contact</a></li>
-      </ul>
-      <div class="nav-actions">
-        <a href="treks.html" class="nav-book">Book a Trek</a>
-        <button class="hamburger" aria-label="Menu">
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-        </button>
-      </div>
-    </div>
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo">Shikhar<span>.</span></a>
+    <ul class="nav-links"><li><a href="index.html" class="nav-a">Home</a></li><li><a href="treks.html" class="nav-a">All Treks</a></li><li><a href="gallery.html" class="nav-a">Gallery</a></li><li><a href="about.html" class="nav-a">About</a></li><li><a href="contact.html" class="nav-a on">Contact</a></li></ul>
+    <div style="display:flex;align-items:center;gap:10px"><a href="treks.html" class="nav-cta">Book a Trek</a><button class="hamburger" id="ham"><span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span></button></div>
   </div>
 </nav>
-<div class="mobile-menu">
-  <a href="index.html" class="nav-link">Home</a>
-  <a href="treks.html" class="nav-link">All Treks</a>
-  <a href="gallery.html" class="nav-link">Gallery</a>
-  <a href="about.html" class="nav-link">About</a>
-  <a href="contact.html" class="nav-link">Contact</a>
-  <a href="treks.html" class="nav-book">Book a Trek</a>
-</div>
+<div class="mob-menu" id="mobMenu"><a href="index.html" class="nav-a">Home</a><a href="treks.html" class="nav-a">All Treks</a><a href="gallery.html" class="nav-a">Gallery</a><a href="about.html" class="nav-a">About</a><a href="contact.html" class="nav-a">Contact</a><a href="treks.html" style="display:block;text-align:center;margin-top:1rem;padding:14px;border-radius:var(--r-full);background:var(--ink);color:#fff;font-weight:700">Book a Trek</a></div>
 
-<!-- HERO -->
 <div class="contact-hero">
-  <svg class="contact-hero-bg-svg" viewBox="0 0 1440 160" preserveAspectRatio="none">
-    <polygon points="0,160 0,100 300,50 600,120 900,40 1200,110 1440,70 1440,160" fill="rgba(255,255,255,0.025)"/>
-  </svg>
-  <div class="container contact-hero-content reveal">
+  <svg class="ch-mtns" viewBox="0 0 1440 160" preserveAspectRatio="none"><polygon points="0,160 0,100 200,48 400,118 600,32 800,108 1000,50 1200,115 1440,65 1440,160" fill="rgba(255,255,255,.022)"/><polygon points="0,160 0,128 300,90 600,152 900,75 1200,142 1440,102 1440,160" fill="rgba(255,255,255,.03)"/></svg>
+  <div class="wrap ch-content sr">
     <p class="eyebrow" style="color:var(--gold)">We're Here to Help</p>
-    <h1>Get in Touch</h1>
-    <p>Questions about a trek? Our experts respond within 4 hours</p>
+    <h1>Get in<br/>Touch</h1>
+    <p>Questions about a trek, safety, fitness requirements or group bookings? Our mountain experts respond within 4 hours, every day of the week.</p>
   </div>
 </div>
 
-<!-- MAIN CONTACT SECTION -->
-<div class="container">
+<div class="wrap">
   <div class="contact-layout">
 
     <!-- FORM -->
-    <div class="contact-form-wrap reveal">
+    <div class="form-card sr-l">
       <h2>Send Us a Message</h2>
-      <p>Tell us about your experience level, group size and which trek interests you — we'll get back with tailored advice.</p>
+      <p>Tell us about your experience level, group size and which trek excites you — we'll respond with honest, tailored advice. No sales pressure, ever.</p>
 
-      <div style="margin-bottom:1.5rem">
-        <div class="form-label" style="margin-bottom:10px">What can we help with?</div>
+      <div style="margin-bottom:.5rem"><div class="fl" style="margin-bottom:10px">What can we help with?</div>
         <div class="subject-chips">
-          <button class="subject-chip active">Trek Inquiry</button>
-          <button class="subject-chip">Booking Help</button>
-          <button class="subject-chip">Cancellation</button>
-          <button class="subject-chip">Safety Question</button>
-          <button class="subject-chip">Corporate Trek</button>
-          <button class="subject-chip">Other</button>
+          <button class="sc on">Trek Inquiry</button>
+          <button class="sc">Booking Help</button>
+          <button class="sc">Cancellation</button>
+          <button class="sc">Safety Question</button>
+          <button class="sc">Group / Corporate</button>
+          <button class="sc">Other</button>
         </div>
       </div>
 
       <form id="contactForm">
-        <div class="form-row">
-          <div class="form-field">
-            <label class="form-label">First Name *</label>
-            <input type="text" class="form-input" placeholder="Rahul" required/>
-          </div>
-          <div class="form-field">
-            <label class="form-label">Last Name *</label>
-            <input type="text" class="form-input" placeholder="Sharma" required/>
-          </div>
+        <div class="frow">
+          <div class="fg"><label class="fl">First Name *</label><input type="text" class="fi" placeholder="Rahul" required/></div>
+          <div class="fg"><label class="fl">Last Name *</label><input type="text" class="fi" placeholder="Sharma" required/></div>
         </div>
-        <div class="form-row">
-          <div class="form-field">
-            <label class="form-label">Email Address *</label>
-            <input type="email" class="form-input" placeholder="rahul@email.com" required/>
-          </div>
-          <div class="form-field">
-            <label class="form-label">Phone Number</label>
-            <input type="tel" class="form-input" placeholder="+91 98765 43210"/>
-          </div>
+        <div class="frow">
+          <div class="fg"><label class="fl">Email Address *</label><input type="email" class="fi" placeholder="rahul@email.com" required/></div>
+          <div class="fg"><label class="fl">Phone / WhatsApp</label><input type="tel" class="fi" placeholder="+91 98765 43210"/></div>
         </div>
-        <div class="form-row">
-          <div class="form-field">
-            <label class="form-label">Trek Interested In</label>
-            <select class="form-select">
+        <div class="frow">
+          <div class="fg"><label class="fl">Trek Interested In</label>
+            <select class="fsel">
               <option value="">Select a trek…</option>
-              <option>Kedarkantha Peak</option>
-              <option>Rupin Pass</option>
-              <option>Valley of Flowers</option>
-              <option>Pin Parvati Pass</option>
-              <option>Deoriatal – Chandrashila</option>
-              <option>Sandakphu Trek</option>
-              <option>Hampta Pass</option>
-              <option>Goecha La</option>
-              <option>Not sure yet</option>
+              <option>Kedarkantha Peak — ₹8,500</option>
+              <option>Rupin Pass — ₹14,200</option>
+              <option>Valley of Flowers — ₹11,000</option>
+              <option>Kashmir Great Lakes — ₹16,500</option>
+              <option>Deoriatal–Chandrashila — ₹6,500</option>
+              <option>Sandakphu Trek — ₹12,800</option>
+              <option>Hampta Pass — ₹9,800</option>
+              <option>Pin Parvati Pass — ₹22,000</option>
+              <option>Goecha La — ₹18,500</option>
+              <option>Not sure yet — help me choose</option>
             </select>
           </div>
-          <div class="form-field">
-            <label class="form-label">Group Size</label>
-            <select class="form-select">
-              <option>Solo</option>
+          <div class="fg"><label class="fl">Group Size</label>
+            <select class="fsel">
+              <option>Solo trekker</option>
               <option>2 people</option>
               <option>3–5 people</option>
               <option>6–10 people</option>
-              <option>10+ people</option>
+              <option>10–20 people (corporate)</option>
+              <option>20+ people</option>
             </select>
           </div>
         </div>
-        <div class="form-field">
-          <label class="form-label">Preferred Month</label>
-          <select class="form-select">
-            <option value="">Select a month…</option>
-            <option>December 2025</option>
-            <option>January 2026</option>
-            <option>February 2026</option>
-            <option>March 2026</option>
-            <option>April 2026</option>
-            <option>May 2026</option>
-            <option>Flexible</option>
-          </select>
+        <div class="frow">
+          <div class="fg"><label class="fl">Preferred Month</label>
+            <select class="fsel">
+              <option value="">Select a month…</option>
+              <option>December 2025</option><option>January 2026</option><option>February 2026</option>
+              <option>March 2026</option><option>April 2026</option><option>May 2026</option>
+              <option>June 2026</option><option>July 2026</option><option>August 2026</option>
+              <option>September 2026</option><option>October 2026</option><option>November 2026</option>
+              <option>Flexible / Not sure yet</option>
+            </select>
+          </div>
+          <div class="fg"><label class="fl">Fitness Level</label>
+            <select class="fsel">
+              <option>Beginner — occasional walks</option>
+              <option>Moderate — gym / regular exercise</option>
+              <option>Good — hike occasionally</option>
+              <option>Very fit — trekked before</option>
+              <option>Expert — high-altitude experience</option>
+            </select>
+          </div>
         </div>
-        <div class="form-field">
-          <label class="form-label">Your Message</label>
-          <textarea class="form-textarea" placeholder="Tell us about your fitness level, past trekking experience, any special requirements, questions about the trail…" style="min-height:130px"></textarea>
+        <div class="fg"><label class="fl">Your Message</label>
+          <textarea class="fta" placeholder="Tell us about your trekking experience, any medical conditions we should know about, dietary requirements, questions about the route, or anything else on your mind…"></textarea>
         </div>
         <div class="form-submit-row">
-          <button type="submit" class="btn btn-primary btn-lg">Send Message →</button>
-          <p class="form-privacy">🔒 We never share your data. Privacy first.</p>
+          <button type="submit" class="btn btn-gold btn-lg">Send Message →</button>
+          <p class="form-privacy">🔒 Your data is private. We never share or sell it.</p>
         </div>
       </form>
     </div>
 
-    <!-- SIDEBAR INFO -->
-    <div class="contact-info">
+    <!-- SIDEBAR -->
+    <div class="info-sidebar">
 
-      <div class="info-card reveal">
-        <div class="info-icon">📞</div>
-        <div class="info-content">
+      <div class="info-card sr-r">
+        <div class="ic-icon">📞</div>
+        <div class="ic-body">
           <h4>Call or WhatsApp</h4>
-          <p>+91 98765 43210<br/>+91 98765 43211</p>
-          <a href="tel:+919876543210">Call Now →</a>
+          <p>+91 98765 43210<br/>+91 98765 43211 (WhatsApp)</p>
+          <a href="tel:+919876543210" style="margin-top:6px;display:inline-block">Call Now →</a>
         </div>
       </div>
 
-      <div class="info-card reveal reveal-delay-1">
-        <div class="info-icon">✉️</div>
-        <div class="info-content">
+      <div class="info-card sr-r d1s">
+        <div class="ic-icon">✉️</div>
+        <div class="ic-body">
           <h4>Email Us</h4>
-          <p>hello@shikhar.in<br/>Response within 4 hours</p>
-          <a href="mailto:hello@shikhar.in">Send Email →</a>
+          <p>hello@shikhar.in<br/>bookings@shikhar.in</p>
+          <a href="mailto:hello@shikhar.in" style="margin-top:6px;display:inline-block">Send Email →</a>
         </div>
       </div>
 
-      <div class="info-card reveal reveal-delay-2">
-        <div class="info-icon">📍</div>
-        <div class="info-content">
+      <div class="info-card sr-r d2s">
+        <div class="ic-icon">📍</div>
+        <div class="ic-body">
           <h4>Head Office</h4>
-          <p>42, Mountain View Road<br/>Dehradun, Uttarakhand 248001</p>
+          <p>42, Mountain View Road<br/>Near ISBT, Dehradun<br/>Uttarakhand 248001</p>
         </div>
       </div>
 
-      <!-- HOURS -->
-      <div class="info-card reveal reveal-delay-3" style="flex-direction:column;gap:0.75rem">
-        <div style="display:flex;align-items:center;gap:0.875rem">
-          <div class="info-icon">🕐</div>
-          <div class="info-content"><h4>Office Hours</h4></div>
+      <div class="info-card sr-r d3s" style="flex-direction:column;align-items:flex-start">
+        <div style="display:flex;align-items:center;gap:.875rem;margin-bottom:.875rem">
+          <div class="ic-icon">🕐</div>
+          <div class="ic-body"><h4>Office Hours</h4></div>
         </div>
         <table class="hours-table">
           <tr><td>Monday – Friday</td><td class="hours-open">9:00 AM – 7:00 PM</td></tr>
           <tr><td>Saturday</td><td class="hours-open">9:00 AM – 5:00 PM</td></tr>
           <tr><td>Sunday</td><td style="color:var(--fog)">WhatsApp only</td></tr>
+          <tr><td>Response time</td><td style="color:var(--fern);font-weight:700">Within 4 hours</td></tr>
         </table>
-        <div style="display:inline-flex;align-items:center;gap:6px;background:#dcfce7;color:#166534;padding:5px 12px;border-radius:var(--r-full);font-size:0.75rem;font-weight:700;">
-          <span style="width:7px;height:7px;border-radius:50%;background:#16a34a;display:inline-block"></span>
-          We're open right now
-        </div>
+        <div class="online-badge"><span class="online-dot"></span>We're open right now</div>
       </div>
 
-      <!-- MAP -->
-      <div class="map-card reveal">
+      <div class="map-card sr-r">
         <div class="map-visual">
-          <div class="map-grid-lines"></div>
-          <div class="map-pin">
+          <div class="map-grid"></div>
+          <svg class="map-roads" viewBox="0 0 400 200" preserveAspectRatio="none">
+            <path d="M0,100 Q100,80 200,100 Q300,120 400,100" stroke="rgba(46,102,68,.15)" fill="none" stroke-width="8"/>
+            <path d="M200,0 Q190,80 200,100 Q210,130 200,200" stroke="rgba(46,102,68,.12)" fill="none" stroke-width="6"/>
+            <path d="M50,150 Q125,130 200,100 Q260,75 350,60" stroke="rgba(46,102,68,.1)" fill="none" stroke-width="4"/>
+          </svg>
+          <div class="map-pin-wrap">
             <div class="map-pin-dot"></div>
-            <div class="map-pin-label">Shikhar HQ — Dehradun</div>
+            <div class="map-pin-lbl">Shikhar HQ — Dehradun</div>
           </div>
         </div>
         <div class="map-body">
-          <h4>Visit Us</h4>
-          <p>42, Mountain View Road, near ISBT, Dehradun</p>
-          <a href="https://maps.google.com" target="_blank" class="btn btn-outline-dark btn-sm" style="border-radius:var(--r-full)">Open in Maps ↗</a>
+          <h4>Visit Our Office</h4>
+          <p>42 Mountain View Road, near ISBT, Dehradun. Walk-ins welcome Mon–Sat 9 AM–5 PM.</p>
+          <a href="https://maps.google.com" target="_blank" rel="noopener" class="btn btn-outline btn-sm" style="border-radius:var(--r-full)">Open in Google Maps ↗</a>
         </div>
       </div>
 
@@ -374,104 +319,70 @@
   </div>
 </div>
 
-<!-- FAQ SECTION -->
-<section class="faq-section">
-  <div class="container">
-    <div class="section-header reveal">
+<!-- FAQ -->
+<div style="background:var(--snow);padding:4rem 0">
+  <div class="wrap">
+    <div class="sr" style="margin-bottom:2.5rem">
       <p class="eyebrow">Quick Answers</p>
-      <h2 class="display-sm" style="margin-top:6px;color:var(--ink)">Frequently Asked Questions</h2>
+      <div style="font-family:var(--ff-display);font-size:clamp(1.75rem,4vw,3rem);font-weight:300;color:var(--ink);letter-spacing:-.02em;margin-top:8px">Frequently Asked <em style="font-style:italic;color:var(--sage)">Questions</em></div>
     </div>
     <div class="faq-grid">
-      <div class="faq-item reveal">
-        <h4>What fitness level do I need for Kedarkantha?</h4>
-        <p>Moderate fitness — able to walk 5–7 km a day with a light daypack. No prior trekking experience needed, but being comfortable walking uphill for 3–4 hours is important.</p>
-      </div>
-      <div class="faq-item reveal reveal-delay-1">
-        <h4>What's included in the trek cost?</h4>
-        <p>All camping equipment, trek leader, cook & support staff, all meals from Day 1 dinner onwards, permits, first aid with oxygen cylinder, and any Shikhar base camp stays.</p>
-      </div>
-      <div class="faq-item reveal">
-        <h4>How do I get to the trek base?</h4>
-        <p>Most treks start from Dehradun, Rishikesh or Haridwar. We share detailed transport info 2 weeks before your trek. We can help arrange shared vehicles too.</p>
-      </div>
-      <div class="faq-item reveal reveal-delay-1">
-        <h4>What is your cancellation policy?</h4>
-        <p>Free cancellation up to 15 days before the trek. 50% refund 8–15 days before. No refund within 7 days — but we'll help you reschedule to a future batch at no cost.</p>
-      </div>
-      <div class="faq-item reveal">
-        <h4>Can solo women trek safely with Shikhar?</h4>
-        <p>Absolutely. 40% of our trekkers are solo women. Our groups are curated, guides are trained in inclusivity, and we have women-only batches for select treks on request.</p>
-      </div>
-      <div class="faq-item reveal reveal-delay-1">
-        <h4>Do you offer corporate or school group treks?</h4>
-        <p>Yes — we design custom corporate and school programmes with team-building elements, safety briefings and flexible scheduling. Contact us for a custom quote.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="newsletter">
-  <div class="container">
-    <div class="newsletter-inner">
-      <div class="newsletter-text">
-        <h3>Stay Connected</h3>
-        <p>Trek alerts, seasonal tips &amp; trail stories</p>
-      </div>
-      <form class="newsletter-form" onsubmit="return false;">
-        <input type="email" class="newsletter-input" placeholder="your@email.com"/>
-        <button type="submit" class="btn btn-gold">Subscribe</button>
-      </form>
+      <div class="faq-item sr"><h4>What fitness level is needed for Kedarkantha?</h4><p>Moderate fitness — able to walk 5–7 km uphill for 3–4 hours a day with a light daypack. No prior trekking experience required, but being generally active helps enormously.</p></div>
+      <div class="faq-item sr d1s"><h4>What exactly is included in the price?</h4><p>All camping gear, trek leader, cook, support staff, all meals from Day 1 dinner, forest permits, first aid with oxygen cylinder, guesthouse on Day 1 and Garmin satellite communicator.</p></div>
+      <div class="faq-item sr"><h4>How do I get to the trek start point?</h4><p>Most treks start from Dehradun, Rishikesh or Haridwar. We share detailed transport instructions 2 weeks before. We can also arrange shared transport — just ask when booking.</p></div>
+      <div class="faq-item sr d1s"><h4>What is your cancellation policy?</h4><p>Free cancellation up to 15 days before. 50% refund 8–14 days before. No refund within 7 days — but we'll happily reschedule you to a future batch at no extra charge.</p></div>
+      <div class="faq-item sr"><h4>Is it safe for solo women trekkers?</h4><p>Absolutely. 40% of our trekkers are solo women. Groups are carefully curated, our guides are trained in inclusivity, and we offer women-only batches for select treks on request.</p></div>
+      <div class="faq-item sr d1s"><h4>Do you offer corporate or school group treks?</h4><p>Yes — we design fully custom corporate retreats and school programmes with team-building modules, safety briefings and flexible scheduling. Contact us for a tailored quote.</p></div>
+      <div class="faq-item sr"><h4>What if I get altitude sickness?</h4><p>Every Shikhar trek leader is trained in AMS, HACE and HAPE recognition and treatment. We carry portable oxygen and pulse oximeters. If symptoms are serious, descent begins immediately — no discussion.</p></div>
+      <div class="faq-item sr d1s"><h4>Can I bring children on a trek?</h4><p>Yes, for Easy-rated treks, children above 10 years can join with parent/guardian approval and a medical fitness form. We recommend Kedarkantha or Deoriatal for families with older children.</p></div>
     </div>
   </div>
 </div>
 
+<div class="nl-band"><div class="wrap nl-inner"><div class="nl-text sr"><h3>Stay Connected</h3><p>Trek alerts, safety tips &amp; trail stories in your inbox</p></div><form class="nl-form sr d2s" onsubmit="handleNL(event,this)"><input type="email" class="nl-input" placeholder="your@email.com" required/><button type="submit" class="btn btn-ink btn-lg">Subscribe →</button></form></div></div>
+
 <footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <div class="nav-logo"><span class="nav-logo-text">Shikhar</span><span class="nav-logo-accent">.</span></div>
-        <p class="footer-brand-desc">India's most trusted trekking organisation since 2006.</p>
-      </div>
-      <div>
-        <div class="footer-col-title">Explore</div>
-        <a href="treks.html" class="footer-link">All Treks</a>
-        <a href="treks.html" class="footer-link">Upcoming Batches</a>
-        <a href="gallery.html" class="footer-link">Gallery</a>
-      </div>
-      <div>
-        <div class="footer-col-title">Company</div>
-        <a href="about.html" class="footer-link">About Us</a>
-        <a href="#" class="footer-link">Blog</a>
-        <a href="#" class="footer-link">Careers</a>
-      </div>
-      <div>
-        <div class="footer-col-title">Support</div>
-        <a href="contact.html" class="footer-link">Contact Us</a>
-        <a href="#" class="footer-link">FAQs</a>
-        <a href="#" class="footer-link">Cancellation Policy</a>
-        <a href="#" class="footer-link">Safety Policy</a>
-      </div>
+  <div class="wrap">
+    <div class="fawards-strip">
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:1.125rem">🏆</span><div class="fai-txt"><strong>India's Best Trek Org</strong>Adventure Tourism Awards 2023</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:1.125rem">🌿</span><div class="fai-txt"><strong>Green Tourism Award</strong>Ministry of Tourism 2022</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:1.125rem">⭐</span><div class="fai-txt"><strong>4.9/5 Rated</strong>35,000+ verified reviews</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:1.125rem">🛡️</span><div class="fai-txt"><strong>Zero Incidents</strong>18 consecutive years</div></div>
+    </div>
+    <div class="footer-main">
+      <div><div class="fb-logo">Shikhar<span>.</span></div><p class="fb-desc">India's most trusted trekking organisation since 2006. 500+ documented trails, WFR-certified guides, zero-waste promise on every trek.</p><div class="fsoc"><a class="fsb" href="#">Ig</a><a class="fsb" href="#">Yt</a><a class="fsb" href="#">in</a><a class="fsb" href="#">Fb</a><a class="fsb" href="#">Wp</a></div><div class="fnl"><p>Get trek alerts &amp; trail stories</p><form class="fnl-form" onsubmit="handleNL(event,this)"><input type="email" class="fnl-input" placeholder="your@email.com" required/><button type="submit" class="fnl-btn">Go</button></form></div></div>
+      <div><div class="fct">Our Treks</div><a href="treks.html" class="fl2">All 500+ Treks</a><a href="treks.html" class="fl2">Upcoming Batches</a><a href="treks.html" class="fl2">Easy Treks</a><a href="treks.html" class="fl2">Moderate Treks</a><a href="treks.html" class="fl2">Challenging Treks</a><a href="treks.html" class="fl2">Corporate Treks</a></div>
+      <div><div class="fct">Destinations</div><a href="treks.html" class="fl2">Uttarakhand</a><a href="treks.html" class="fl2">Himachal Pradesh</a><a href="treks.html" class="fl2">Kashmir</a><a href="treks.html" class="fl2">Sikkim &amp; Bengal</a><a href="treks.html" class="fl2">Spiti Valley</a><a href="treks.html" class="fl2">Ladakh</a><a href="treks.html" class="fl2">Northeast India</a></div>
+      <div><div class="fct">Company</div><a href="about.html" class="fl2">About Shikhar</a><a href="about.html" class="fl2">Our Story</a><a href="about.html" class="fl2">Meet the Team</a><a href="#" class="fl2">Careers</a><a href="#" class="fl2">Blog &amp; Articles</a><a href="#" class="fl2">Press &amp; Media</a></div>
+      <div><div class="fct">Support</div><a href="contact.html" class="fl2">Contact Us</a><a href="#" class="fl2">FAQs</a><a href="#" class="fl2">Safety Policy</a><a href="#" class="fl2">Cancellation Policy</a><a href="#" class="fl2">What's Included</a><a href="#" class="fl2">Gear Checklist</a><a href="#" class="fl2">Fitness Guide</a><div style="margin-top:1.25rem"><div class="fct">Direct Contact</div><p style="font-size:.8125rem;color:rgba(255,255,255,.38);line-height:1.9;font-weight:300">📞 +91 98765 43210<br/>📱 +91 98765 43211 (WA)<br/>✉️ hello@shikhar.in<br/>📍 42 Mountain View Rd,<br/>&nbsp;&nbsp;&nbsp;&nbsp;Dehradun, UK 248001</p></div></div>
     </div>
     <div class="footer-bottom">
-      <p class="footer-copy">© 2025 Shikhar. All rights reserved.</p>
-      <div class="social-row">
-        <a class="social-btn" href="#">in</a>
-        <a class="social-btn" href="#">ig</a>
-        <a class="social-btn" href="#">yt</a>
-        <a class="social-btn" href="#">fb</a>
-      </div>
+      <p class="fcopy">© 2025 Shikhar Trekking Pvt. Ltd. All rights reserved.</p>
+      <div class="flegal"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Refund Policy</a><a href="#">Cookie Policy</a></div>
+      <p style="font-size:.75rem;color:rgba(255,255,255,.18)">Made with ❤️ in the Himalayas</p>
     </div>
   </div>
 </footer>
-<script src="js/main.js"></script>
+
 <script>
-  // Subject chips
-  document.querySelectorAll('.subject-chip').forEach(chip => {
-    chip.addEventListener('click', function() {
-      document.querySelectorAll('.subject-chip').forEach(c => c.classList.remove('active'));
-      this.classList.add('active');
-    });
-  });
+const ham=document.getElementById('ham'),mob=document.getElementById('mobMenu');
+ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('open');document.body.style.overflow=mob.classList.contains('open')?'hidden':'';});
+mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{ham.classList.remove('open');mob.classList.remove('open');document.body.style.overflow='';}));
+const srEls=document.querySelectorAll('.sr,.sr-l,.sr-r');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');obs.unobserve(e.target)}});},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
+srEls.forEach(el=>obs.observe(el));
+document.querySelectorAll('.sc').forEach(c=>{c.addEventListener('click',function(){document.querySelectorAll('.sc').forEach(x=>x.classList.remove('on'));this.classList.add('on');});});
+document.getElementById('contactForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const btn=this.querySelector('[type=submit]');
+  const orig=btn.textContent;
+  btn.textContent='Sending…';btn.disabled=true;
+  setTimeout(()=>{
+    btn.textContent='✓ Message Sent!';btn.style.background='#166534';btn.style.color='#fff';
+    setTimeout(()=>{btn.textContent=orig;btn.style.background='';btn.style.color='';btn.disabled=false;this.reset();},3500);
+  },1200);
+});
+function handleNL(e,form){e.preventDefault();const btn=form.querySelector('button');const t=btn.textContent;btn.textContent='✓ Done!';btn.style.background='#166534';btn.style.color='#fff';setTimeout(()=>{btn.textContent=t;btn.style.background='';btn.style.color='';form.reset();},3000);}
 </script>
 </body>
 </html>
